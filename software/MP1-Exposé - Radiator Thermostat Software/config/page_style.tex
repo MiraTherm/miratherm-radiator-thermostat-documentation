@@ -1,0 +1,103 @@
+% 1.5 line spacing
+\onehalfspacing
+%
+% Page margins
+\setlength{\topskip}{\ht\strutbox} % fixes warning from geometry
+\geometry{   paper=a4paper,
+	inner=35mm,
+	outer=30mm,
+	top=25mm,
+	bottom=25mm,
+	footskip=10mm,
+	includeheadfoot}
+%
+% Headers and footers
+\pagestyle{scrheadings}
+%
+% Font of the header
+\renewcommand{\headfont}{\normalfont}
+%
+% Height of the header at chapter start (is huge without this comment)
+\renewcommand*{\chapterheadstartvskip}{\vspace*{-\topskip}}
+%
+% Program code style
+\lstset{
+	basicstyle=\ttfamily\footnotesize,
+	identifierstyle=\color[rgb]{0,0,0},
+	keywordstyle=\color[rgb]{0,0,1},
+	stringstyle=\color[rgb]{0.56, 0.0, 1.0},
+	commentstyle=\color[rgb]{0.18, 0.61, 0.33},
+	columns=flexible,
+	tabsize=2,
+	extendedchars=true,
+	showspaces=false,
+	showstringspaces=false,
+	numbers=left,
+	numberstyle=\tiny,
+	breaklines=true,
+	backgroundcolor=\color[rgb]{0.9,0.9,0.9}}
+%
+\DeclareCaptionFont{white}{\color{white}}
+\DeclareCaptionFormat{listing}{\colorbox[cmyk]{0.43, 0.35, 0.35, 0.01}{\parbox{\textwidth}{\hspace{0pt}#1#2#3}}}
+\captionsetup[lstlisting]{
+	format=listing,
+	labelfont=white,
+	textfont=white,
+	singlelinecheck=false,
+	margin=0pt,
+	font={footnotesize},
+}
+%
+% KOMA options
+\KOMAoptions{    
+	%headwidth=textwithmarginpar:0pt,                                % widen header beyond the text area
+	%DIV=12,
+	headsepline = true,                                     % Header line
+	footsepline = true, plainfootsepline = true             % Footer line
+}
+%
+% Header entries
+\ihead*{Fulda University of Applied Sciences}
+\chead*{}
+\ohead*{\headmark}
+%
+% Footer entries
+\ifoot*{©MiraTherm}
+\cfoot*{\pagemark} % move \pagemark to \ofoot for printing
+\ofoot*{License: CC-BY-4.0}
+%
+% creates a little more space after a period
+\frenchspacing
+%
+% No single lines at the beginning of a paragraph (orphans)
+\clubpenalty = 10000
+%
+% No single lines at the end of a paragraph (widows)
+\widowpenalty = 10000 \displaywidowpenalty = 10000
+%
+% number footnotes consecutively
+\counterwithout{footnote}{chapter}
+%
+% Adjust floating environments %
+\renewcommand{\topfraction}{0.9}
+\renewcommand{\bottomfraction}{0.8}
+%
+% Depth of the table of contents
+\setcounter{tocdepth}{1}
+%
+% Adjust font
+\setmainfont{Latin Modern Roman}
+\setsansfont{Nimbus Sans L}
+\setmonofont{Nimbus Mono}
+%
+% captions of tables on top
+\floatsetup[table]{capposition=top}
+%
+% pgf plot setup
+\pgfplotsset{compat=newest}
+\usetikzlibrary{plotmarks}
+\usepgfplotslibrary{patchplots}
+%
+% so that everything always has the same spacing in print
+\raggedbottom
+%

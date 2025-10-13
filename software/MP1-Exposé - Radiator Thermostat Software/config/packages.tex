@@ -1,0 +1,145 @@
+% Adjustment of the page layout
+\usepackage[
+automark, 					% automatically create chapter information in the header
+headsepline, 				% separating line under the header
+ilines 						% align separating line to the left
+]{scrlayer-scrpage}
+%
+% Adaptation to the national language
+\usepackage[english]{babel}
+%
+% Encoding
+\usepackage{fontspec}
+%
+% Euro sign etc.
+\usepackage{textcomp}
+%
+% Subfigures
+\usepackage{subfigure}
+%
+% Wrapfigures
+\usepackage{wrapfig}
+%
+% Math
+\usepackage[intlimits]{amsmath}
+\usepackage{amssymb}
+\usepackage{empheq}
+\usepackage{nicefrac}
+\usepackage{upgreek}
+\usepackage{siunitx}
+%
+% Index
+\usepackage{makeidx}
+%
+% Simple definition of line spacing and page margins etc.
+\usepackage{setspace}
+\usepackage{geometry}
+%
+% List of abbreviations
+\usepackage[printonlyused]{acronym}
+%
+% for text wrapping around images
+\usepackage{floatrow}
+%
+% simpler color definition
+\usepackage[usenames,dvipsnames]{xcolor}
+%
+% Program code
+\usepackage{listings}
+%
+% Custom colors
+\usepackage[dvipsnames]{xcolor}
+%
+% Link URL
+\usepackage{url}
+%
+% continuous numbering of footnotes
+\usepackage{chngcntr}
+%
+% Tables
+\usepackage{tabularx}
+\usepackage{multirow}
+\usepackage{longtable}
+\usepackage{colortbl}
+\usepackage{array}
+\usepackage{ragged2e}
+\usepackage{lscape}
+%
+% For line breaks in tables
+\usepackage{makecell}
+%
+% Individual design of cells in tables
+\usepackage{hhline}
+%
+%
+% needed for the definition of custom commands
+\usepackage{ifthen}
+%
+% defines i.a. the commands \todo and \listoftodos
+\usepackage{todonotes}
+%
+% roman numerals
+\usepackage{romannum}
+%
+% for using toprule
+\usepackage{booktabs}
+%
+% Frames
+\usepackage{framed, color}
+\usepackage[most]{tcolorbox}
+%
+% Bibliography
+\usepackage{csquotes}
+\usepackage[style=ieee,sorting=none,maxnames=25]{biblatex}
+% Breaking of (long) URLs at any character
+\usepackage{xurl}
+%
+% Tikz
+\usepackage{color}
+\usepackage{transparent}
+\usepackage{pgfplots}
+%
+% Caption
+\usepackage{caption}
+%
+% Space after comma
+\usepackage{ziffer}
+%
+% Table colors
+\usepackage{colortbl}
+\usepackage{hhline}
+%
+% package pgf plots
+\usepackage{pgfplots}
+%
+% For the university logo on the title page
+\usepackage{wallpaper}
+\usepackage{watermark}
+%
+% To change the indentation in enumerations
+\usepackage{enumitem}
+%
+% To extend the character set
+\usepackage{newunicodechar}
+%
+% To add PDF as pages
+\usepackage{pdfpages}
+%
+% PDF options
+\usepackage[
+bookmarks,
+bookmarksopen=true,
+%these color definitions highlight links in the PDF in color (comment out for printing)
+colorlinks=true,
+linkcolor=blue, 			% simple internal links
+anchorcolor=black,			% anchor text
+citecolor=blue, 			% references to bibliography in the text
+filecolor=magenta, 			% links that open local files
+menucolor=red, 				% Acrobat menu items
+urlcolor=cyan,
+%
+plainpages=false, 			% for the correct creation of bookmarks
+pdfpagelabels, 				% for the correct creation of bookmarks
+hypertexnames=false, 		% for the correct creation of bookmarks
+linktocpage 				% link page numbers instead of text in the table of contents
+]{hyperref}
