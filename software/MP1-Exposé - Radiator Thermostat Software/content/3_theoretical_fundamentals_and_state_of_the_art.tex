@@ -8,13 +8,34 @@
 % License Text (URI): https://creativecommons.org/licenses/by/4.0/
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\chapter{Theoretical foundations and state of the art}
-\label{chap:Theoretical foundations and state of the art}
+\chapter{Theoretical fundamentals and state of the art}
+\label{chap:Theoretical fundamentals and state of the art}
 %
-Descriptions of common thermostats such as eQ-3 eqiva Bluetooth® and eQ-3 MAX! will be used as a reference for functional scope of the software \cite{eQ3AG.05.2018} \cite{ELVjournal.2012}. For example they implement following functions:
+A radiator thermostat is a device, which is mounted on a radiator valve to control the flow of hot water through the radiator. By this means it regulates the temperature of a room.
+
+As described in \cite{ELVjournal.2012} and shown in figure \ref{fig:rt-photo}, a digital radiator thermostat typically consists of the following components:
 
 \begin{itemize}
-	\item temperature adjustment, mode selection, open-window function
+	\item \acs{pcb} with \ac{ui} including buttons, rotary encoder, display, motor driver, and other components
+	\item \ac{dc}-motor
+	\item Gear box with planetary gears
+	\item Valve connector
 \end{itemize}
 
-...To Do...
+Most digital thermostats are \ac{mcu}-based and battery powered. Smart thermostats often include additional features such as \ac{wlan} or \ac{ble} connectivity and mobile app integration. 
+
+Descriptions of common thermostats such as eQ-3 MAX! from \cite{ELVjournal.2012} and smart eQ-3 eqiva Bluetooth from \cite{eQ3AG.05.2018} can be used as a reference for functional scope of the software to develop. For example they implement following functions:
+
+\begin{itemize}
+	\item Mode selection (Auto, Manual, Boost, Vacation)
+	\item Manual temperature adjustment
+	\item Weekly schedule programming
+	\item Open-window function
+\end{itemize}
+
+\begin{figure}[htbp]
+	\centering
+	\includegraphics[width=0.9\linewidth]{./content/images/photo_2025-10-15_07-17-45_mod.png}
+	\caption{Photo of a partially disassembled radiator thermostat eQ-3 eqiva (version without Bluetooth).}
+	\label{fig:rt-photo}
+\end{figure}
