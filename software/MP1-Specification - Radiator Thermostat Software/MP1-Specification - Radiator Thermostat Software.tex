@@ -1,0 +1,138 @@
+\documentclass[
+	11pt,                            % Font size
+	english,                         % for umlauts, hyphenation, etc
+	a4paper,                         % Paper format
+	oneside,                         % one-sided document (must be changed to twoside for printing) 
+	% openright,                     % Odd pages as chapter start (set if printing is intended)
+	titlepage,                       % a title page is used
+	parskip=half,                    % Spacing between paragraphs (half a line)
+	headings=normal,                 % Reduce the size of headings
+	bibliography=totoc,              % Bibliography in the table of contents
+	index=totoc,                     % List index in the table of contents
+	listof=totoc,                    % List of figures/tables/etc. in the table of contents
+	final,                           % Status of the document (final/draft)
+	numbers=noenddot,			     % No dot after chapter numbers
+	cleardoublepage=plain,		     % Plain ensures that page numbers are still on empty pages
+	footsepline, plainheadsepline,   % Foot and head lines
+	toc=chapterentrywithdots         % Dots up to the page number in the table of contents also for chapters
+]{scrreprt}
+%
+%--Packages-------------------------------------------------------------------%
+%
+\input{config/packages}
+%
+%--Customization--------------------------------------------------------------%
+%
+\input{config/customization}
+%
+%--Hyphenation----------------------------------------------------------------%
+\input{config/hyphenation} 
+%
+%--Index----------------------------------------------------------------------%
+%
+\makeindex
+%
+%--Path to Bibliography-------------------------------------------------------%
+%
+\addbibresource{lists/bibliography.bib}
+%
+%--Meta-Information-----------------------------------------------------------%
+%
+\newcommand{\doctitle}{MiraTherm Radiator Thermostat Software Specification}
+%\newcommand{\docsubtitle}{Subtitle}
+\newcommand{\docworktype}{Requirement Specification for a Master Project}
+\newcommand{\docinstitution}{Fulda University of Applied Sciences}
+\newcommand{\docdepartment}{Electrical Engineering}
+\newcommand{\docauthor}{Alexander Menzel}
+\newcommand{\docdegreeprogramm}{M.Eng. Embedded Systems (PO 2020)}
+\newcommand{\docmatriculationnumber}{1316814}
+\newcommand{\docadvisor}{Prof. Dr. Uwe Werner}
+%\newcommand{\docsecadvisor}{Second Advisor}
+\newcommand{\doclicense}{Creative Commons Attribution 4.0 International}
+\newcommand{\doccopyright}{2025 MiraTherm}
+\newcommand{\doclink}{ToDo}
+\newcommand{\docdate}{\today}
+\newcommand{\docplace}{Fulda}
+%
+% For changes package
+\definechangesauthor[name={Alexander Menzel}, color=orange]{AM}
+%
+%--Head and Foot Lines, Margins, etc------------------------------------------%
+%
+\input{config/page_style}
+%
+%-----------------------------------------------------------------------------%
+%
+\begin{document}
+	%
+	%--Cover Sheet----------------------------------------------------------------%
+	%
+	\thispagestyle{plain}
+	%
+	\input{misc/titlepage} %
+	%
+	%--Declaration of Independent Work--------------------------------------------%
+	%
+	%\input{misc/declaration_of_independent_work} %
+	%\includepdf[pages=1]{declaration_of_independent_work.pdf} %
+	%\clearpage
+	%\begingroup
+	%\thiswatermark{\ThisCenterWallPaper{1}{declaration_of_independent_work.pdf}} %
+	%	\pagestyle{empty}
+	%	\null
+	%	\newpage
+	%\endgroup
+	%
+	%\ohead*{Affidavit} %
+	%
+	%\myemptypage % set if printing on both sides is intended
+	%
+	%--Disable page numbers for Abstract------------------------------------------%
+	%
+	\pagenumbering{gobble}
+	%
+	%--Table of Contents----------------------------------------------------------%
+	%
+	\tableofcontents
+	%
+	\ohead*{\headmark}
+	%
+	\clearpage{\thispagestyle{plain}\cleardoublepage}
+	%
+	%--Change Log-----------------------------------------------------------------%
+	%
+	\input{misc/changelog}   
+	%
+	%--Arabic page numbers in the main part --------------------------------------%
+	%
+	\pagenumbering{arabic}
+	%
+	%--Content--------------------------------------------------------------------%
+	%
+	\input{content/1_introduction}
+	%
+	\input{content/2_requirements}
+	%
+	\input{content/3_planning}
+	%
+	\input{content/4_concept}
+	%
+	\clearpage{\thispagestyle{plain}\cleardoublepage}
+	%
+	%--Directories----------------------------------------------------------------% 
+	%
+	\printbibliography          	 	 					% Bibliography
+	%\listoffigures                                        	% List of Figures
+	%\listoftables                                         	% List of Tables
+	%\lstlistoflistings                                    	% Listings (Program Code)
+	\input{lists/abbreviations}          					% List of Abbreviations
+	%\input{lists/symbols}               					% List of Symbols
+	%
+	%--Appendix-------------------------------------------------------------------%
+	%
+	%\input{lists/appendix}
+	%
+	%-----------------------------------------------------------------------------%
+	%
+\end{document}
+%
