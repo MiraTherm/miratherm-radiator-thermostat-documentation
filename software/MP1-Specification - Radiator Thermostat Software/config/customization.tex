@@ -1,3 +1,15 @@
+%
+
+% Change font of all headings to \rmfamily
+\addtokomafont{chapter}{\rmfamily\bfseries}
+\addtokomafont{section}{\rmfamily\bfseries}
+\addtokomafont{subsection}{\rmfamily\bfseries}
+\addtokomafont{subsubsection}{\rmfamily\bfseries}
+\addtokomafont{paragraph}{\rmfamily\bfseries}
+\addtokomafont{subparagraph}{\rmfamily\bfseries}
+\addtokomafont{title}{\rmfamily\bfseries}
+\addtokomafont{disposition}{\rmfamily\bfseries}
+%
 % Define individual cell types
 \newcommand{\flexcell}[1]{\makecell[{{p{\linewidth}}}t]{#1}}
 \newcommand{\flexrcell}[1]{\makecell[{{p{\linewidth}}}t]{\RaggedRight{#1}}}
