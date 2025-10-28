@@ -1,0 +1,2 @@
+{"rule":"POSSESSIVE_APOSTROPHE","sentence":"^\\QThis document provides a requirements specification for software of a \\E(?:Dummy|Ina|Jimmy-)[0-9]+\\Q based radiator thermostat.\\E$"}
+{"rule":"POSSESSIVE_APOSTROPHE","sentence":"^\\QThis document provides a requirements specification for software of a \\E(?:Dummy|Ina|Jimmy-)[0-9]+\\Q based radiator thermostat, which will be developed as part of a master project at Fulda University of Applied Sciences.\\E$"}
