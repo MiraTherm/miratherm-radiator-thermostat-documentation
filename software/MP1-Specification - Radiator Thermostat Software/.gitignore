@@ -42,7 +42,8 @@
 *.xml
 *.soc
 *.loc
+*.xdv
 *blx.bib
-.bak 
+.bak
 .mtc
 build/
