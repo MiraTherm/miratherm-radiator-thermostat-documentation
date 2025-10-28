@@ -1,0 +1,13 @@
+{
+    "name": "LaTeX Workshop",
+    "build": {
+        "dockerfile": "Dockerfile"
+    },
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "james-yu.latex-workshop"
+            ]
+        }
+    }
+}
