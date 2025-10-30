@@ -16,15 +16,12 @@ In this chapter, the overall concept and approach for the development of the rad
 \label{sec:Solution approach}
 In this project, a basic software for the device should be implemented including hardware drivers and general program logic. The description of the eQ-3 eqiva Bluetooth from \cite{eQ3AG.05.2018} will be used as a reference for defining the functional scope of the software to be developed.
 
-The software should be designed ready for prospective integration of the control algorithms and Matter-over-Thread standard. (For further details about this standard see \cite{enwiki:matter}.) The device is supposed to be used for smart home applications, specifically for the integration of the thermostat in Home Assistant, smart home applications and/or custom \acp{api}.
+The software should be designed ready for prospective integration of the control algorithms and Matter-over-Thread standard. (For further details about this standard see \cite{enwiki:matter}.) The device is supposed to be used for smart home applications, specifically for the integration of the thermostat in Home Assistant, apps like Google Home and/or custom \acp{api}.
 
 \section{Hardware requirements}
 \label{sec:Hardware requirements}
 
-To ensure a degree of independence from the \acs{pcb} design and mechanics, the software will be developed using a hardware set that resembles the final thermostat in terms of components and interfaces. This approach enables early software development and testing before the final \acs{pcb} is available.
-
-\subsection{Hardware block diagram}
-\label{sec:Hardware block diagram}
+To ensure a degree of independence from the \acs{pcb} design and mechanics, the software will be developed using a hardware set that resembles the final thermostat in terms of components and interfaces. This approach enables early software development and testing before a hardware prototype is available.
 
 A block diagram of the hardware setup for software development and testing is shown in Figure \ref{fig:mt-rt-sw-dev-hw-block-diagram}. Further, a list of required components is provided in section \ref{sec:Required equipment}.
 
@@ -41,7 +38,7 @@ A block diagram of the hardware setup for software development and testing is sh
 For the software development and testing, the following hardware components are required:
 
 \begin{itemize}
-    \item \textbf{P-NUCLEO-WB55} - \acs{mcu} development board with Matter standard support
+    \item \textbf{P-NUCLEO-WB55} - \acs{mcu} development board with Matter-over-Thread standard support
     \item \textbf{eQ-3 eqiva Model N} - Radiator thermostat with a C300 3V motor and gear box for disassembly (available)
     \item \textbf{DRV8833} - Motor driver module
     \item \textbf{Shunt resistor} - For current measurement of the motor
