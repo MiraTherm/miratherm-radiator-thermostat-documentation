@@ -11,22 +11,216 @@
 \chapter{Requirements}
 \label{chap:Requirements}
 
-
 \section{Functional Requirements}
 \label{sec:Functional Requirements}
 
-\subsection*{REQ 1:}
-\label{subsec:REQ 1:}
+\subsection*{REQ 1: Configuration Routines}
+\label{subsec:REQ 1: Configuration Routines}
+The system shall provide following configuration routines for initial setup:
+\begin{itemize}
+    \item \textbf{\ac{bcr}} Manual configuration via control wheel and buttons on the device without wireless connectivity.
+    \item \textbf{\ac{acr}} Particularly automatic wireless configuration via Matter standard and/or Thread protocol.
+\end{itemize}
 
-\subsection*{REQ 2:}
-\label{subsec:REQ 2:}
+\subsection*{REQ 2: Prototype Features}
+\label{subsec:REQ 2: Prototype Features}
+In the prototype version of the thermostat software, only the \acs{bcr} shall be fully supported. Wireless connectivity and the \acs{acr} shall not be implemented.
+
+\subsection*{REQ 3: Configuration Routine Choice}
+\label{subsec:REQ 3: Configuration Routine Choice}
+The user shall be able to choose between the \acs{bcr} (``Manual Configuration'') and \acs{acr} (``Automatic Configuration'') during the initial setup process. The setup process shall be run after battery insertion if no previous configuration exists, otherwise the system shall resume normal operation with existing settings.
+
+\subsection*{REQ 4: Advanced Configuration Routine Blocking}
+\label{subsec:REQ 4: Advanced Configuration Routine Blocking}
+The system shall block access to the \acs{acr} in the prototype version of the thermostat software.
+
+\subsection*{REQ 5: Date and Time Configuration}
+\label{subsec:REQ 5: Date and Time Configuration}
+The system shall request date and time configuration as the first step in the \acs{bcr}. The user shall be able to set the year, month, day, hour, and minute through the control wheel interface with confirmation capability by the control wheel button. The system shall ask whether the user wants to activate automatic summer/winter time switching after setting the date and time.
+
+\subsection*{REQ 6: Installation Command}
+\label{subsec:REQ 6: Installation Command}
+The system shall wait for an installation command from the user as the second step in the \acs{bcr}. The text ``Begin Installation?'' shall be displayed. The user shall initiate the installation command by pressing the control wheel button, which will start the valve adaptation procedure.
+
+\subsection*{REQ 7: Valve Adaptation} % ToDo: Check the adaptation routine here again
+\label{subsec:REQ 7: Valve Adaptation}
+The system shall perform an automatic adaption run as the third step in the \acs{bcr} to detect and adapt to the specific valve characteristics. The adaptation procedure shall:
+\begin{enumerate}
+    \item Display the message ``Adaptation...'' during the procedure
+    \item Move the motor to the fully opened position
+    \item Move the motor to the fully closed position
+    \item Incrementally move the motor to the fully open position
+    \item Calculate the valve stroke range
+    \item Validate that measured travel distance matches expected 4.3 mm linear travel
+    \item If valve characteristics are outside acceptable ranges, the system shall display following error messages:
+    \begin{itemize}
+        \item \textbf{F1}: Valve drive sluggish (motor movement is impeded or extremely slow)
+        \item \textbf{F2}: Actuating range too wide (measured valve stroke exceeds expected parameters)
+        \item \textbf{F3}: Adjustment range too small (measured valve stroke is below acceptable minimum)
+    \end{itemize}
+    \item If an error occurs, the system shall allow reversal of the adaption run by pressing the control wheel button, returning to the waiting of the installation command. Otherwise, the system shall proceed to the main display state.
+\end{enumerate}
+
+\subsection*{REQ 8: Current Extremes Definition}
+\label{subsec:REQ 8: Current Extremes Definition}
+During the software development phase, the current extremes for the motor during the adaptation procedure shall be defined to detect fully opened and fully closed valve positions.
+
+\subsection*{REQ 9: Main Display State}
+\label{subsec:REQ 9: Main Display State}
+In the main display state, the system shall display at least the following informations:
+\begin{itemize}
+    \item Current temperature
+    \item Target temperature
+    \item Time slot of the target temperature
+    \item Time and day of week
+    \item Operational mode indicator
+    \item Battery charge in percentage
+    \item State of the valve in percentage
+\end{itemize}
+
+\subsection*{REQ 10: Operational Modes}
+\label{subsec:REQ 10: Operational Modes}
+The system shall support following operational modes:
+\begin{itemize}
+    \item \textbf{Manual Mode}: The user can manually set the target temperature.
+    % \item Auto Mode: The system follows the weekly heating program.
+    \item \textbf{Boost Mode} is described in \ref{subsec:REQ 13: Boost Mode}.
+\end{itemize}
+
+\subsection*{REQ 11: Temperature Range and Resolution}
+\label{subsec:REQ 11: Temperature Range and Resolution}
+In the Manual Mode, the system shall allow setting target temperatures in the range of $5.0^\circ C$ to $30.0^\circ C$ in increments of $0.5^\circ C$. The system shall support following adjustments:
+\begin{itemize}
+    \item \textbf{OFF} state, when user tries to set the target temperature below $5.0^\circ C$: Fully closes the valve% and maintains the closed state (particularly useful during summer heating pause)
+    \item \textbf{ON} state, when user tries to set the target temperature above $30.0^\circ C$: Fully opens the valve% and maintains the open state
+\end{itemize}
+
+\subsection*{REQ 12: Configuration Menu}
+\label{subsec:REQ 12: Configuration Menu}
+The system shall provide a configuration menu accessible via the main display state by pressing SW1. The menu shall list the following configurable options:
+\begin{itemize}
+    \item Temperature offset configuration
+    \item Inactivity timeout setting
+    \item Automatic summer/winter time switching
+    % \item Open-window detection settings
+    % \item Matter-Standard connectivity control
+    % \item Holiday function configuration
+    % \item Comfort and eco temperature settings
+    % \item Heating pause and frost protection modes
+    % \item Child safety lock
+    % \item Automatic descaling routine information
+    % \item Application-based control information
+    % \item Persistent settings storage and recovery
+    % \item Bidirectional wireless communication and synchronization
+\end{itemize}
+
+\subsection*{REQ 13: Temperature Offset Configuration}
+\label{subsec:REQ 13: Temperature Offset Configuration}
+The system shall allow setting a temperature offset between $-3.5^\circ C$ and $+3.5^\circ C$ in increments of $0.5^\circ C$. The default value shall be $0.0^\circ C$. The offset shall be applied to the measured temperature to calculate the effective temperature.
+
+\subsection*{REQ 14: Inactivity Timeout}
+\label{subsec:REQ 14: Inactivity Timeout}
+If no interactions by the user occur for a default period of 30 seconds, the system shall turn the display off.
+
+\subsection*{REQ 15: Automatic Summer/Winter Time Switching}
+\label{subsec:REQ 15: Automatic Summer/Winter Time Switching}
+The system shall automatically switch between summer and winter time.
+
+\subsection*{REQ 16: Boost Mode}
+\label{subsec:REQ 16: Boost Mode}
+The system shall provide a boost mode that immediately opens the heating valve to 80\% for 5 minutes after pressing the control wheel button. The remaining time shall be displayed as a countdown in seconds. The function shall be deactivatable at any time by pressing the control wheel button.
+
+\subsection*{REQ 17: Automatic Descaling Routine}
+\label{subsec:REQ 17: Automatic Descaling Routine}
+The system shall perform an automatic routine descaling run once a week on Saturday at 12:00 to protect against calcification of the valve. The descaling procedure shall:
+\begin{enumerate}
+    \item Display ``Maintenance...'' indicator on the display to inform the user
+    \item Move the motor through its full stroke range within a maximal timeframe of 5 minutes
+\end{enumerate}
+The calcification protection routine shall continue running in all operational modes. User commands shall be ignored during the descaling routine.
+
+\subsection*{REQ 18: Persistent Settings Storage}
+\label{subsec:REQ 18: Persistent Settings Storage}
+The system shall persist all user-configured settings in non-volatile memory. These settings shall survive battery removal and replacement.
+
+\subsection*{REQ 19: Factory Reset}
+\label{subsec:REQ 19: Factory Reset}
+The system shall provide a factory reset function (``rES'') that clears all user settings and returns to default configuration, with a confirmation prompt (``COnF'') to prevent accidental data loss.
+
+% \subsection*{REQ 20: Motor Direction Indication}
+% \label{subsec:REQ 20: Motor Direction Indication}
+% The system shall display a motor activity symbol on the display that indicates valve movement direction. The activity symbol shall rotate clockwise when the valve is closing and counterclockwise when the valve is opening. This symbol shall only be displayed when the motor is actively controlled.
+
+% \subsection*{REQ 21: Weekly Program for Auto Mode}
+% \label{subsec:REQ 21: Weekly Program for Auto Mode}
+% The system shall allow configuration of a weekly heating program with up to 24 heating phases per day with customizable target temperatures and time slots as an \acs{aco}. The whole program must cover the entire period from 00:00 to 23:59.
+
+% \subsection*{REQ 22: Manual Temperature Control in Auto Mode}
+% \label{subsec:REQ 22: Manual Temperature Control in Auto Mode}
+% The system shall allow users to change the temperature at any time using the control wheel in auto mode. The modified temperature shall remain until the next programmed change point.
+
+% \subsection*{REQ 23: Open-Window Detection}
+% \label{subsec:REQ 23: Open-Window Detection}
+% The system shall automatically detect when a room is being ventilated based on rapidly reducing temperature and shall reduce the temperature for a factory-set period of 15 minutes. Following configuration options shall be available in the \acs{acr}:
+% \begin{itemize}
+%     \item Deactivation of open-window detection
+%     \item Adjustment of timeout period between 5 and 60 minutes in 5-minute increments
+%     %\item Sensitivity adjustment for open-window detection
+% \end{itemize}
+%During this period, the ``window open'' symbol shall be displayed.
+
+% \subsection*{REQ 24: Matter-Standard Connectivity Control}
+% \label{subsec:REQ 24: Matter-Standard Connectivity Control}
+% The system shall allow manual activation and deactivation of the Matter-Standard function.
+
+% \subsection*{REQ 25: Holiday Function}
+% \label{subsec:REQ 25: Holiday Function}
+% The system shall provide a holiday function that maintains a fixed temperature for a specified period. The user shall be able to set the end date, time, and desired temperature. After the set end time, the system shall automatically switch back to auto mode.
+
+% \subsection*{REQ 26: Comfort and Eco Temperature Settings}
+% \label{subsec:REQ 26: Comfort and Eco Temperature Settings}
+% The system shall allow switching between two predefined temperature modes: comfort temperature (factory default: 21.0°C) and eco temperature (factory default: 17.0°C). Users shall be able to modify both settings independently.
+
+% \subsection*{REQ 27: Heating Pause (Battery Saving Mode)}
+% \label{subsec:REQ 27: Heating Pause (Battery Saving Mode)}
+% The system shall support a heating pause mode where the valve is opened fully to disable heating during summer. The calcification protection routine shall continue running even in this mode.
+
+% \subsection*{REQ 28: Frost Protection Mode}
+% \label{subsec:REQ 28: Frost Protection Mode}
+% The system shall support a frost protection mode that closes the valve unless there is a risk of frost. The calcification protection routine shall continue to run in this mode.
+
+% \subsection*{REQ 29: Child Safety Lock}
+% \label{subsec:REQ 29: Child Safety Lock}
+% The system shall provide an operating lock feature that prevents unintended device operation. The lock shall be activated and deactivated by pressing the Mode/Menu and comfort/eco button simultaneously, with ``LOC'' displayed when active.
+
+% \subsection*{REQ 30: Application-Based Control}
+% \label{subsec:REQ 30: Application-Based Control}
+% The system shall support remote control and configuration via the using Matter-Standard protocol with equivalent functionality to the on-device interface.
+
+% \subsection*{REQ 31: Bidirectional Wireless Communication and Synchronization}
+% \label{subsec:REQ 31: Bidirectional Wireless Communication and Synchronization}
+% The system shall support bidirectional wireless communication with other thermostats and system components (Cube). When multiple thermostats are present in the same room, the system shall immediately communicate any new target temperature setpoint to all other thermostats in that room, ensuring synchronous regulation of all radiator thermostats to the same target temperature. This bidirectional communication shall provide very high functional reliability.
+
+% \subsection*{REQ 32: Adaptive Control}
+% \label{subsec:REQ 32: Adaptive Control}
+% The system shall perform adaptive regulation that automatically adjusts to spatial conditions and room characteristics. This adaptation shall eliminate the need for manual hydraulic balancing of individual radiator valves.
+
+% \subsection*{REQ 33: Wireless Signal Strength Indication}
+% \label{subsec:REQ 33: Wireless Signal Strength Indication}
+% The system shall display an antenna symbol on the display that indicates the wireless communication status:
+% \begin{itemize}
+%     \item Symbol displayed continuously: Wireless connection is functioning normally
+%     \item Symbol blinking: Wireless communication disruption detected
+% \end{itemize}
 
 
 \section{Non-Functional Requirements}
 \label{sec:Non-Functional Requirements}
 
-\subsection*{REQ 3:}
-\label{subsec:REQ 3:}
+\subsection*{REQ 20: Power Supply and Battery Life}
+\label{subsec:REQ 20: Power Supply and Battery Life}
+The system shall operate on 2x 1.5V LR6/mignon/AA alkaline batteries with an expected battery life of approximately 2 years.
 
-\subsection*{REQ 4:}
-\label{subsec:REQ 4:}
+\subsection*{REQ 21: User Interface Responsiveness}
+\label{subsec:REQ 21: User Interface Responsiveness}
+The system shall provide immediate visual feedback for all user interactions through the control wheel and Mode/Menu button, with display updates occurring within acceptable latency for user perception.
