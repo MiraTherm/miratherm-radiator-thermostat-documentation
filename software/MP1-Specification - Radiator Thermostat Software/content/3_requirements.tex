@@ -18,38 +18,51 @@
 \label{subsec:REQ 1: Configuration Routines}
 The system shall provide following configuration routines for initial setup:
 \begin{itemize}
-    \item \textbf{\ac{bcr}} Manual configuration via control wheel and buttons on the device without wireless connectivity.
     \item \textbf{\ac{acr}} Particularly automatic wireless configuration via Matter standard and/or Thread protocol.
+    \item \textbf{\ac{mcr}} Manual configuration via control wheel and buttons on the device without wireless connectivity.
 \end{itemize}
+The setup process shall be run after battery insertion if no complete configuration exists in the persistent storage, otherwise the system shall resume normal operation with existing settings. 
 
-\subsection*{REQ 2: Prototype Features}
-\label{subsec:REQ 2: Prototype Features}
-In the prototype version of the thermostat software, only the \acs{bcr} shall be fully supported. Wireless connectivity and the \acs{acr} shall not be implemented.
+\subsection*{REQ 1.1: Prototype Configuration}
+\label{subsec:REQ 1.1: Prototype Configuration}
+In the prototype version of the thermostat's software, only the \acs{mcr} shall be fully supported. Wireless connectivity and the \acs{acr} shall not be implemented.
 
 \subsection*{REQ 3: Configuration Routine Choice}
 \label{subsec:REQ 3: Configuration Routine Choice}
-The user shall be able to choose between the \acs{bcr} (``Manual Configuration'') and \acs{acr} (``Automatic Configuration'') during the initial setup process. The setup process shall be run after battery insertion if no previous configuration exists, otherwise the system shall resume normal operation with existing settings.
+The user shall be able to choose between the \acs{acr} (``Automatic Configuration'') and \acs{mcr} (``Manual Configuration'') during the initial setup process.
 
-\subsection*{REQ 4: Advanced Configuration Routine Blocking}
-\label{subsec:REQ 4: Advanced Configuration Routine Blocking}
+\subsection*{REQ 3.1: Advanced Configuration Routine Blocking}
+\label{subsec:REQ 3.1: Advanced Configuration Routine Blocking}
 The system shall block access to the \acs{acr} in the prototype version of the thermostat software.
 
 \subsection*{REQ 5: Date and Time Configuration}
 \label{subsec:REQ 5: Date and Time Configuration}
-The system shall request date and time configuration as the first step in the \acs{bcr}. The user shall be able to set the year, month, day, hour, and minute through the control wheel interface with confirmation capability by the control wheel button. The system shall ask whether the user wants to activate automatic summer/winter time switching after setting the date and time.
+The system shall request date and time configuration as the first step in the \acs{mcr} or each time if no wireless connection is configured. The user shall be able to set the year, month, day, hour, and minute through the control wheel interface with confirmation capability by the control wheel button. Then, the system shall ask whether the user wants to activate automatic summer/winter time switching after setting the date and time.
 
 \subsection*{REQ 6: Installation Command}
 \label{subsec:REQ 6: Installation Command}
-The system shall wait for an installation command from the user as the second step in the \acs{bcr}. The text ``Begin Installation?'' shall be displayed. The user shall initiate the installation command by pressing the control wheel button, which will start the valve adaptation procedure.
+The system shall wait for a command for installation begin from the user as the second step in the \acs{mcr}. The text ``Begin Installation?'' shall be displayed. The user shall initiate the installation command by pressing the control wheel button, which will start the valve adaptation procedure.
 
-\subsection*{REQ 7: Valve Adaptation} % ToDo: Check the adaptation routine here again
-\label{subsec:REQ 7: Valve Adaptation}
-The system shall perform an automatic adaption run as the third step in the \acs{bcr} to detect and adapt to the specific valve characteristics. The adaptation procedure shall:
+\subsection*{REQ 7: Current Extremes Definition}
+\label{subsec:REQ 7: Current Extremes Definition}
+During the software development phase, the current extremes for the motor during the adaptation procedure shall be defined to detect maximal and minimal valve pin positions. This definition shall be based on empirical measurements and analysis of the motor's current consumption during operation.
+
+\subsection*{NOTE 1: Pin Position Extremes Definition}
+\label{subsec:NOTE 1: Pin Position Extremes Definition}
+After a successful adaptation procedure:
+\begin{itemize}
+    \item Maximal valve pin position equates to fully open valve position
+    \item Minimal valve pin position equates to fully closed valve position
+\end{itemize}
+
+\subsection*{REQ 8: Valve Adaptation}
+\label{subsec:REQ 8: Valve Adaptation}
+The system shall perform an automatic adaption run as the third step in the \acs{mcr} to detect and adapt to the specific valve characteristics. The adaptation procedure shall:
 \begin{enumerate}
     \item Display the message ``Adaptation...'' during the procedure
-    \item Move the motor to the fully opened position
-    \item Move the motor to the fully closed position
-    \item Incrementally move the motor to the fully open position
+    \item Move the thermostat to the maximal pin position
+    \item Move the motor to the minimal pin position
+    \item Incrementally move the motor to the maximal pin position
     \item Calculate the valve stroke range
     \item Validate that measured travel distance matches expected 4.3 mm linear travel
     \item If valve characteristics are outside acceptable ranges, the system shall display following error messages:
@@ -58,12 +71,12 @@ The system shall perform an automatic adaption run as the third step in the \acs
         \item \textbf{F2}: Actuating range too wide (measured valve stroke exceeds expected parameters)
         \item \textbf{F3}: Adjustment range too small (measured valve stroke is below acceptable minimum)
     \end{itemize}
-    \item If an error occurs, the system shall allow reversal of the adaption run by pressing the control wheel button, returning to the waiting of the installation command. Otherwise, the system shall proceed to the main display state.
+    \item If an error occurs, the system shall allow reversal of the adaption run by pressing the control wheel button, returning to the waiting of the installation command.
 \end{enumerate}
 
-\subsection*{REQ 8: Current Extremes Definition}
-\label{subsec:REQ 8: Current Extremes Definition}
-During the software development phase, the current extremes for the motor during the adaptation procedure shall be defined to detect fully opened and fully closed valve positions.
+\subsection*{REQ 5: Daily Plan Configuration}
+\label{subsec:REQ 5: Daily Plan Configuration}
+The system shall request daily plan configuration as the fourth step in the \acs{mcr}. The user shall be able to set 3 time slots with corresponding target temperatures for the day using the control wheel interface with confirmation capability by the control wheel button. The first time slot shall always start at 00:00 and the last time slot shall always end at 23:59. After completing the daily plan configuration, the system shall proceed to the main display state.
 
 \subsection*{REQ 9: Main Display State}
 \label{subsec:REQ 9: Main Display State}
@@ -72,10 +85,11 @@ In the main display state, the system shall display at least the following infor
     \item Current temperature
     \item Target temperature
     \item Time slot of the target temperature
-    \item Time and day of week
+    \item Time in hours and minutes
+    % \item Day of week
     \item Operational mode indicator
     \item Battery charge in percentage
-    \item State of the valve in percentage
+    % \item State of the valve in percentage
 \end{itemize}
 
 \subsection*{REQ 10: Operational Modes}
@@ -83,7 +97,7 @@ In the main display state, the system shall display at least the following infor
 The system shall support following operational modes:
 \begin{itemize}
     \item \textbf{Manual Mode}: The user can manually set the target temperature.
-    % \item Auto Mode: The system follows the weekly heating program.
+    \item Auto Mode: The system follows the weekly heating program.
     \item \textbf{Boost Mode} is described in \ref{subsec:REQ 13: Boost Mode}.
 \end{itemize}
 
@@ -101,7 +115,7 @@ The system shall provide a configuration menu accessible via the main display st
 \begin{itemize}
     \item Temperature offset configuration
     \item Inactivity timeout setting
-    \item Automatic summer/winter time switching
+    % \item Automatic summer/winter time switching
     % \item Open-window detection settings
     % \item Matter-Standard connectivity control
     % \item Holiday function configuration
