@@ -20,7 +20,7 @@ The system shall integrate a 1.3" 128x64 \acs{oled} display with SH1106 controll
 
 \subsection*{REQ 2: Rotary Encoder}
 \label{subsec:REQ 2: Rotary Encoder}
-The system shall integrate a rotary encoder KY-040 via \ac{qdec} and a \ac{gpio} pin.
+The system shall integrate a rotary encoder KY-040 via \ac{qdec} interface and a \ac{gpio} pin.
 
 \subsection*{REQ 3: Buttons}
 \label{subsec:REQ 3: Buttons}
@@ -32,14 +32,14 @@ The system shall support control of the eQ-3 eqiva Model N C300 3V motor through
 
 \subsection*{REQ 5: Motor Current Measurement}
 \label{subsec:REQ 5: Motor Current Measurement}
-The system shall measure the motor current consumption using an \ac{adc} channel connected to a shunt resistor in series with the motor circuit.
+The system shall measure the motor current consumption using an \ac{adc} channel connected to a $1 \unit{Ω}$ shunt resistor in series with the motor circuit.
 
 \subsection*{REQ 6: Power Supply Voltage Measurement}
 \label{subsec:REQ 6: Power Supply Voltage Measurement}
 The system shall measure the power supply voltage using an \acs{adc} channel. The measured voltage shall be used to calculate the battery charge level as a percentage.
 
-\subsection*{REQ 7: Motor Extremes Definition}
-\label{subsec:REQ 7: Motor Extremes Definition}
+\subsection*{REQ 7: Motor Current Extremes Definition}
+\label{subsec:REQ 7: Motor Current Extremes Definition}
 During the software development phase, the current extremes for the motor shall be defined to detect maximal and minimal valve pin positions. This definition shall be based on empirical measurements and analysis of the motor's current consumption during operation.
 
 \subsection*{NOTE 1: Pin Position Extremes Definition}
@@ -54,7 +54,7 @@ After a successful adaptation procedure:
 \label{subsec:REQ 8: Configuration Routines}
 The system shall provide the following configuration routines for initial setup:
 \begin{itemize}
-    \item \textbf{\ac{cva}}: Automatic wireless configuration via Matter standard and/or Thread protocol.
+    \item \textbf{\ac{cva}}: Partially automatic, wireless configuration via Matter standard and/or Thread protocol.
     \item \textbf{\ac{cod}}: Manual configuration via control wheel and buttons on the device without wireless connectivity.
 \end{itemize}
 The setup process shall be run after battery insertion if no complete configuration exists in persistent storage. Otherwise, the system shall resume normal operation with existing settings.
@@ -84,11 +84,11 @@ The system shall wait for an installation begin command from the user as the sec
 The system shall perform an automatic adaptation run as the third step in the \acs{cod} to detect and adapt to the specific valve characteristics. The adaptation procedure shall:
 \begin{enumerate}
     \item Display ``Adaptation...'' indicator page during the procedure.
-    \item Move the motor to the maximal pin position.
-    \item Move the motor to the minimal pin position.
-    \item Incrementally move the motor to the maximal pin position.
+    \item Move the motor to the maximal valve pin position.
+    \item Move the motor to the minimal valve pin position.
+    \item Incrementally move the motor to the maximal valve pin position.
     \item Calculate the valve stroke range.
-    \item Validate that the measured travel distance matches the expected 4.3 mm linear travel.
+    \item Validate that the measured travel distance matches the expected $4.3 \unit{mm}$ linear travel.
     \item If valve characteristics are outside acceptable ranges, display the following error messages:
     \begin{itemize}
         \item \textbf{F1}: Valve drive sluggish (motor movement is impeded or extremely slow).
@@ -122,7 +122,7 @@ The system shall support the following operational modes:
 \begin{itemize}
     \item \textbf{Manual Mode}: The user can manually set the target temperature.
     \item \textbf{Auto Mode}: The system follows the heating program and sets the target temperature according to the current time slot.
-    \item \textbf{Boost Mode}: Described in REQ 15.
+    \item \textbf{Boost Mode}: Described in REQ 16.
 \end{itemize}
 
 \subsection*{REQ 15: Switching Operational Modes}
@@ -131,14 +131,14 @@ The system shall allow switching between Manual Mode and Auto Mode using the SW2
 
 \subsection*{REQ 16: Boost Mode}
 \label{subsec:REQ 16: Boost Mode}
-The system shall provide a boost mode that immediately opens the heating valve to $80\%$ for $5$ minutes after double pressing the control wheel button. The remaining time shall be displayed as a countdown in seconds. The function shall be deactivatable at any time by pressing the control wheel button.
+The system shall provide a boost mode that immediately opens the heating valve to $80\%$ for $5$ minutes after double pressing the control wheel button. Then the system shall display the remaining time instead of the target temperature on the main display page. The remaining time shall be displayed as a countdown in seconds. The function shall be deactivatable at any time by pressing the control wheel button.
 
 \subsection*{REQ 17: Temperature Range and Resolution}
 \label{subsec:REQ 17: Temperature Range and Resolution}
-In Manual Mode, the system shall allow setting target temperatures in the range of $5.0^\circ C$ to $30.0^\circ C$ in increments of $0.5^\circ C$. The system shall support the following special states:
+In Manual Mode, the system shall allow setting target temperatures in the range of $5.0 \unit{°C}$ to $30.0 \unit{°C}$ in increments of $0.5 \unit{°C}$. The system shall support the following special states:
 \begin{itemize}
-    \item \textbf{CLOSED state}: When the user sets a target temperature below $5.0^\circ C$, the valve shall be fully closed. Then the system shall display (``CLOSED'') instead of the target temperature on the main display page.
-    \item \textbf{OPEN state}: When the user sets a target temperature above $30.0^\circ C$, the valve shall be fully opened. Then the system shall display (``OPEN'') instead of the target temperature on the main display page.
+    \item \textbf{CLOSED state}: When the user sets a target temperature below $5.0 \unit{°C}$, the valve shall be fully closed. Then the system shall display (``CLOSED'') instead of the target temperature on the main display page.
+    \item \textbf{OPEN state}: When the user sets a target temperature above $30.0 \unit{°C}$, the valve shall be fully opened. Then the system shall display (``OPEN'') instead of the target temperature on the main display page.
 \end{itemize}
 
 \subsection*{REQ 18: Configuration Menu}
@@ -146,8 +146,8 @@ In Manual Mode, the system shall allow setting target temperatures in the range 
 The system shall provide a configuration menu page accessible from the main display page by pressing SW1. The menu shall list the following configurable options:
 \begin{itemize}
     \item Temperature offset configuration.
-    \item Inactivity timeout setting.
-    \item Automatic descaling routine time.
+    % \item Inactivity timeout setting.
+    % \item Automatic descaling routine time.
     \item Factory reset function.
     % \item Automatic summer/winter time switching
     % \item Open-window detection settings
@@ -164,7 +164,7 @@ The system shall provide a configuration menu page accessible from the main disp
 
 \subsection*{REQ 19: Temperature Offset Configuration}
 \label{subsec:REQ 19: Temperature Offset Configuration}
-The system shall allow setting a temperature offset between $-3.5^\circ C$ and $+3.5^\circ C$ in increments of $0.5^\circ C$. The default value shall be $0.0^\circ C$. The offset shall be applied to the measured temperature to calculate the effective temperature.
+The system shall allow setting a temperature offset between $-3.5 \unit{°C}$ and $+3.5 \unit{°C}$ in increments of $0.5 \unit{°C}$. The default value shall be $0.0 \unit{°C}$. The offset shall be applied to the measured temperature to calculate the effective temperature.
 
 \subsection*{REQ 20: Inactivity Timeout}
 \label{subsec:REQ 20: Inactivity Timeout}
@@ -177,11 +177,11 @@ The system shall automatically switch between summer and winter time.
 \subsection*{REQ 22: Automatic Descaling Routine}
 \label{subsec:REQ 22: Automatic Descaling Routine}
 The system shall perform an automatic descaling routine once a week on Saturday at 12:00 to protect against calcification of the valve. The descaling procedure shall:
-\begin{enumerate}
+\begin{itemize}
     \item Display ``Maintenance...'' indicator page.
     \item Ignore any user inputs during the routine.
     \item Move the motor through its full stroke range at maximum speed.
-\end{enumerate}
+\end{itemize}
 The calcification protection routine shall continue running in all operational modes except Boost Mode. If Boost Mode is active, the system shall wait until it is deactivated before beginning the descaling routine.
 
 \subsection*{REQ 23: Persistent Settings Storage}
