@@ -14,24 +14,22 @@
 \section{Functional Requirements}
 \label{sec:Functional Requirements}
 
+\subsection*{\chadded[id=AM, comment={v0.2}]{NOTE 2: Prototype Requirements}}
+\chadded[id=AM, comment={v0.2}]{The requirements mentioning a prototype (REQ 1.1, 2.1, 3.1, 4.1, 5.1, 6.1, 8.1) could be subject to change or removal in the final product version. They are included to define the initial hardware and software setup for prototyping and testing purposes.}
+
 \subsection*{REQ 1: Display}
-\label{subsec:REQ 1: Display}
 The system shall integrate a display.
 
 \subsection*{REQ 1.1: Prototype Display}
-\label{subsec:REQ 1.1: Prototype Display}
 In the prototype version, a 1.3" 128×64 \acs{oled} display with SH1106 controller over the \ac{i2c} protocol shall be used.
 
 \subsection*{REQ 2: Rotary Encoder}
-\label{subsec:REQ 2: Rotary Encoder}
 The system shall integrate a rotary encoder as a control wheel via \ac{qdec} interface.
 
 \subsection*{REQ 2.1: Prototype Rotary Encoder}
-\label{subsec:REQ 2.1: Prototype Rotary Encoder}
 In the prototype version, a KY-040 rotary encoder module shall be integrated as the control wheel.
 
 \subsection*{REQ 3: Push Buttons}
-\label{subsec:REQ 3: Push Buttons}
 The system shall integrate the following push buttons via \acsp{gpio}:
 \begin{itemize}
     \item \textbf{Mode} button
@@ -40,7 +38,6 @@ The system shall integrate the following push buttons via \acsp{gpio}:
 \end{itemize}
 
 \subsection*{REQ 3.1: Prototype Push Buttons}
-\label{subsec:REQ 3.1: Prototype Push Buttons}
 In the prototype version, the push buttons SW1 and SW3 from the P-NUCLEO-WB55 and KY-040 shall be used:
 \begin {itemize}
     \item SW1 as \textbf{Mode} button
@@ -49,80 +46,64 @@ In the prototype version, the push buttons SW1 and SW3 from the P-NUCLEO-WB55 an
 \end{itemize}
 
 \subsection*{REQ 4: Motor Control}
-\label{subsec:REQ 4: Motor Control}
 The system shall support control of motor driver hardware.
 
 \subsection*{REQ 4.1: Prototype Motor Control}
-\label{subsec:REQ 4.1: Prototype Motor Control}
 The system shall support control of the eQ-3 eqiva Model N C300 3V motor through a DRV8833 motor driver module using two \ac{pwm} signals.
 
 \subsection*{REQ 5: Motor Current Measurement}
-\label{subsec:REQ 5: Motor Current Measurement}
 The system shall measure motor current consumption.
 
 \subsection*{REQ 5.1: Prototype Motor Current Measurement}
-\label{subsec:REQ 5.1: Prototype Motor Current Measurement}
 In the prototype version, the system shall measure motor current consumption using an \ac{adc} channel connected to a $1 \unit{Ω}$ shunt resistor in series with the motor circuit.
 
 \subsection*{REQ 6: Power Supply Voltage Measurement}
-\label{subsec:REQ 6: Power Supply Voltage Measurement}
 The system shall measure the power supply voltage. The measured voltage shall be used to calculate the battery charge level as a percentage.
 
 \subsection*{REQ 6.1: Prototype Power Supply Voltage Measurement}
-\label{subsec:REQ 6.1: Prototype Power Supply Voltage Measurement}
 In the prototype version, the system shall measure the power supply voltage using an \acs{adc} channel.
 
 \subsection*{REQ 7: Motor Current Extremes Definition}
-\label{subsec:REQ 7: Motor Current Extremes Definition}
 During the software development phase, the motor current extremes shall be defined to detect maximal and minimal valve pin positions. This definition shall be based on empirical measurements and analysis of the motor's current consumption during operation.
 
 \subsection*{REQ 8: Temperature Measurement}
-\label{subsec:REQ 8: Temperature Measurement}
 The system shall measure the ambient temperature using a digital temperature sensor.
 
 \subsection*{REQ 8.1: Prototype Temperature Sensor}
-\label{subsec:REQ 8.1: Prototype Temperature Sensor}
 In the prototype version, the system shall use a temperature sensor integrated into the STM32WB55 \acs{mcu} of the P-NUCLEO-WB55 development board.
 
-\subsection*{NOTE 1: Pin Position Extremes Definition}
-\label{subsec:NOTE 1: Pin Position Extremes Definition}
-After a successful adaptation procedure:
-\begin{itemize}
-    \item Maximal valve pin position corresponds to the fully open valve position.
-    \item Minimal valve pin position corresponds to the fully closed valve position.
-\end{itemize}
-
 \subsection*{REQ 9: Configuration Routines}
-\label{subsec:REQ 9: Configuration Routines}
 The system shall provide the following configuration routines for initial setup:
 \begin{itemize}
-    \item \textbf{\ac{cva}}: Partially automatic, wireless configuration via Matter standard and/or Thread protocol.
     \item \textbf{\ac{cod}}: Manual configuration via buttons on the device without wireless connectivity.
+    \item \chdeleted[id=AM, comment={v0.2}]{\textbf{\ac{cva}}: Partially automatic, wireless configuration via Matter standard and/or Thread protocol.}
 \end{itemize}
 The setup process shall run after battery insertion if no complete configuration exists in persistent storage. Otherwise, the system shall resume normal operation with existing settings.
 
-\subsection*{REQ 9.1: Configuration Routine Choice}
+\subsection*{\chdeleted[id=AM, comment={v0.2}]{REQ 9.1: Configuration Routine Choice}}
 \label{subsec:REQ 9.1: Configuration Routine Choice}
-The user shall be able to choose between the \acs{cva} (``Configuration via App'') and \acs{cod} (``Configuration on Device'') before the initial setup process.
+\chdeleted[id=AM, comment={v0.2}]{The user shall be able to choose between the \acs{cva} (``Configuration via App'') and \acs{cod} (``Configuration on Device'') before the initial setup process.}
 
-\subsection*{REQ 9.2: Prototype Configuration}
-\label{subsec:REQ 9.2: Prototype Configuration}
-In the prototype version of the thermostat software, only the \acs{cod} shall be implemented. Wireless connectivity and the \acs{cva} shall not be supported.
+\subsection*{\chdeleted[id=AM, comment={v0.2}]{REQ 9.2: Prototype Configuration}}
+\chdeleted[id=AM, comment={v0.2}]{In the prototype version of the thermostat software, only the \acs{cod} shall be implemented. Wireless connectivity and the \acs{cva} shall not be supported.}
 
-\subsection*{REQ 9.3: Configuration Via App Blocking}
-\label{subsec:REQ 9.3: Configuration Via App Blocking}
-The system shall block access to the \acs{cva} in the prototype version of the thermostat software.
+\subsection*{\chdeleted[id=AM, comment={v0.2}]{REQ 9.3: Configuration Via App Blocking}}
+\chdeleted[id=AM, comment={v0.2}]{The system shall block access to the \acs{cva} in the prototype version of the thermostat software.}
 
 \subsection*{REQ 10: Date and Time Configuration}
-\label{subsec:REQ 10: Date and Time Configuration}
 The system shall request date and time configuration as the first step in the \acs{cod}, or each time if no wireless connection is configured. The user shall be able to set the year, month, day, hour, and minute through the control wheel interface with confirmation capability via the centered button. After setting the date and time, the system shall ask whether the user wants to enable automatic summer/winter time switching.
 
 \subsection*{REQ 11: Installation Command}
-\label{subsec:REQ 11: Installation Command}
 The system shall wait for an installation begin command from the user as the second step in the \acs{cod}. The text ``Begin Installation?'' shall be displayed. The user shall initiate the installation by pressing the centered button, which will start the valve adaptation procedure.
+\subsection*{NOTE 1: Pin Position Extremes Definition}
+\label{subsec:NOTE 1: Pin Position Extremes Definition}
+After a successful \chadded[id=AM, comment={v0.2}]{valve} adaptation procedure \chadded[id=AM, comment={v0.2}]{described in REQ 12}:
+\begin{itemize}
+    \item The maximal \chadded[id=AM, comment={v0.2}]{movable} valve pin position corresponds to the fully open valve position.
+    \item The minimal \chadded[id=AM, comment={v0.2}]{movable} valve pin position corresponds to the fully closed valve position.
+\end{itemize}
 
 \subsection*{REQ 12: Valve Adaptation}
-\label{subsec:REQ 12: Valve Adaptation}
 The system shall perform an automatic adaptation run as the third step in the \acs{cod} to detect and adapt to specific valve characteristics. The adaptation procedure shall:
 \begin{enumerate}
     \item Display ``Adaptation...'' indicator page during the procedure.
@@ -141,11 +122,9 @@ The system shall perform an automatic adaptation run as the third step in the \a
 \end{enumerate}
 
 \subsection*{REQ 13: Daily Schedule Configuration}
-\label{subsec:REQ 13: Daily Schedule Configuration}
 The system shall request daily schedule configuration as the fourth step in the \acs{cod}. The user shall be able to set three time slots with corresponding target temperatures for the day using the control wheel interface with confirmation capability via the centered button. The first time slot shall always start at 00:00 and the last time slot shall always end at 23:59. After completing the daily schedule configuration, the system shall proceed to the main display page.
 
 \subsection*{REQ 14: Main Display Page}
-\label{subsec:REQ 14: Main Display Page}
 On the main display page, the system shall display at least the following information:
 \begin{itemize}
     \item Current time in hours and minutes.
@@ -159,7 +138,6 @@ On the main display page, the system shall display at least the following inform
 \end{itemize}
 
 \subsection*{REQ 15: Configuration Menu}
-\label{subsec:REQ 15: Configuration Menu}
 The system shall provide a configuration menu page accessible from the main display page by pressing the menu button. The menu shall list the following configurable options:
 \begin{itemize}
     \item Temperature offset configuration.
@@ -180,11 +158,9 @@ The system shall provide a configuration menu page accessible from the main disp
 \end{itemize}
 
 \subsection*{REQ 16: Inactivity Timeout}
-\label{subsec:REQ 16: Inactivity Timeout}
-If no user interactions occur for 30 seconds, the system shall turn the display off. The system shall return to the currently active page upon the next user interaction via any button.
+If no user interactions occur for $30 \unit{s}$, the system shall turn the display off. The system shall return to the currently active page upon the next user interaction via any button.
 
 \subsection*{REQ 17: Operational Modes}
-\label{subsec:REQ 17: Operational Modes}
 The system shall support the following operational modes:
 \begin{itemize}
     \item \textbf{Manual Mode}: The user can manually set the target temperature.
@@ -193,15 +169,12 @@ The system shall support the following operational modes:
 \end{itemize}
 
 \subsection*{REQ 18: Switching Operational Modes}
-\label{subsec:REQ 18: Switching Operational Modes}
 The system shall allow switching between Manual Mode and Auto Mode using the mode button.
 
 \subsection*{REQ 19: Boost Mode}
-\label{subsec:REQ 19: Boost Mode}
-The system shall provide a boost mode that immediately opens the heating valve to 80\% for 5 minutes after double-pressing the control wheel button. Then the system shall display the remaining time instead of the target temperature on the main display page. The remaining time shall be displayed as a countdown in seconds. The function shall be deactivatable at any time by pressing the control wheel button.
+The system shall provide a boost mode that immediately opens the heating valve to 80\% for $5 \unit{min}$ after double-pressing the control wheel button. Then the system shall display the remaining time instead of the target temperature on the main display page. The remaining time shall be displayed as a countdown in seconds. The function shall be deactivatable at any time by pressing the control wheel button.
 
 \subsection*{REQ 20: Temperature Range and Resolution}
-\label{subsec:REQ 20: Temperature Range and Resolution}
 In Manual Mode, the system shall allow setting target temperatures in the range of $5.0 \unit{°C}$ to $30.0 \unit{°C}$ in increments of $0.5 \unit{°C}$. The system shall support the following special states:
 \begin{itemize}
     \item \textbf{CLOSED state}: When the user sets a target temperature below $5.0 \unit{°C}$, the valve shall be fully closed. Then the system shall display ``CLOSED'' instead of the target temperature on the main display page.
@@ -209,23 +182,18 @@ In Manual Mode, the system shall allow setting target temperatures in the range 
 \end{itemize}
 
 \subsection*{REQ 21: Temperature Offset Configuration}
-\label{subsec:REQ 21: Temperature Offset Configuration}
 The system shall allow setting a temperature offset between $-3.5 \unit{°C}$ and $+3.5 \unit{°C}$ in increments of $0.5 \unit{°C}$. The default value shall be $0.0 \unit{°C}$. The offset shall be applied to the measured temperature to calculate the effective temperature.
 
 \subsection*{REQ 22: Automatic Summer/Winter Time Switching}
-\label{subsec:REQ 22: Automatic Summer/Winter Time Switching}
 The system shall automatically switch between summer and winter time.
 
 \subsection*{REQ 23: Persistent Settings Storage}
-\label{subsec:REQ 23: Persistent Settings Storage}
 The system shall persist all user-configured settings in non-volatile memory. These settings shall survive battery removal and replacement.
 
 \subsection*{REQ 24: Factory Reset}
-\label{subsec:REQ 24: Factory Reset}
 The system shall provide a factory reset function that clears all user settings and returns to default configuration. A confirmation prompt page (``Confirm Factory Reset?'') shall be displayed to prevent accidental data loss.
 
 \subsection*{REQ 25: Automatic Descaling Routine}
-\label{subsec:REQ 25: Automatic Descaling Routine}
 The system shall perform an automatic descaling routine once a week on Saturday at 12:00 to protect against calcification of the valve. The descaling procedure shall:
 \begin{itemize}
     \item Display ``Maintenance...'' indicator page.
@@ -234,22 +202,21 @@ The system shall perform an automatic descaling routine once a week on Saturday 
 \end{itemize}
 The calcification protection routine shall continue running in all operational modes except Boost Mode. If Boost Mode is active, the system shall wait until it is deactivated before beginning the descaling routine.
 
+\subsection*{\chadded[id=AM, comment={v0.2}]{REQ 28: Deep Sleep Mode}}
+\chadded[id=AM, comment={v0.2}]{The system shall enter a deep sleep mode to minimize power consumption when no user interactions occur for $30 \unit{s}$ after an inactivity timeout (described in REQ 16) and no tasks are being executed (e.g., Boost Mode). In deep sleep mode, all non-essential functions shall be disabled, and the system shall only wake up upon user interaction or scheduled tasks (e.g., Descaling Routine).}
+
 % Commented requirements (Future enhancements)
 
 % \subsection*{REQ 26: Motor Direction Indication}
-% \label{subsec:REQ 26: Motor Direction Indication}
 % The system shall display a motor activity symbol on the display that indicates valve movement direction. The activity symbol shall rotate clockwise when the valve is closing and counterclockwise when the valve is opening. This symbol shall only be displayed when the motor is actively controlled.
 
 % \subsection*{REQ 27: Weekly Program for Auto Mode}
-% \label{subsec:REQ 27: Weekly Program for Auto Mode}
 % The system shall allow configuration of a weekly heating program with up to 24 heating phases per day with customizable target temperatures and time slots as an \acs{aco}. The entire program must cover the period from 00:00 to 23:59.
 
 % \subsection*{REQ 28: Manual Temperature Control in Auto Mode}
-% \label{subsec:REQ 28: Manual Temperature Control in Auto Mode}
 % The system shall allow users to change the temperature at any time using the control wheel in auto mode. The modified temperature shall remain until the next programmed change point.
 
 % \subsection*{REQ 29: Open-Window Detection}
-% \label{subsec:REQ 29: Open-Window Detection}
 % The system shall automatically detect when a room is being ventilated based on rapidly decreasing temperature and shall reduce heating for a factory-set period of 15 minutes. The following configuration options shall be available:
 % \begin{itemize}
 %     \item Deactivation of open-window detection.
@@ -258,43 +225,33 @@ The calcification protection routine shall continue running in all operational m
 % During this period, the ``window open'' symbol shall be displayed.
 
 % \subsection*{REQ 30: Matter-Standard Connectivity Control}
-% \label{subsec:REQ 30: Matter-Standard Connectivity Control}
 % The system shall allow manual activation and deactivation of the Matter-Standard function.
 
 % \subsection*{REQ 31: Holiday Function}
-% \label{subsec:REQ 31: Holiday Function}
 % The system shall provide a holiday function that maintains a fixed temperature for a specified period. The user shall be able to set the end date, time, and desired temperature. After the set end time, the system shall automatically switch back to auto mode.
 
 % \subsection*{REQ 32: Comfort and Eco Temperature Settings}
-% \label{subsec:REQ 32: Comfort and Eco Temperature Settings}
 % The system shall allow switching between two predefined temperature modes: comfort temperature (factory default: 21.0°C) and eco temperature (factory default: 17.0°C). Users shall be able to modify both settings independently.
 
 % \subsection*{REQ 33: Heating Pause (Battery Saving Mode)}
-% \label{subsec:REQ 33: Heating Pause (Battery Saving Mode)}
 % The system shall support a heating pause mode where the valve is opened fully to disable heating during summer. The calcification protection routine shall continue running even in this mode.
 
 % \subsection*{REQ 34: Frost Protection Mode}
-% \label{subsec:REQ 34: Frost Protection Mode}
 % The system shall support a frost protection mode that closes the valve unless there is a risk of frost. The calcification protection routine shall continue running in this mode.
 
 % \subsection*{REQ 35: Child Safety Lock}
-% \label{subsec:REQ 35: Child Safety Lock}
 % The system shall provide an operating lock feature that prevents unintended device operation. The lock shall be activated and deactivated by pressing the Mode/Menu and comfort/eco button simultaneously, with ``LOC'' displayed when active.
 
 % \subsection*{REQ 36: Application-Based Control}
-% \label{subsec:REQ 36: Application-Based Control}
 % The system shall support remote control and configuration via the Matter-Standard protocol with equivalent functionality to the on-device interface.
 
 % \subsection*{REQ 37: Bidirectional Wireless Communication and Synchronization}
-% \label{subsec:REQ 37: Bidirectional Wireless Communication and Synchronization}
 % The system shall support bidirectional wireless communication with other thermostats and system components (Cube). When multiple thermostats are present in the same room, the system shall immediately communicate any new target temperature setpoint to all other thermostats in that room, ensuring synchronous regulation of all radiator thermostats to the same target temperature. This bidirectional communication shall provide very high functional reliability.
 
 % \subsection*{REQ 38: Adaptive Control}
-% \label{subsec:REQ 38: Adaptive Control}
 % The system shall perform adaptive regulation that automatically adjusts to spatial conditions and room characteristics. This adaptation shall eliminate the need for manual hydraulic balancing of individual radiator valves.
 
 % \subsection*{REQ 39: Wireless Signal Strength Indication}
-% \label{subsec:REQ 39: Wireless Signal Strength Indication}
 % The system shall display an antenna symbol on the display that indicates the wireless communication status:
 % \begin{itemize}
 %     \item Symbol displayed continuously: Wireless connection is functioning normally.
@@ -302,16 +259,15 @@ The calcification protection routine shall continue running in all operational m
 % \end{itemize}
 
 \section{Non-Functional Requirements}
-\label{sec:Non-Functional Requirements}
 
-\subsection*{REQ 26: Energy Efficiency}
-\label{subsec:REQ 26: Energy Efficiency}
-The system shall be designed for low power consumption to maximize battery life. Deep sleep modes and efficient peripheral management shall be implemented to minimize energy usage during idle periods.
+\subsection*{\chdeleted[id=AM, comment={v0.2}]{REQ 26: Energy Efficiency}}
+\chdeleted[id=AM, comment={v0.2}]{The system shall be designed for low power consumption to maximize battery life. Deep sleep modes and efficient peripheral management shall be implemented to minimize energy usage during idle periods.}
 
-\subsection*{REQ 27: User Interface Responsiveness}
-\label{subsec:REQ 27: User Interface Responsiveness}
-The system shall provide immediate visual feedback for all user interactions via the control wheel and buttons, with display updates occurring within acceptable latency for user perception.
+\subsection*{\chdeleted[id=AM, comment={v0.2}]{REQ 27: User Interface Responsiveness}}
+\chdeleted[id=AM, comment={v0.2}]{The system shall provide immediate visual feedback for all user interactions via the control wheel and buttons, with display updates occurring within acceptable latency for user perception.}
+
+\subsection*{REQ 29: Display Update Latency}
+The system shall update the display within $150 \unit{ms}$ after each user interaction or system event, provided that these require a display change.
 
 % \subsection*{REQ 28: Battery Life}
-% \label{subsec:REQ 28: Battery Life}
 % The system shall operate on two 1.5V LR6/mignon/AA alkaline batteries with an expected battery life of approximately 2 years.
