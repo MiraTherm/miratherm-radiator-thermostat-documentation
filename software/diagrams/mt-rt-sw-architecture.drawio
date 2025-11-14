@@ -1,6 +1,6 @@
 <mxfile host="65bd71144e">
     <diagram name="Seite-1" id="oSMfVe9FBlaE4qSntFBy">
-        <mxGraphModel dx="1495" dy="786" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1654" pageHeight="1169" math="0" shadow="0">
+        <mxGraphModel dx="399" dy="210" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1654" pageHeight="1169" math="0" shadow="0">
             <root>
                 <mxCell id="0"/>
                 <mxCell id="1" parent="0"/>
@@ -130,8 +130,8 @@
                         <mxPoint x="1029" y="71" as="sourcePoint"/>
                         <mxPoint x="981" y="151" as="targetPoint"/>
                         <Array as="points">
-                            <mxPoint x="1121" y="310"/>
-                            <mxPoint x="1086" y="310"/>
+                            <mxPoint x="1121" y="313"/>
+                            <mxPoint x="1086" y="313"/>
                         </Array>
                     </mxGeometry>
                 </mxCell>
