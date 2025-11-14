@@ -1,6 +1,6 @@
 <mxfile host="65bd71144e">
     <diagram name="Seite-1" id="oSMfVe9FBlaE4qSntFBy">
-        <mxGraphModel dx="399" dy="210" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1654" pageHeight="1169" math="0" shadow="0">
+        <mxGraphModel dx="1709" dy="899" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1654" pageHeight="1169" math="0" shadow="0">
             <root>
                 <mxCell id="0"/>
                 <mxCell id="1" parent="0"/>
@@ -12,7 +12,7 @@
                         <mxPoint x="-27" y="7" as="offset"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="39" value="&lt;b&gt;SystemTask&lt;/b&gt;&lt;br&gt;state management and coordination" style="html=1;dropTarget=0;whiteSpace=wrap;" parent="1" vertex="1">
+                <mxCell id="39" value="&lt;b&gt;SystemTask&lt;/b&gt;&lt;br&gt;1) state management and coordination&lt;br&gt;2) target temperature &lt;br&gt;assignment" style="html=1;dropTarget=0;whiteSpace=wrap;" parent="1" vertex="1">
                     <mxGeometry x="682" y="480" width="180" height="90" as="geometry"/>
                 </mxCell>
                 <mxCell id="40" value="" style="shape=module;jettyWidth=8;jettyHeight=4;" parent="39" vertex="1">
@@ -428,7 +428,7 @@
                         </Array>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="160" value="&lt;b&gt;target temperature&lt;br&gt;float&lt;/b&gt;&lt;b&gt;&lt;/b&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="159" connectable="0" vertex="1">
+                <mxCell id="160" value="&lt;b&gt;target temperature&lt;/b&gt;&lt;br&gt;float&lt;b&gt;&lt;/b&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="159" connectable="0" vertex="1">
                     <mxGeometry x="-0.3006" relative="1" as="geometry">
                         <mxPoint x="2" y="10" as="offset"/>
                     </mxGeometry>
