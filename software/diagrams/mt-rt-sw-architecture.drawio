@@ -1,6 +1,6 @@
 <mxfile host="65bd71144e">
     <diagram name="Seite-1" id="oSMfVe9FBlaE4qSntFBy">
-        <mxGraphModel dx="399" dy="210" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1654" pageHeight="1169" math="0" shadow="0">
+        <mxGraphModel dx="997" dy="524" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1654" pageHeight="1169" math="0" shadow="0">
             <root>
                 <mxCell id="0"/>
                 <mxCell id="1" parent="0"/>
@@ -20,7 +20,7 @@
                         <mxPoint x="-27" y="7" as="offset"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="41" value="&lt;b&gt;ViewPresenterTask&lt;/b&gt;&lt;br&gt;1) display of elements and &lt;br&gt;rendering&lt;br&gt;2) system state presentation and manual configuration" style="html=1;dropTarget=0;whiteSpace=wrap;" parent="1" vertex="1">
+                <mxCell id="41" value="&lt;b&gt;ViewPresenterTask&lt;/b&gt;&lt;br&gt;1) display of elements and &lt;br&gt;rendering&lt;br&gt;2) system state presentation&lt;div&gt;3) routing of manual commands and manual configuration&lt;/div&gt;" style="html=1;dropTarget=0;whiteSpace=wrap;" parent="1" vertex="1">
                     <mxGeometry x="1212" y="420" width="180" height="110" as="geometry"/>
                 </mxCell>
                 <mxCell id="42" value="" style="shape=module;jettyWidth=8;jettyHeight=4;" parent="41" vertex="1">
