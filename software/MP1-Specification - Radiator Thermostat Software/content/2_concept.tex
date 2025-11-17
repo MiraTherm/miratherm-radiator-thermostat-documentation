@@ -10,7 +10,7 @@
 
 \chapter{Concept}
 \label{chap:Concept}
-In this chapter, the overall concept and approach for the development of the radiator thermostat software is described. Additionally, the required hardware for development and testing is outlined.
+In this chapter, the overall concept and approach for the development of \chreplaced[id=v0.3]{software of the radiator thermostat prototype}{the radiator thermostat software} is described. Additionally, the required hardware for development and testing is outlined.
 
 \section{Solution Approach}
 \label{sec:Solution Approach}
@@ -23,9 +23,9 @@ The software should be designed ready for prospective integration of the control
 \section{Required Hardware}
 \label{sec:Required Hardware}
 
-To ensure a degree of independence from the \acs{pcb} design and mechanics, the software will be developed using a prototype hardware set that resembles the thermostat in terms of components and interfaces. This approach enables early software development and testing before all hardware of the thermostat is available.
+To ensure a degree of independence from the \acs{pcb} design and mechanics, the software will be developed using a prototype hardware set that resembles the \chadded[id=v0.3]{target} thermostat \chadded[id=v0.3]{hardware (results of the \acs{pcb} and mechanics development)} in terms of components and interfaces. This approach enables early software development and testing before all hardware of the thermostat is available.
 
-A block diagram of the prototype hardware for software development and testing is shown in Figure \ref{fig:mt-rt-sw-dev-hw-block-diagram}. The following components are required:
+A block diagram of the prototype hardware \chdeleted[id=v0.3]{for software development and testing }is shown in Figure \ref{fig:mt-rt-sw-dev-hw-block-diagram}. The following components are required:
 
 \begin{itemize}
     \item \textbf{P-NUCLEO-WB55} - \acs{mcu} development board with Matter-over-Thread standard support
@@ -42,6 +42,6 @@ A block diagram of the prototype hardware for software development and testing i
 \begin{figure}[htbp]
     \centering
     \includegraphics[width=1.0\textwidth]{../../electronics/diagrams/mt-rt-sw-dev-hw-block-diagram.png}
-    \caption{Block diagram of the prototype hardware for software development and testing}
+    \caption{Block diagram of the \chadded[id=v0.3]{thermostat's} prototype hardware\chdeleted[id=v0.3]{ for software development and testing}}
     \label{fig:mt-rt-sw-dev-hw-block-diagram}
 \end{figure}
