@@ -1,7 +1,7 @@
 # MiraTherm Radiator Thermostat Software Architecture
 This document describes the software architecture for the MiraTherm Radiator Thermostat. The software will be written in C and utilizes FreeRTOS for real-time task scheduling and resource management.
 
-The architecture follows a modular design separating hardware abstraction, core control logic, and user interface (GUI) management. The structure aims future integration of control algorithms and the Matter-over-Thread standard with minimal effort.
+The architecture follows a modular design separating hardware abstraction, core control logic, and user interface (GUI) management. The structure aims to enable future integration of control algorithms and the Matter-over-Thread standard with minimal effort.
 
 ## Architecture Diagram
 ![Architecture](./../diagrams/mt-rt-sw-architecture.png)
@@ -11,17 +11,17 @@ The architecture follows a modular design separating hardware abstraction, core 
 ### Application Layer (Tasks)
 The software is divided into specific FreeRTOS tasks, each responsible for distinct domain logic:
 
-**SystemTask**: Acts as the central coordinator. It manages the high-level state machine, coordinates transitions between operational modes, and assigns target temperatures. Therefore it commmunicates with other tasks using events (e.g., `EVT_ADAPT_REQ`, `EVT_ADAPT_END`, `ENT_INST_REQ`), reads configurations from `ConfigMutex`, and writes current system state to `SystemStateMutex`.
+**SystemTask**: Acts as the central coordinator. It manages the high-level state machine, coordinates transitions between operational modes, and assigns target temperatures. Therefore, it communicates with other tasks using events (e.g., `EVT_ADAPT_REQ`, `EVT_ADAPT_END`, `ENT_INST_REQ`), reads configurations from `ConfigMutex`, and writes current system state to `SystemStateMutex`.
 
-**InputTask**: Interprets hardware signals from the rotary encoder and push buttons, converting interrupts and GPIO states into logical input events (e.g., `EVT_MENU_BTN`, `EVT_CTRL_WHEEL_DELTA`) and sends them to `ViewPresenterTask`.
+**InputTask**: Interprets hardware signals from the rotary encoder and push buttons, converting interrupts and GPIO states into logical input events (e.g., `EVT_MENU_BTN`, `EVT_CTRL_WHEEL_DELTA`) and sends them to the `ViewPresenterTask`.
 
-**ViewPresenterTask**: Manages the User Interface. It utilizes the LVGL library for rendering, handles routing of manual commands from the `InputTask`, and presents the system state to the user. Therefore it writes to `ConfigMutex`, reads from `SystemStateMutex`, and sends command events to `SystemTask`.
+**ViewPresenterTask**: Manages the User Interface. It utilizes the LVGL library for rendering, handles routing of manual commands from the `InputTask`, and presents the system state to the user. Therefore, it writes to `ConfigMutex`, reads from `SystemStateMutex`, and sends command events to `SystemTask`.
 
 **SensorTask**: Periodically reads raw data from hardware sensors (e.g., temperature), converts them to internally used units (e.g., raw data to °C in float), and updates the shared `SystemStateMutex`.
 
-**ControlTask**: Executes the control loop and receives related values (e.g., current temperature and target temperature from `SystemStateMutex`) The calculation of the temperature setpoint currently mocked as a praceholder for future control algorithms integration.
+**ControlTask**: Executes the control loop and receives related values (e.g., current temperature and target temperature) from `SystemStateMutex`. The calculation of the temperature setpoint is currently mocked as a placeholder for future control algorithms integration.
 
-**MaintenanceTask**: Handles command events from `SystemTask` for non-standard operations such as valve adaptation (calibration) and descaling routines. Moreover it sets fully opened (`EVT_OPEN_STATE` 100%) or fully closed (`EVT_CLOSED_STATE` 0%) positions. Therefore it interacts with the `ControlTask` to stop the control loop and use `ValveFacade` to move the valve to specific positions as part of these procedures.
+**MaintenanceTask**: Handles command events from `SystemTask` for non-standard operations such as valve adaptation (calibration) and descaling routines. Moreover, it sets fully opened (`EVT_OPEN_STATE` 100%) or fully closed (`EVT_CLOSED_STATE` 0%) positions. Therefore, it interacts with the `ControlTask` to stop the control loop and use `ValveFacade` to move the valve to specific positions as part of these procedures.
 
 **StorageTask**: Manages non-volatile memory interaction, ensuring configuration data is saved to the internal Flash via an EEPROM emulation layer. It clears saved data upon receiving `EVT_CFG_RST_REQ` during factory reset routine.
 
