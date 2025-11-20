@@ -32,7 +32,7 @@ Thread safety is maintained using Event Queues and Mutexes for shared data struc
 
 **ConfigMutex**: Holds configuration settings.
 
-**SleepLock**: A mechanism utilizing FreeRTOS pre-sleep processing to prevent the STM32WB55 from entering deep sleep while critical tasks (like motor movement or UI interaction) are active.
+**SleepLock**: A mechanism utilizing FreeRTOS pre-sleep processing to prevent the STM32WB55 from entering deep sleep while critical tasks (like motor movement or UI interaction) are active. It manages a variable containing bitflags `*_LOCK` that represent whether specific operations are ongoing, ensuring the system remains responsive during these periods.
 
 ### Hardware Abstraction Layer (HAL)
 **Display**: Driver for SH1106 OLED display (128×64) via I²C.
