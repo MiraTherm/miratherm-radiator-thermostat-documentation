@@ -9,7 +9,7 @@ The architecture follows a modular design separating hardware abstraction, core 
 ## System Components
 
 ### Application Layer (Tasks)
-The software is divided into specific FreeRTOS tasks, each responsible for distinct domain logic. These stasks are commonly started at system boot in the `main` function and then run indefinitely.
+The software is divided into specific FreeRTOS tasks, each responsible for distinct domain logic. These tasks are commonly started at system boot in the `main` function and then run indefinitely.
 
 **SystemTask**: Acts as the central coordinator. It manages the high-level state machine, coordinates transitions between operational modes, and assigns target temperatures. Therefore, it communicates with other tasks using events (e.g., `EVT_ADAPT_REQ`, `EVT_ADAPT_END`, `ENT_INST_REQ`), reads configurations from `ConfigMutex`, and writes current system state to `SystemStateMutex`.
 
