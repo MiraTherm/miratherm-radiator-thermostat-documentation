@@ -1,6 +1,6 @@
 <mxfile host="65bd71144e">
     <diagram name="Seite-1" id="oSMfVe9FBlaE4qSntFBy">
-        <mxGraphModel dx="2470" dy="1327" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1654" pageHeight="1169" math="0" shadow="0">
+        <mxGraphModel dx="1302" dy="689" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1654" pageHeight="1169" math="0" shadow="0">
             <root>
                 <mxCell id="0"/>
                 <mxCell id="1" parent="0"/>
@@ -106,7 +106,7 @@
                         <mxPoint x="1" y="-27" as="offset"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="61" value="&lt;div&gt;&lt;b&gt;ValveFence&lt;br&gt;&lt;/b&gt;valve facade/abstraction&lt;/div&gt;" style="html=1;dropTarget=0;whiteSpace=wrap;fontColor=default;" parent="1" vertex="1">
+                <mxCell id="61" value="&lt;div&gt;&lt;b&gt;ValveFacade&lt;br&gt;&lt;/b&gt;valve facade/abstraction&lt;/div&gt;" style="html=1;dropTarget=0;whiteSpace=wrap;fontColor=default;" parent="1" vertex="1">
                     <mxGeometry x="272" y="720" width="270" height="90" as="geometry"/>
                 </mxCell>
                 <mxCell id="62" value="" style="shape=module;jettyWidth=8;jettyHeight=4;fontColor=default;" parent="61" vertex="1">
