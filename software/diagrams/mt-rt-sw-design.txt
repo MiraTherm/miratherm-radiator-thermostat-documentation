@@ -1,0 +1,205 @@
+SystemStateTypeDef <<struct>>
+-CurrentTemp: float
+-TargetTemp: float
+-ValvePosition: uint8_t
+-BatterySoC: uint8_t
+-Mode: SystemMode
+-IsMotorMoving: bool
+
+ConfigTypeDef <<struct>>
+-TemperatureOffset: float
+-PidKp: float
+-PidKi: float
+-PidKd: float
+-IsFirstRun: bool
+
+SystemTaskEventTypeDef <<enumeration>>
+-EVT_CFG_RST_END
+-EVT_INST_REQ
+-EVT_ADAPT_REQ
+-EVT_FACTORY_RST_REQ
+-EVT_ADAPT_END
+-EVT_DESCAL_END
+
+StorageTaskEventTypeDef <<enumeration>>
+-EVT_CFG_RST_REQ
+
+ViewPresenterTaskEventTypeDef <<enumeration>>
+-EVT_MODE_BTN
+-EVT_CENTRAL_BTN
+-EVT_MENU_BTN
+-EVT_CTRL_WHEEL_DELTA
+
+MaintenanceTaskEventTypeDef <<enumeration>>
+-EVT_ADAPT_REQ
+-EVT_DESCAL_REQ
+-EVT_CLOSED_STATE
+-EVT_NORMAL_STATE
+-EVT_OPEN_STATE
+-EVT_STOP_T_CTRL_END
+-EVT_START_T_CTRL_END
+
+ControlTaskEventTypeDef <<enumeration>>
+-EVT_STOP_T_CTRL_REQ
+-EVT_START_T_CTRL_REQ
+
+SystemTask
+-systemQueue: QueueHandle_t
+-configMutex: ConfigMutex*
+-systemStateMutex: SystemStateMutex*
+-sleepLock: SleepLock*
+--
++SystemTask(void* pvParameters): void
+-SystemTask_HandleEvent(evt: SystemTaskEventTypeDef): void
+-SystemTask_ProcessStorageResponse(): void
+-SystemTask_ProcessMaintResponse(): void
+-SystemTask_CoordinateState(): void
+
+InputTask
+-LastEncoderValue: int16_t
+--
++InputTask(void* pvParameters): void
+-InputTask_PollEncoders(): void
+-InputTask_PollButtons(): void
+-InputTask_SendToVPQueue(evt: ViewPresenterTaskEventTypeDef): void
+
+ViewPresenterTask
+-vpQueue: QueueHandle_t
+-configMutex: ConfigMutex*
+-systemStateMutex: SystemStateMutex*
+-sleepLock: SleepLock*
+-activeScreen: lv_obj_t*
+--
++ViewPresenterTask(void* pvParameters): void
+-ViewPresenterTask_ProcessInputEvent(evt: ViewPresenterTaskEventTypeDef): void
+-ViewPresenterTask_UpdateDisplay(state: SystemStateTypeDef): void
+-ViewPresenterTask_SendToSystemQueue(evt: SystemTaskEventTypeDef): void
+
+ControlTask
+-controlQueue: QueueHandle_t
+-configMutex: ConfigMutex*
+-systemStateMutex: SystemStateMutex*
+-sleepLock: SleepLock*
+-PidState: float
+--
++ControlTask(void* pvParameters): void
+-ControlTask_RunControlLoop(): void
+-ControlTask_ProcessHandshakeEvent(evt: ControlTaskEventTypeDef): void
+-ControlTask_SendToMaintQueue(evt: MaintenanceTaskEventTypeDef): void
+
+MaintenanceTask
+-maintQueue: QueueHandle_t
+-sleepLock: SleepLock*
+--
++MaintenanceTask(void* pvParameters): void
+-MaintenanceTask_ProcessRequest(evt: MaintenanceTaskEventTypeDef): void
+-MaintenanceTask_RunAdaptationRoutine(): void
+-MaintenanceTask_RunDescalingRoutine(): void
+-MaintenanceTask_SendToControlQueue(evt: ControlTaskEventTypeDef): void
+-MaintenanceTask_SendToSystemQueue(evt: SystemTaskEventTypeDef): void
+
+SensorTask
+-systemStateMutex: SystemStateMutex*
+--
++SensorTask(void* pvParameters): void
+-SensorTask_ReadAllSensors(): void
+-SensorTask_PublishToStateMutex(): void
+
+StorageTask
+-storageQueue: QueueHandle_t
+-configMutex: ConfigMutex*
+--
++StorageTask(void* pvParameters): void
+-StorageTask_HandleResetReq(evt: StorageTaskEventTypeDef): void
+-StorageTask_SaveConfig(cfg: ConfigTypeDef): void
+-StorageTask_LoadConfig(): ConfigTypeDef
+-StorageTask_SendToSystemQueue(evt: SystemTaskEventTypeDef): void
+
+SystemStateMutex <<mutex>>
+-handle: SemaphoreHandle_t
+-data: SystemStateTypeDef
+--
++SystemStateMutex_Read(out: SystemStateTypeDef*): void
++SystemStateMutex_Write(in: SystemStateTypeDef*): void
+
+ConfigMutex <<mutex>>
+-handle: SemaphoreHandle_t
+-data: ConfigTypeDef
+--
++ConfigMutex_Read(out: ConfigTypeDef*): void
++ConfigMutex_Write(in: ConfigTypeDef*): void
+
+ValveFacade
+-MotorDriver: MotorDriver*
+-CurrentPosition: uint8_t
+--
++ValveFacade_Init(motor_driver: MotorDriver*, motor_current_sensor: MotorCurrentSensor*): void
++ValveFacade_MoveTo(percent: uint8_t): void
+-ValveFacade_Stop(): void
+
+MotorDriver
+-GpioPort: GPIO_TypeDef*
+-PinIn1: uint16_t
+-PinIn2: uint16_t
+--
++MotorDriver_Init(gpio_port: GPIO_TypeDef*, pin_in1: uint16_t, pin_in2: uint16_t): void
++MotorDriver_SetState(state: MotorStateTypeDef): void
+
+MotorCurrentSensor
+-AdcHandle: ADC_HandleTypeDef*
+-AdcChannel: uint32_t
+--
++MotorCurrentSensor_Init(adc_handle: ADC_HandleTypeDef*): void
++MotorCurrentSensor_GetCurrentmA(): uint16_t
+-MotorCurrentSensor_ReadRaw(): uint16_t
+
+DisplayDriver
+-I2cHandle: I2C_HandleTypeDef*
+--
++DisplayDriver_Init(i2c_handle: I2C_HandleTypeDef*): void
++DisplayDriver_SetPixelCb(x: uint16_t, y: uint16_t, color: color_t): void
++DisplayDriver_RounderCb(area: lv_area_t*): void
++DisplayDriver_FlushCb(disp_drv: lv_disp_drv_t*, area: lv_area_t*, color: color_t*): void
+
+SoCSensor
+-AdcHandle: ADC_HandleTypeDef*
+-AdcChannel: uint32_t
+--
++SoCSensor_Init(adc_handle: ADC_HandleTypeDef*): void
++SoCSensor_GetSoC(): uint8_t
+-SoCSensor_ReadVoltage(): uint16_t
+
+TemperatureSensor
+-I2cHandle: I2C_HandleTypeDef*
+-CalibrationOffset: float
+--
++TemperatureSensor_Init(i2c_handle: I2C_HandleTypeDef*): void
++TemperatureSensor_GetCelsius(): float
+-TemperatureSensor_ReadRaw(): uint16_t
+
+ButtonArray
+-GpioPort: GPIO_TypeDef*
+-ModePin: uint16_t
+-CentralPin: uint16_t
+-MenuPin: uint16_t
+--
++ButtonArray_Init(gpio_port: GPIO_TypeDef*, mode_pin: uint16_t, central_pin: uint16_t, menu_pin: uint16_t): void
++ButtonArray_GetModeButton(): bool
++ButtonArray_GetCentralButton(): bool
++ButtonArray_GetMenuButton(): bool
+
+RotaryEncoder
+-GpioPort: GPIO_TypeDef*
+-PinA: uint16_t
+-PinB: uint16_t
+-CurrentValue: int16_t
+--
++RotaryEncoder_Init(gpio_port: GPIO_TypeDef*, pin_a: uint16_t, pin_b: uint16_t): void
++RotaryEncoder_GetDelta(): int16_t
+
+SleepLock
+-LockMask: uint32_t
+--
++SleepLock_Acquire(bit: uint32_t): void
++SleepLock_Release(bit: uint32_t): void
++SleepLock_Check(): bool
