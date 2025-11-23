@@ -1,6 +1,6 @@
 <mxfile host="65bd71144e">
     <diagram name="Seite-1" id="oSMfVe9FBlaE4qSntFBy">
-        <mxGraphModel dx="1302" dy="689" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1654" pageHeight="1169" math="0" shadow="0">
+        <mxGraphModel dx="1433" dy="740" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1654" pageHeight="1169" math="0" shadow="0">
             <root>
                 <mxCell id="0"/>
                 <mxCell id="1" parent="0"/>
@@ -506,14 +506,14 @@
                         <mxPoint x="1375" y="585" as="sourcePoint"/>
                         <mxPoint x="1070" y="665" as="targetPoint"/>
                         <Array as="points">
-                            <mxPoint x="890" y="447"/>
-                            <mxPoint x="890" y="345"/>
+                            <mxPoint x="900" y="448"/>
+                            <mxPoint x="900" y="345"/>
                         </Array>
                     </mxGeometry>
                 </mxCell>
                 <mxCell id="200" value="&lt;b&gt;config&lt;/b&gt;&lt;br&gt;&lt;div&gt;struct&lt;/div&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontColor=default;" parent="199" vertex="1" connectable="0">
                     <mxGeometry x="-0.7214" y="-1" relative="1" as="geometry">
-                        <mxPoint x="-246" y="-26" as="offset"/>
+                        <mxPoint x="-236" y="-36" as="offset"/>
                     </mxGeometry>
                 </mxCell>
                 <mxCell id="201" value="" style="endArrow=open;html=1;rounded=0;endFill=0;edgeStyle=orthogonalEdgeStyle;exitX=0.5;exitY=1;exitDx=0;exitDy=0;startArrow=none;startFill=0;entryX=0.25;entryY=0;entryDx=0;entryDy=0;fontColor=default;" parent="1" source="197" target="39" edge="1">
@@ -542,8 +542,8 @@
                         <mxPoint x="-11" y="-13" as="offset"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="207" value="&lt;b&gt;SystemStateMutex&lt;br&gt;&lt;/b&gt;thread safe system state structure" style="html=1;dropTarget=0;whiteSpace=wrap;fontColor=default;" parent="1" vertex="1">
-                    <mxGeometry x="975" y="513" width="160" height="70" as="geometry"/>
+                <mxCell id="207" value="&lt;b&gt;SystemContextMutex&lt;br&gt;&lt;/b&gt;thread safe system state structure" style="html=1;dropTarget=0;whiteSpace=wrap;fontColor=default;" parent="1" vertex="1">
+                    <mxGeometry x="990" y="510" width="160" height="70" as="geometry"/>
                 </mxCell>
                 <mxCell id="208" value="" style="shape=module;jettyWidth=8;jettyHeight=4;fontColor=default;" parent="207" vertex="1">
                     <mxGeometry x="1" width="20" height="20" relative="1" as="geometry">
@@ -556,9 +556,9 @@
                         <mxPoint x="1080" y="685" as="targetPoint"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="211" value="&lt;b&gt;system state&lt;/b&gt;&lt;br&gt;&lt;div&gt;struct&lt;/div&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontColor=default;" parent="210" vertex="1" connectable="0">
+                <mxCell id="211" value="&lt;b&gt;system context&lt;/b&gt;&lt;br&gt;&lt;div&gt;struct&lt;/div&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontColor=default;" parent="210" vertex="1" connectable="0">
                     <mxGeometry x="-0.7214" y="-1" relative="1" as="geometry">
-                        <mxPoint x="-66" y="1" as="offset"/>
+                        <mxPoint x="-56" y="1" as="offset"/>
                     </mxGeometry>
                 </mxCell>
                 <mxCell id="212" value="" style="endArrow=open;html=1;rounded=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;endFill=0;exitX=1;exitY=0.75;exitDx=0;exitDy=0;edgeStyle=orthogonalEdgeStyle;startArrow=none;startFill=0;fontColor=default;" parent="1" source="39" target="207" edge="1">
@@ -567,9 +567,9 @@
                         <mxPoint x="1080" y="685" as="targetPoint"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="213" value="&lt;b&gt;system task state&lt;/b&gt;&lt;br&gt;&lt;div&gt;struct&lt;/div&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontColor=default;" parent="212" vertex="1" connectable="0">
+                <mxCell id="213" value="&lt;b&gt;system task&amp;nbsp;&lt;/b&gt;&lt;b style=&quot;color: rgb(63, 63, 63); scrollbar-color: rgb(226, 226, 226) rgb(251, 251, 251);&quot;&gt;context&lt;/b&gt;&lt;br&gt;&lt;div&gt;struct&lt;/div&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontColor=default;" parent="212" vertex="1" connectable="0">
                     <mxGeometry x="-0.7214" y="-1" relative="1" as="geometry">
-                        <mxPoint x="42" as="offset"/>
+                        <mxPoint x="40" y="-4" as="offset"/>
                     </mxGeometry>
                 </mxCell>
                 <mxCell id="221" value="" style="endArrow=none;html=1;rounded=0;endFill=0;edgeStyle=orthogonalEdgeStyle;exitX=0.5;exitY=1;exitDx=0;exitDy=0;startArrow=open;startFill=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;fontColor=default;" parent="1" source="51" target="39" edge="1">
@@ -584,7 +584,7 @@
                         </Array>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="222" value="&lt;b&gt;EVT_CFG_RST_REQ&lt;/b&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontColor=default;" parent="221" vertex="1" connectable="0">
+                <mxCell id="222" value="&lt;b style=&quot;color: rgb(63, 63, 63); scrollbar-color: rgb(226, 226, 226) rgb(251, 251, 251);&quot;&gt;EVT_CFG_LOAD_REQ&lt;/b&gt;&lt;b&gt;&lt;br&gt;EVT_CFG_RST_REQ&lt;/b&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontColor=default;" parent="221" vertex="1" connectable="0">
                     <mxGeometry x="-0.7214" y="-1" relative="1" as="geometry">
                         <mxPoint x="71" y="99" as="offset"/>
                     </mxGeometry>
@@ -601,9 +601,9 @@
                         </Array>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="227" value="&lt;b&gt;EVT_CFG_RST_END&lt;/b&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontColor=default;" parent="226" vertex="1" connectable="0">
+                <mxCell id="227" value="&lt;b style=&quot;color: rgb(63, 63, 63); scrollbar-color: rgb(226, 226, 226) rgb(251, 251, 251);&quot;&gt;EVT_CFG_LOAD_END&lt;/b&gt;&lt;b&gt;&lt;br&gt;EVT_CFG_RST_END&lt;/b&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontColor=default;" parent="226" vertex="1" connectable="0">
                     <mxGeometry x="-0.7214" y="-1" relative="1" as="geometry">
-                        <mxPoint x="79" y="179" as="offset"/>
+                        <mxPoint x="73" y="168" as="offset"/>
                     </mxGeometry>
                 </mxCell>
                 <mxCell id="230" value="" style="endArrow=none;html=1;rounded=0;endFill=0;exitX=0;exitY=0.25;exitDx=0;exitDy=0;edgeStyle=orthogonalEdgeStyle;entryX=1;entryY=0.5;entryDx=0;entryDy=0;startArrow=open;startFill=0;fontColor=default;" parent="1" source="53" target="43" edge="1">
@@ -616,7 +616,7 @@
                         </Array>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="231" value="&lt;b&gt;CONTROL_SLEEP_LOCK&lt;/b&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontColor=default;" parent="230" connectable="0" vertex="1">
+                <mxCell id="231" value="&lt;b&gt;CTRL_SLEEP_LOCK&lt;/b&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontColor=default;" parent="230" connectable="0" vertex="1">
                     <mxGeometry x="0.0438" y="1" relative="1" as="geometry">
                         <mxPoint x="-173" y="-1" as="offset"/>
                     </mxGeometry>
@@ -645,7 +645,7 @@
                         </Array>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="241" value="&lt;b&gt;GUI_SLEEP_LOCK&lt;/b&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontColor=default;" parent="240" connectable="0" vertex="1">
+                <mxCell id="241" value="&lt;b&gt;UI_SLEEP_LOCK&lt;/b&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontColor=default;" parent="240" connectable="0" vertex="1">
                     <mxGeometry x="0.0438" y="1" relative="1" as="geometry">
                         <mxPoint x="19" y="-148" as="offset"/>
                     </mxGeometry>
@@ -665,7 +665,7 @@
                         <mxPoint x="-75" y="-1" as="offset"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="244" value="&lt;b&gt;SystemStateMutex&lt;br&gt;&lt;/b&gt;thread safe system state structure" style="html=1;dropTarget=0;whiteSpace=wrap;fontColor=default;" parent="1" vertex="1">
+                <mxCell id="244" value="&lt;b&gt;SystemContextMutex&lt;br&gt;&lt;/b&gt;thread safe system state structure" style="html=1;dropTarget=0;whiteSpace=wrap;fontColor=default;" parent="1" vertex="1">
                     <mxGeometry x="260" y="440" width="160" height="70" as="geometry"/>
                 </mxCell>
                 <mxCell id="245" value="" style="shape=module;jettyWidth=8;jettyHeight=4;fontColor=default;" parent="244" vertex="1">

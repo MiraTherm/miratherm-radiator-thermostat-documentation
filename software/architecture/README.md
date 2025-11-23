@@ -23,7 +23,7 @@ The software is divided into specific FreeRTOS tasks, each responsible for disti
 
 **MaintenanceTask**: Handles command events from `SystemTask` for non-standard operations such as valve adaptation (calibration) and descaling routines. Moreover, it sets fully opened (`EVT_OPEN_STATE` 100%) or fully closed (`EVT_CLOSED_STATE` 0%) positions. Therefore, it interacts with the `ControlTask` to stop the control loop and use `ValveFacade` to move the valve to specific positions as part of these procedures.
 
-**StorageTask**: Manages non-volatile memory interaction, ensuring configuration data is saved to the internal Flash via an EEPROM emulation layer. It clears saved data upon receiving `EVT_CFG_RST_REQ` during factory reset routine.
+**StorageTask**: Manages non-volatile memory interaction, ensuring configuration data is saved to the internal Flash via an EEPROM emulation layer. It loads configuration data at startup upon receiving `EVT_CFG_LOAD_REQ` and clears saved data upon receiving `EVT_CFG_RST_REQ` during factory reset routine.
 
 ### Synchronization & Data Structures
 Thread safety is maintained using Event Queues and Mutexes for shared data structures:
