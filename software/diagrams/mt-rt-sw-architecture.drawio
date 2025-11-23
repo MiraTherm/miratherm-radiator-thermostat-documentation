@@ -1,6 +1,6 @@
 <mxfile host="65bd71144e">
     <diagram name="Seite-1" id="oSMfVe9FBlaE4qSntFBy">
-        <mxGraphModel dx="1433" dy="740" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1654" pageHeight="1169" math="0" shadow="0">
+        <mxGraphModel dx="1015" dy="524" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1654" pageHeight="1169" math="0" shadow="0">
             <root>
                 <mxCell id="0"/>
                 <mxCell id="1" parent="0"/>
@@ -731,6 +731,21 @@
                 <mxCell id="255" value="&lt;b&gt;target temperature &lt;/b&gt;&lt;br&gt;float" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontColor=default;" parent="254" connectable="0" vertex="1">
                     <mxGeometry x="-0.3006" relative="1" as="geometry">
                         <mxPoint x="-3" y="-9" as="offset"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="256" value="" style="endArrow=open;html=1;rounded=0;endFill=0;exitX=0;exitY=0.5;exitDx=0;exitDy=0;edgeStyle=orthogonalEdgeStyle;entryX=0;entryY=0.75;entryDx=0;entryDy=0;startArrow=open;startFill=0;fontColor=default;" edge="1" parent="1" source="43" target="49">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="230" y="580" as="sourcePoint"/>
+                        <mxPoint x="20" y="448" as="targetPoint"/>
+                        <Array as="points">
+                            <mxPoint x="230" y="615"/>
+                            <mxPoint x="230" y="358"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="257" value="&lt;b&gt;EVT_T_MEAS_REQ&lt;/b&gt;&lt;div&gt;&lt;font&gt;&lt;b&gt;EVT_T_MEAS_END&lt;/b&gt;&lt;/font&gt;&lt;/div&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontColor=default;" connectable="0" vertex="1" parent="256">
+                    <mxGeometry x="0.0438" y="1" relative="1" as="geometry">
+                        <mxPoint x="31" y="95" as="offset"/>
                     </mxGeometry>
                 </mxCell>
             </root>
