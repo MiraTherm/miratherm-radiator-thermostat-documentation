@@ -216,7 +216,7 @@
         </mxGraphModel>
     </diagram>
     <diagram id="btKqc36JK7OPKPQNK39Q" name="core">
-        <mxGraphModel dx="2060" dy="1093" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1654" pageHeight="1169" math="0" shadow="0">
+        <mxGraphModel dx="700" dy="372" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1654" pageHeight="1169" math="0" shadow="0">
             <root>
                 <mxCell id="0"/>
                 <mxCell id="1" parent="0"/>
@@ -379,7 +379,7 @@
                     <mxGeometry y="104" width="320" height="26" as="geometry"/>
                 </mxCell>
                 <mxCell id="wxLnq0oEBapFVt_X2Ljs-1" value="SystemContextTypeDef &lt;&lt;struct&gt;&gt;" style="swimlane;fontStyle=1;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;fillColor=#fff2cc;strokeColor=#d6b656;" parent="1" vertex="1">
-                    <mxGeometry x="525" y="961" width="220" height="182" as="geometry">
+                    <mxGeometry x="525" y="940" width="220" height="208" as="geometry">
                         <mxRectangle x="50" y="777" width="210" height="30" as="alternateBounds"/>
                     </mxGeometry>
                 </mxCell>
@@ -401,8 +401,11 @@
                 <mxCell id="wxLnq0oEBapFVt_X2Ljs-7" value="+State: SystemState" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="wxLnq0oEBapFVt_X2Ljs-1" vertex="1">
                     <mxGeometry y="156" width="220" height="26" as="geometry"/>
                 </mxCell>
+                <mxCell id="u3h0XhZ7hyXI4jf6yHAv-1" value="+BoostTimerSeconds: uint16_t" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="wxLnq0oEBapFVt_X2Ljs-1">
+                    <mxGeometry y="182" width="220" height="26" as="geometry"/>
+                </mxCell>
                 <mxCell id="wxLnq0oEBapFVt_X2Ljs-8" value="ConfigTypeDef &lt;&lt;struct&gt;&gt;" style="swimlane;fontStyle=1;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;fillColor=#fff2cc;strokeColor=#d6b656;" parent="1" vertex="1">
-                    <mxGeometry x="915" y="961" width="190" height="52" as="geometry">
+                    <mxGeometry x="915" y="940" width="190" height="52" as="geometry">
                         <mxRectangle x="420" y="777" width="180" height="30" as="alternateBounds"/>
                     </mxGeometry>
                 </mxCell>
@@ -460,8 +463,8 @@
                         <mxPoint x="785" y="1258.5" as="sourcePoint"/>
                         <mxPoint x="785" y="1195.5" as="targetPoint"/>
                         <Array as="points">
-                            <mxPoint x="1010" y="961"/>
-                            <mxPoint x="1010" y="914"/>
+                            <mxPoint x="1010" y="930"/>
+                            <mxPoint x="1010" y="930"/>
                         </Array>
                     </mxGeometry>
                 </mxCell>
@@ -470,8 +473,8 @@
                         <mxPoint x="725" y="1237" as="sourcePoint"/>
                         <mxPoint x="815" y="1237" as="targetPoint"/>
                         <Array as="points">
-                            <mxPoint x="635" y="944"/>
-                            <mxPoint x="635" y="944"/>
+                            <mxPoint x="635" y="930"/>
+                            <mxPoint x="635" y="930"/>
                         </Array>
                     </mxGeometry>
                 </mxCell>
@@ -638,7 +641,7 @@
                     <mxGeometry y="138" width="340" height="26" as="geometry"/>
                 </mxCell>
                 <mxCell id="c0XnXunf3ep7i59iCvnN-1" value="SystemContextTypeDef &lt;&lt;struct&gt;&gt;" style="swimlane;fontStyle=1;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;fillColor=#fff2cc;strokeColor=#d6b656;" parent="1" vertex="1">
-                    <mxGeometry x="395" y="8" width="220" height="182" as="geometry">
+                    <mxGeometry x="395" y="8" width="220" height="208" as="geometry">
                         <mxRectangle x="285" y="22" width="230" height="30" as="alternateBounds"/>
                     </mxGeometry>
                 </mxCell>
@@ -659,6 +662,9 @@
                 </mxCell>
                 <mxCell id="c0XnXunf3ep7i59iCvnN-7" value="+State: SystemState" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="c0XnXunf3ep7i59iCvnN-1" vertex="1">
                     <mxGeometry y="156" width="220" height="26" as="geometry"/>
+                </mxCell>
+                <mxCell id="RfFhn_F0bTcLm_BMNNLg-1" value="+BoostTimerSeconds: uint16_t" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="c0XnXunf3ep7i59iCvnN-1">
+                    <mxGeometry y="182" width="220" height="26" as="geometry"/>
                 </mxCell>
                 <UserObject label="SystemContextMutex &lt;&lt;mutex&gt;&gt;" link="data:page/id,btKqc36JK7OPKPQNK39Q" id="c0XnXunf3ep7i59iCvnN-8">
                     <mxCell style="swimlane;fontStyle=1;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;fillColor=#d5e8d4;strokeColor=#82b366;" parent="1" vertex="1" collapsed="1">
@@ -773,7 +779,7 @@
                 <mxCell id="0"/>
                 <mxCell id="1" parent="0"/>
                 <mxCell id="rk6P8Q8_e6BLXKspfn2N-3" value="SystemContextTypeDef &lt;&lt;struct&gt;&gt;" style="swimlane;fontStyle=1;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;fillColor=#fff2cc;strokeColor=#d6b656;" parent="1" vertex="1">
-                    <mxGeometry x="290" y="14" width="220" height="182" as="geometry">
+                    <mxGeometry x="290" y="14" width="220" height="208" as="geometry">
                         <mxRectangle x="285" y="22" width="230" height="30" as="alternateBounds"/>
                     </mxGeometry>
                 </mxCell>
@@ -794,6 +800,9 @@
                 </mxCell>
                 <mxCell id="VWEzAagOjpbr4CGydgCp-1" value="+State: SystemState" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="rk6P8Q8_e6BLXKspfn2N-3" vertex="1">
                     <mxGeometry y="156" width="220" height="26" as="geometry"/>
+                </mxCell>
+                <mxCell id="4NhdBqtVmZs30ZdoiAi--1" value="+BoostTimerSeconds: uint16_t" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="rk6P8Q8_e6BLXKspfn2N-3">
+                    <mxGeometry y="182" width="220" height="26" as="geometry"/>
                 </mxCell>
                 <mxCell id="rk6P8Q8_e6BLXKspfn2N-10" value="MotorDriver" style="swimlane;fontStyle=1;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;fillColor=#e1d5e7;strokeColor=#9673a6;" parent="1" vertex="1">
                     <mxGeometry x="590" y="991" width="490" height="164" as="geometry"/>
@@ -1308,7 +1317,7 @@
         </mxGraphModel>
     </diagram>
     <diagram id="9TFCIqJtBCm5FpI7HOMS" name="ui">
-        <mxGraphModel dx="1751" dy="929" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1654" pageHeight="1169" math="0" shadow="0">
+        <mxGraphModel dx="2060" dy="1093" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1654" pageHeight="1169" math="0" shadow="0">
             <root>
                 <mxCell id="0"/>
                 <mxCell id="1" parent="0"/>
@@ -1328,7 +1337,7 @@
                     <mxGeometry y="104" width="330" height="26" as="geometry"/>
                 </mxCell>
                 <mxCell id="ZoUu75yg22qnZvzmLhu8-8" value="SystemContextTypeDef &lt;&lt;struct&gt;&gt;" style="swimlane;fontStyle=1;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;fillColor=#fff2cc;strokeColor=#d6b656;" parent="1" vertex="1">
-                    <mxGeometry x="40" y="362" width="220" height="182" as="geometry">
+                    <mxGeometry x="40" y="362" width="220" height="208" as="geometry">
                         <mxRectangle x="620" y="520" width="210" height="30" as="alternateBounds"/>
                     </mxGeometry>
                 </mxCell>
@@ -1349,6 +1358,9 @@
                 </mxCell>
                 <mxCell id="wt1L2JgMi8nshdinnM2o-1" value="+State: SystemState" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="ZoUu75yg22qnZvzmLhu8-8" vertex="1">
                     <mxGeometry y="156" width="220" height="26" as="geometry"/>
+                </mxCell>
+                <mxCell id="yJesTTPxsPiDUS91g0oT-1" value="+BoostTimerSeconds: uint16_t" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="ZoUu75yg22qnZvzmLhu8-8">
+                    <mxGeometry y="182" width="220" height="26" as="geometry"/>
                 </mxCell>
                 <UserObject label="SleepLock" link="data:page/id,btKqc36JK7OPKPQNK39Q" id="ZoUu75yg22qnZvzmLhu8-27">
                     <mxCell style="swimlane;fontStyle=1;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;fillColor=#d5e8d4;strokeColor=#82b366;" parent="1" vertex="1" collapsed="1">
