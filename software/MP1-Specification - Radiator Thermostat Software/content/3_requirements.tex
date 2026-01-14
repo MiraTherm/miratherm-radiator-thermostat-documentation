@@ -32,18 +32,21 @@ The \chreplaced[id=v0.3]{software}{system} shall integrate a rotary encoder as a
 \subsection*{REQ 3: Push Buttons}
 The \chreplaced[id=v0.3]{software}{system} shall integrate the following push buttons via \acsp{gpio}:
 \begin{itemize}
-    \item \textbf{Mode} button
-    \item \textbf{Centered} button
-    \item \textbf{Menu} button
+    \item \textbf{Left} button
+    \item \textbf{Middle} button
+    \item \textbf{Right} button
 \end{itemize}
 
-\subsection*{REQ 3.1: Prototype Push Buttons}
-\chreplaced[id=v0.3]{The}{In the prototype version, the} push buttons SW1 and SW3 from the P-NUCLEO-WB55 and KY-040 shall be used:
+\subsection*{\chdeleted[id=v0.4]{REQ 3.1: Prototype Push Buttons}}
+\chdeleted[id=v0.4]{\chreplaced[id=v0.3]{The}{In the prototype version, the} push buttons SW1 and SW3 from the P-NUCLEO-WB55 and KY-040 shall be used:}
 \begin {itemize}
-    \item SW1 as \textbf{Mode} button
-    \item KY-040 push button as \textbf{Centered} button
-    \item SW3 as \textbf{Menu} button
+    \item \chdeleted[id=v0.4]{SW1 as \textbf{Mode} button}
+    \item \chdeleted[id=v0.4]{KY-040 push button as \textbf{Centered} button}
+    \item \chdeleted[id=v0.4]{SW3 as \textbf{Menu} button}
 \end{itemize}
+
+\subsection*{\chadded[id=v0.4]{REQ 3.2: Rotary Encoder Button}}
+\chadded[id=v0.4]{The software shall use the push button integrated into the rotary encoder as the \textbf{Middle} button.}
 
 \subsection*{REQ 4: Motor Control}
 The \chreplaced[id=v0.3]{software}{system} shall support control of motor driver hardware.
@@ -55,7 +58,7 @@ The \chreplaced[id=v0.3]{software}{system} shall support control of the eQ-3 eqi
 The \chreplaced[id=v0.3]{software}{system} shall measure motor current consumption.
 
 \subsection*{REQ 5.1: Prototype Motor Current Measurement}
-\chreplaced[id=v0.3]{The software}{In the prototype version, the system} shall measure motor current consumption using an \ac{adc} channel connected to a $1 \unit{Ω}$ shunt resistor in series with the motor circuit.
+\chreplaced[id=v0.3]{The software}{In the prototype version, the system} shall measure motor current consumption using an \ac{adc} channel connected to a \chreplaced[id=v0.4]{$0.22 \unit{Ω}$}{$1 \unit{Ω}$} shunt resistor in series with the motor circuit.
 
 \subsection*{REQ 6: Power Supply Voltage Measurement}
 The \chreplaced[id=v0.3]{software}{system} shall measure the power supply voltage. The measured voltage shall be used to calculate the battery charge level as a percentage.
@@ -63,8 +66,8 @@ The \chreplaced[id=v0.3]{software}{system} shall measure the power supply voltag
 \subsection*{REQ 6.1: Prototype Power Supply Voltage Measurement}
 \chreplaced[id=v0.3]{The software}{In the prototype version, the system} shall measure the power supply voltage using an \acs{adc} channel.
 
-\subsection*{REQ 7: Motor Current Extremes Definition}
-During the software development phase, the motor current extremes shall be defined to detect maximal and minimal valve pin positions. This definition shall be based on empirical measurements and analysis of the motor's current consumption during operation.
+\subsection*{\chdeleted[id=v0.4]{REQ 7: Motor Current Extremes Definition}}
+\chdeleted[id=v0.4]{During the software development phase, the motor current extremes shall be defined to detect maximal and minimal valve pin positions. This definition shall be based on empirical measurements and analysis of the motor's current consumption during operation.}
 
 \subsection*{REQ 8: Temperature Measurement}
 The \chreplaced[id=v0.3]{software}{system} shall measure the ambient temperature using a digital temperature sensor.
@@ -78,7 +81,7 @@ The \chreplaced[id=v0.3]{software}{system} shall provide the following configura
     \item \textbf{\ac{cod}}: Manual configuration via buttons on the device without wireless connectivity.
     \item \chdeleted[id=v0.2]{\textbf{\ac{cva}}: Partially automatic, wireless configuration via Matter standard and/or Thread protocol.}
 \end{itemize}
-The setup process shall run after battery insertion if no complete configuration exists in persistent storage. Otherwise, the \chreplaced[id=v0.3]{software}{system} shall resume normal operation with existing settings.
+The setup process shall run after battery insertion\chreplaced[id=v0.4]{. Valid configuration options saved in persistent storage shall be used as initial values for the setup process.}{ if no complete configuration exists in persistent storage. Otherwise, the \chreplaced[id=v0.3]{software}{system} shall resume normal operation with existing settings.}
 
 \subsection*{\chdeleted[id=v0.2]{REQ 9.1: Configuration Routine Choice}}
 \label{subsec:REQ 9.1: Configuration Routine Choice}
@@ -91,56 +94,72 @@ The setup process shall run after battery insertion if no complete configuration
 \chdeleted[id=v0.2]{The system shall block access to the \acs{cva} in the prototype version of the thermostat software.}
 
 \subsection*{REQ 10: Date and Time Configuration}
-The \chreplaced[id=v0.3]{software}{system} shall request date and time configuration as the first step in the \acs{cod}, or each time if no wireless connection is configured. The user shall be able to set the year, month, day, hour, and minute through the control wheel interface with confirmation capability via the centered button. After setting the date and time, the \chreplaced[id=v0.3]{software}{system} shall ask whether the user wants to enable automatic summer/winter time switching.
+The \chreplaced[id=v0.3]{software}{system} shall request date and time configuration as the first step in the \acs{cod}\chdeleted[id=v0.4]{, or each time if no wireless connection is configured}. The user shall be able to set the year, month, day, hour, and minute through the control wheel interface with confirmation capability via the centered button. After setting the date and time, the \chreplaced[id=v0.3]{software}{system} shall ask whether the user wants to enable automatic summer/winter time switching.
 
-\subsection*{REQ 11: Installation Command}
-The \chreplaced[id=v0.3]{software}{system} shall wait for an installation begin command from the user as the second step in the \acs{cod}. The text ``Begin Installation?'' shall be displayed. The user shall initiate the installation by pressing the centered button, which will start the valve adaptation procedure.
-
-\subsection*{NOTE 1: Pin Position Extremes Definition}
-\label{subsec:NOTE 1: Pin Position Extremes Definition}
-After a successful \chadded[id=v0.2]{valve} adaptation procedure \chadded[id=v0.2]{described in REQ 12}:
+\subsection*{REQ 20: Temperature Range\chreplaced[id=v0.4]{,}{ and} Resolution \chadded[id=v0.4]{and Valve States}}
+\chreplaced[id=v0.4]{T}{In Manual Mode, t}he \chreplaced[id=v0.3]{software}{system} shall allow setting target temperatures in the range of $5.0 \unit{°C}$ to $30.0 \unit{°C}$ in increments of $0.5 \unit{°C}$\chadded[id=v0.4]{ in all related input fields}. The \chreplaced[id=v0.3]{software}{system} shall\chadded[id=v0.4]{ also} support the\chadded[id=v0.4]{ setting of} following \chreplaced[id=v0.4]{valve}{special} states\chadded[id=v0.4]{ in the same input fields}:
 \begin{itemize}
-    \item The maximal \chadded[id=v0.2]{movable} valve pin position corresponds to the fully open valve position.
-    \item The minimal \chadded[id=v0.2]{movable} valve pin position corresponds to the fully closed valve position.
+    \item \chadded[id=v0.4]{\textbf{OFF/}}\textbf{CLOSED state}: If the user sets a target temperature below $5.0 \unit{°C}$, \chreplaced[id=v0.4]{``OFF'' shall be displayed instead of the target temperature number in an input or output field.}{the valve shall be fully closed. Then the \chreplaced[id=v0.3]{software}{system} shall display ``CLOSED'' instead of the target temperature on the main display page.}
+    \item \chadded[id=v0.4]{\textbf{ON/}}\textbf{OPEN state}: If the user sets a target temperature \chadded[id=v0.4]{equal or }above $30.0 \unit{°C}$, \chreplaced[id=v0.4]{``ON'' shall be displayed instead of the target temperature number in an input field.}{the valve shall be fully opened. Then the \chreplaced[id=v0.3]{software}{system} shall display ``OPEN'' instead of the target temperature on the main display page.}
 \end{itemize}
 
-\subsection*{REQ 12: Valve Adaptation}
-The \chreplaced[id=v0.3]{software}{system} shall perform an automatic adaptation run as the third step in the \acs{cod} to detect and adapt to specific valve characteristics. The adaptation procedure shall:
+\subsection*{REQ 13: Daily Schedule Configuration}
+The \chreplaced[id=v0.3]{software}{system} shall request daily schedule configuration as the \chreplaced[id=v0.4]{second}{fourth} step in the \acs{cod}. The user shall be able to set \chreplaced[id=v0.4]{3, 4 or 5}{three} time slots \chadded[id=v0.4]{per day} with corresponding target temperatures\chadded[id=v0.4]{ or valve states}\chdeleted[id=v0.4]{ for the day} using the control wheel interface with confirmation capability via the centered button. The first time slot shall always start at 00:00 and the last time slot shall always end at 23:59.\chadded[id=v0.4]{ It shall not be possible to set the start of the next time slot before the end of the previous one.}\chdeleted[id=v0.4]{ After completing the daily schedule configuration, the \chreplaced[id=v0.3]{software}{system} shall proceed to the main display page.}
+
+\subsection*{REQ 11: Installation Command}
+The \chreplaced[id=v0.3]{software}{system} shall wait for an installation begin command from the user as the \chreplaced[id=v0.4]{third}{second} step in the \acs{cod}. The text ``Begin Installation?'' shall be displayed. The user shall initiate the installation by pressing the centered button, which will start the valve adaptation procedure.
+
+\subsection*{\chdeleted[id=v0.4]{NOTE 1: Pin Position Extremes Definition}}
+\label{subsec:NOTE 1: Pin Position Extremes Definition}
+\chdeleted[id=v0.4]{After a successful \chadded[id=v0.2]{valve} adaptation procedure \chadded[id=v0.2]{described in REQ 12}:}
+\begin{itemize}
+    \item \chdeleted[id=v0.4]{The maximal \chadded[id=v0.2]{movable} valve pin position corresponds to the fully open valve position.}
+    \item \chdeleted[id=v0.4]{The minimal \chadded[id=v0.2]{movable} valve pin position corresponds to the fully closed valve position.}
+\end{itemize}
+
+\subsection*{\chdeleted[id=v0.4]{REQ 12: Valve Adaptation}}
+\chdeleted[id=v0.4]{The \chreplaced[id=v0.3]{software}{system} shall perform an automatic adaptation run as the third step in the \acs{cod} to detect and adapt to specific valve characteristics. The adaptation procedure shall:}
 \begin{enumerate}
-    \item Display ``Adaptation...'' indicator page during the procedure.
-    \item Move the motor to the maximal valve pin position.
-    \item Move the motor to the minimal valve pin position.
-    \item Incrementally move the motor to the maximal valve pin position.
-    \item Calculate the valve stroke range.
-    \item Validate that the measured travel distance matches the expected $4.3 \unit{mm}$ linear travel.
-    \item If valve characteristics are outside acceptable ranges, display the following error messages:
+    \item \chdeleted[id=v0.4]{Display ``Adaptation...'' indicator page during the procedure.}
+    \item \chdeleted[id=v0.4]{Move the motor to the maximal valve pin position.}
+    \item \chdeleted[id=v0.4]{Move the motor to the minimal valve pin position.}
+    \item \chdeleted[id=v0.4]{Incrementally move the motor to the maximal valve pin position.}
+    \item \chdeleted[id=v0.4]{Calculate the valve stroke range.}
+    \item \chdeleted[id=v0.4]{Validate that the measured travel distance matches the expected $4.3 \unit{mm}$ linear travel.}
+    \item \chdeleted[id=v0.4]{If valve characteristics are outside acceptable ranges, display the following error messages:}
     \begin{itemize}
-        \item \textbf{F1}: Valve drive sluggish (motor movement is impeded or extremely slow).
-        \item \textbf{F2}: Actuating range too wide (measured valve stroke exceeds expected parameters).
-        \item \textbf{F3}: Adjustment range too small (measured valve stroke is below acceptable minimum).
+        \item \chdeleted[id=v0.4]{\textbf{F1}: Valve drive sluggish (motor movement is impeded or extremely slow).}
+        \item \chdeleted[id=v0.4]{\textbf{F2}: Actuating range too wide (measured valve stroke exceeds expected parameters).}
+        \item \chdeleted[id=v0.4]{\textbf{F3}: Adjustment range too small (measured valve stroke is below acceptable minimum).}
     \end{itemize}
-    \item If an error occurs, allow reversal of the adaptation run by pressing the centered button, returning to the waiting state for the installation command.
+    \item \chdeleted[id=v0.4]{If an error occurs, allow reversal of the adaptation run by pressing the centered button, returning to the waiting state for the installation command.}
 \end{enumerate}
 
-\subsection*{REQ 13: Daily Schedule Configuration}
-The \chreplaced[id=v0.3]{software}{system} shall request daily schedule configuration as the fourth step in the \acs{cod}. The user shall be able to set three time slots with corresponding target temperatures for the day using the control wheel interface with confirmation capability via the centered button. The first time slot shall always start at 00:00 and the last time slot shall always end at 23:59. After completing the daily schedule configuration, the \chreplaced[id=v0.3]{software}{system} shall proceed to the main display page.
+\subsection*{\chadded[id=v0.4]{REQ 12.1: Mocked Valve Adaptation}}
+\chadded[id=v0.4]{The software shall perform a mocked adaptation procedure as the fourth step in the \acs{cod}. The procedure shall:}
+\begin{enumerate}
+    \item \chadded[id=v0.4]{Display ``Adaptation...'' indicator page for $10 \unit{s}$.}
+\end{enumerate}
 
-\subsection*{REQ 14: Main Display Page}
-On the main display page, the \chreplaced[id=v0.3]{software}{system} shall display at least the following information:
+\chadded[id=v0.4]{After a successful adaptation the \chreplaced[id=v0.3]{software}{system} shall proceed to the \chreplaced[id=v0.4]{home}{main} display page.}
+
+\subsection*{REQ 14: \chadded[id=v0.4]{Home/}Main Display Page}
+On the  \chadded[id=v0.4]{Home/}main display page, the \chreplaced[id=v0.3]{software}{system} shall display at least the following information:
 \begin{itemize}
     \item Current time in hours and minutes.
     % \item Current day of week
     \item Current temperature.
-    \item Target temperature.
-    \item Current time slot.
+    \item Target temperature \chadded[id=v0.4]{or valve state}.
+    \item \chreplaced[id=v0.4]{End time of the c}{C}urrent time slot.
     \item Operational mode indicator.
     \item Battery charge as a percentage.
     % \item State of the valve in percentage
 \end{itemize}
 
 \subsection*{REQ 15: Configuration Menu}
-The \chreplaced[id=v0.3]{software}{system} shall provide a configuration menu page accessible from the main display page by pressing the menu button. The menu shall list the following configurable options:
+The \chreplaced[id=v0.3]{software}{system} shall provide a configuration menu page accessible from the main display page by pressing the \chreplaced{left}{menu} button. The menu shall list the following configurable options:
 \begin{itemize}
+    \item \chadded[id=v0.4]{Schedule change.}
     \item Temperature offset configuration.
     % \item Inactivity timeout setting.
     % \item Automatic descaling routine time.
@@ -158,29 +177,25 @@ The \chreplaced[id=v0.3]{software}{system} shall provide a configuration menu pa
     % \item Bidirectional wireless communication and synchronization
 \end{itemize}
 
-\subsection*{REQ 16: Inactivity Timeout}
-If no user interactions occur for $30 \unit{s}$, the \chreplaced[id=v0.3]{software}{system} shall turn the display off. The \chreplaced[id=v0.3]{software}{system} shall return to the currently active page upon the next user interaction via any button.
+\subsection*{\chdeleted[id=v0.4]{REQ 16: Inactivity Timeout}}
+\chdeleted[id=v0.4]{If no user interactions occur for $30 \unit{s}$, the \chreplaced[id=v0.3]{software}{system} shall turn the display off. The \chreplaced[id=v0.3]{software}{system} shall return to the currently active page upon the next user interaction via any button.}
 
 \subsection*{REQ 17: Operational Modes}
 The \chreplaced[id=v0.3]{software}{system} shall support the following operational modes:
 \begin{itemize}
-    \item \textbf{Manual Mode}: The user can manually set the target temperature.
-    \item \textbf{Auto Mode}: The \chreplaced[id=v0.3]{software}{system} follows the heating program and sets the target temperature according to the current time slot.
+    \item \textbf{Manual Mode}: The user can manually set the target temperature\chadded[id=v0.4]{ or valve state}.
+    \item \textbf{Auto Mode}: The \chreplaced[id=v0.3]{software}{system} follows the heating program and sets the target temperature\chadded[id=v0.4]{ or valve state} according to the current time slot. \chadded[id=v0.4]{If the user sets the target temperature or valve state manually in the Auto Mode, the modified temperature shall remain until the next programmed change point.}
     \item \textbf{Boost Mode}: Described in REQ 19.
 \end{itemize}
 
 \subsection*{REQ 18: Switching Operational Modes}
-The \chreplaced[id=v0.3]{software}{system} shall allow switching between Manual Mode and Auto Mode using the mode button.
+The \chreplaced[id=v0.3]{software}{system} shall allow switching between Manual Mode and Auto Mode using the \chreplaced[id=v0.3]{right}{mode} button.
 
-\subsection*{REQ 19: Boost Mode}
-The \chreplaced[id=v0.3]{software}{system} shall provide a boost mode that immediately opens the heating valve to 80\% for $5 \unit{min}$ after double-pressing the control wheel button. Then the \chreplaced[id=v0.3]{software}{system} shall display the remaining time instead of the target temperature on the main display page. The remaining time shall be displayed as a countdown in seconds. The function shall be deactivatable at any time by pressing the control wheel button.
+\subsection*{\chdeleted[id=v0.4]{REQ 19: Boost Mode}}
+\chdeleted[id=v0.4]{The \chreplaced[id=v0.3]{software}{system} shall provide a boost mode that immediately opens the heating valve to 80\% for $5 \unit{min}$ after double-pressing the control wheel button. Then the \chreplaced[id=v0.3]{software}{system} shall display the remaining time instead of the target temperature on the main display page. The remaining time shall be displayed as a countdown in seconds. The function shall be deactivatable at any time by pressing the control wheel button.}
 
-\subsection*{REQ 20: Temperature Range and Resolution}
-In Manual Mode, the \chreplaced[id=v0.3]{software}{system} shall allow setting target temperatures in the range of $5.0 \unit{°C}$ to $30.0 \unit{°C}$ in increments of $0.5 \unit{°C}$. The \chreplaced[id=v0.3]{software}{system} shall support the following special states:
-\begin{itemize}
-    \item \textbf{CLOSED state}: When the user sets a target temperature below $5.0 \unit{°C}$, the valve shall be fully closed. Then the \chreplaced[id=v0.3]{software}{system} shall display ``CLOSED'' instead of the target temperature on the main display page.
-    \item \textbf{OPEN state}: When the user sets a target temperature above $30.0 \unit{°C}$, the valve shall be fully opened. Then the \chreplaced[id=v0.3]{software}{system} shall display ``OPEN'' instead of the target temperature on the main display page.
-\end{itemize}
+\subsection*{\chadded[id=v0.4]{REQ 19.1: Mocked Boost Mode}}
+\chadded[id=v0.4]{The software shall show a boost mode page for $5 \unit{min}$ after pressing the middle button on the home page. The text ``Boost Mode'' and the remaining time as a countdown in seconds shall be displayed on this screen until the countdown reaches zero. The function shall be deactivatable at any time by pressing the middle button.}
 
 \subsection*{REQ 21: Temperature Offset Configuration}
 The \chreplaced[id=v0.3]{software}{system} shall allow setting a temperature offset between $-3.5 \unit{°C}$ and $+3.5 \unit{°C}$ in increments of $0.5 \unit{°C}$. The default value shall be $0.0 \unit{°C}$. The offset shall be applied to the measured temperature to calculate the effective temperature.
@@ -191,23 +206,23 @@ The \chreplaced[id=v0.3]{software}{system} shall automatically switch between su
 \subsection*{REQ 23: Persistent Settings Storage}
 The \chreplaced[id=v0.3]{software}{system} shall persist all user-configured settings in non-volatile memory. These settings shall survive battery removal and replacement.
 
-\subsection*{REQ 24: Factory Reset}
-The \chreplaced[id=v0.3]{software}{system} shall provide a factory reset function that clears all user settings and returns to default configuration. A confirmation prompt page (``Confirm Factory Reset?'') shall be displayed to prevent accidental data loss.
+\subsection*{\chdeleted[id=v0.4]{REQ 24: Factory Reset}}
+\chdeleted[id=v0.4]{The \chreplaced[id=v0.3]{software}{system} shall provide a factory reset function that clears all user settings and returns to default configuration. A confirmation prompt page (``Confirm Factory Reset?'') shall be displayed to prevent accidental data loss.}
 
-\subsection*{REQ 25: Automatic Descaling Routine}
-The \chreplaced[id=v0.3]{software}{system} shall perform an automatic descaling routine once a week on Saturday at 12:00 to protect against calcification of the valve. The descaling procedure shall:
+\subsection*{\chdeleted[id=v0.4]{REQ 25: Automatic Descaling Routine}}
+\chdeleted[id=v0.4]{The \chreplaced[id=v0.3]{software}{system} shall perform an automatic descaling routine once a week on Saturday at 12:00 to protect against calcification of the valve. The descaling procedure shall:}
 \begin{itemize}
-    \item Display ``Maintenance...'' indicator page.
-    \item Ignore any user inputs during the routine.
-    \item Move the motor through its full stroke range at maximum speed.
+    \item \chdeleted[id=v0.4]{Display ``Maintenance...'' indicator page.}
+    \item \chdeleted[id=v0.4]{Ignore any user inputs during the routine.}
+    \item \chdeleted[id=v0.4]{Move the motor through its full stroke range at maximum speed.}
 \end{itemize}
-The calcification protection routine shall continue running in all operational modes except Boost Mode. If Boost Mode is active, the \chreplaced[id=v0.3]{software}{system} shall wait until it is deactivated before beginning the descaling routine.
+\chdeleted[id=v0.4]{The calcification protection routine shall continue running in all operational modes except Boost Mode. If Boost Mode is active, the \chreplaced[id=v0.3]{software}{system} shall wait until it is deactivated before beginning the descaling routine.}
 
-\subsection*{\chadded[id=v0.2]{REQ 28: Deep Sleep Mode}}
-\chadded[id=v0.2]{The \chreplaced[id=v0.3]{software}{system} shall enter a deep sleep mode to minimize power consumption when no user interactions occur for \chreplaced[id=v0.3]{$3 \unit{s}$}{$30 \unit{s}$} after an inactivity timeout (described in REQ 16) and no tasks are being executed (e.g., Boost Mode). In deep sleep mode, all non-essential functions shall be disabled, and the \chreplaced[id=v0.3]{software}{system} shall only wake up upon user interaction or scheduled tasks (e.g., Descaling Routine).}
+\subsection*{\chdeleted[id=v0.4]{REQ 28: Deep Sleep Mode}}
+\chdeleted[id=v0.4]{The \chreplaced[id=v0.3]{software}{system} shall enter a deep sleep mode to minimize power consumption when no user interactions occur for \chreplaced[id=v0.3]{$3 \unit{s}$}{$30 \unit{s}$} after an inactivity timeout (described in REQ 16) and no tasks are being executed (e.g., Boost Mode). In deep sleep mode, all non-essential functions shall be disabled, and the \chreplaced[id=v0.3]{software}{system} shall only wake up upon user interaction or scheduled tasks (e.g., Descaling Routine).}
 
-\subsection*{\chadded[id=v0.3]{REQ 30: Control Algorithms Integration}}
-\chadded[id=v0.3]{The software shall make possible the integration of control algorithms (e.g., \ac{pid} control) to regulate the valve position based on the difference between the target temperature and the effective temperature.}
+\subsection*{\chdeleted[id=v0.4]{REQ 30: Control Algorithms Integration}}
+\chdeleted[id=v0.4]{The software shall make possible the integration of control algorithms (e.g., \ac{pid} control) to regulate the valve position based on the difference between the target temperature and the effective temperature.}
 
 % Commented requirements (Future enhancements)
 
@@ -276,6 +291,8 @@ The calcification protection routine shall continue running in all operational m
 \subsection*{\chadded[id=v0.3]{REQ 30: Hardware Components Replaceability}}
 \chadded[id=v0.3]{The software shall be designed to allow easy replacement of hardware components (e.g., display, driver \ac{ic} of the motor, temperature sensor) with minimal changes to the codebase. Hardware abstraction layers shall be implemented to facilitate this replaceability.}
 
+\subsection*{\chadded[id=v0.4]{REQ 31: Button Hints Display}}
+\chadded[id=v0.4]{The software shall display button hints on the screen for each operational page, indicating the function of each button (left, middle, right) relevant to the current context.}
 
 % \subsection*{REQ 28: Battery Life}
 % The system shall operate on two 1.5V LR6/mignon/AA alkaline batteries with an expected battery life of approximately 2 years.
