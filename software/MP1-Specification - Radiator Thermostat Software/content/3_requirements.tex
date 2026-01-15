@@ -81,7 +81,7 @@ The \chreplaced[id=v0.3]{software}{system} shall provide the following configura
     \item \textbf{\ac{cod}}: Manual configuration via buttons on the device without wireless connectivity.
     \item \chdeleted[id=v0.2]{\textbf{\ac{cva}}: Partially automatic, wireless configuration via Matter standard and/or Thread protocol.}
 \end{itemize}
-The setup process shall run after battery insertion\chreplaced[id=v1.0]{. Valid configuration options saved in persistent storage shall be used as initial values for the setup process.}{ if no complete configuration exists in persistent storage. Otherwise, the \chreplaced[id=v0.3]{software}{system} shall resume normal operation with existing settings.}
+The setup process shall run at \chreplaced[id=v1.0]{start-up. Valid configuration options saved in persistent storage shall be used as initial values for the setup process.}{battery insertion if no complete configuration exists in persistent storage. Otherwise, the \chreplaced[id=v0.3]{software}{system} shall resume normal operation with existing settings.}
 
 \subsection*{\chdeleted[id=v0.2]{REQ 9.1: Configuration Routine Choice}}
 \label{subsec:REQ 9.1: Configuration Routine Choice}
@@ -291,7 +291,7 @@ The \chreplaced[id=v0.3]{software}{system} shall persist all user-configured set
 \subsection*{\chadded[id=v0.3]{REQ 30: Hardware Components Replaceability}}
 \chadded[id=v0.3]{The software shall be designed to allow easy replacement of hardware components (e.g., display, driver \ac{ic} of the motor, temperature sensor) with minimal changes to the codebase. Hardware abstraction layers shall be implemented to facilitate this replaceability.}
 
-\subsection*{\chadded[id=v1.0]{REQ 31: Button Hints Display}}
+\subsection*{\chadded[id=v1.0]{REQ 31: Display Button Hints}}
 \chadded[id=v1.0]{The software shall display button hints on the screen for each operational page, indicating the function of each button (left, middle, right) relevant to the current context.}
 
 % \subsection*{REQ 28: Battery Life}
