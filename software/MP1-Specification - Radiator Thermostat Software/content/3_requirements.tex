@@ -96,7 +96,7 @@ The setup process shall run after battery insertion\chreplaced[id=v0.4]{. Valid 
 \subsection*{REQ 10: Date and Time Configuration}
 The \chreplaced[id=v0.3]{software}{system} shall request date and time configuration as the first step in the \acs{cod}\chdeleted[id=v0.4]{, or each time if no wireless connection is configured}. The user shall be able to set the year, month, day, hour, and minute through the control wheel interface with confirmation capability via the centered button. After setting the date and time, the \chreplaced[id=v0.3]{software}{system} shall ask whether the user wants to enable automatic summer/winter time switching.
 
-\subsection*{REQ 20: Temperature Range\chreplaced[id=v0.4]{,}{ and} Resolution \chadded[id=v0.4]{and Valve States}}
+\subsection*{REQ 20: \chadded[id=v0.4]{Target} Temperature Range\chreplaced[id=v0.4]{,}{ and} Resolution \chadded[id=v0.4]{and Valve States}}
 \chreplaced[id=v0.4]{T}{In Manual Mode, t}he \chreplaced[id=v0.3]{software}{system} shall allow setting target temperatures in the range of $5.0 \unit{°C}$ to $30.0 \unit{°C}$ in increments of $0.5 \unit{°C}$\chadded[id=v0.4]{ in all related input fields}. The \chreplaced[id=v0.3]{software}{system} shall\chadded[id=v0.4]{ also} support the\chadded[id=v0.4]{ setting of} following \chreplaced[id=v0.4]{valve}{special} states\chadded[id=v0.4]{ in the same input fields}:
 \begin{itemize}
     \item \chadded[id=v0.4]{\textbf{OFF/}}\textbf{CLOSED state}: If the user sets a target temperature below $5.0 \unit{°C}$, \chreplaced[id=v0.4]{``OFF'' shall be displayed instead of the target temperature number in an input or output field.}{the valve shall be fully closed. Then the \chreplaced[id=v0.3]{software}{system} shall display ``CLOSED'' instead of the target temperature on the main display page.}
@@ -149,7 +149,7 @@ On the  \chadded[id=v0.4]{Home/}main display page, the \chreplaced[id=v0.3]{soft
     \item Current time in hours and minutes.
     % \item Current day of week
     \item Current temperature.
-    \item Target temperature \chadded[id=v0.4]{or valve state}.
+    \item Target temperature \chadded[id=v0.4]{or valve state. Adjustable using the control wheel in ``Auto'' and ``Manual'' operational modes (see \textbf{REQ 17})}.
     \item \chreplaced[id=v0.4]{End time of the c}{C}urrent time slot.
     \item Operational mode indicator.
     \item Battery charge as a percentage.
