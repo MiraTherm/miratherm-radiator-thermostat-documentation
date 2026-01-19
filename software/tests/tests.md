@@ -52,3 +52,11 @@ Unless otherwise specified in the test scenarios, please ensure the following be
 
 |ID|Name|Commit Hash|Status|Comments|
 |--|-----------|-----------|------|--------|
+|5|Home Display Page|016659f10fa078166a2549f68c3efff718f45566|✅Passed||
+|6|Target Temperature Range, Resolution and Valve States|016659f10fa078166a2549f68c3efff718f45566|✅Passed||
+|7|Mode Switch|016659f10fa078166a2549f68c3efff718f45566|✅Passed||
+|8|COD: Date and Time Setup|016659f10fa078166a2549f68c3efff718f45566|✅Passed||
+|9|COD: Daily Schedule Setup|016659f10fa078166a2549f68c3efff718f45566|✅Passed||
+|10|Boost-Mode|016659f10fa078166a2549f68c3efff718f45566|✅Passed||
+|11|Temperature Offset|016659f10fa078166a2549f68c3efff718f45566|✅Passed||
+|12|Factory Reset|016659f10fa078166a2549f68c3efff718f45566|✅Passed||
