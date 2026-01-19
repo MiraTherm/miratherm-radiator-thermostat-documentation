@@ -36,6 +36,7 @@ Unless otherwise specified in the test scenarios, please ensure the following be
 ## Integration test scenarios
 
 - For these test scenarios the MCU software must be compiled without any flags set in [tests.h](https://github.com/MiraTherm/miratherm-radiator-thermostat-software/blob/main/Core/Inc/tests.h).
+- All driver test scenarios must be passed before starting the integration tests.
 
 |ID|Name|REQ|Prerequisites|Test scenarios|Expected behavior|
 |--|----|---|-------------|--------------|-----------------|
