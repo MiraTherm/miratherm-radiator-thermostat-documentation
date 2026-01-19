@@ -1,6 +1,6 @@
 # Verification by Inspection
 
-For some of the requierements verification by inspection was performed and documented in this section.
+For some of the requirements verification by inspection was performed and documented in this section.
 
 ## Inspection Scenarios
 
