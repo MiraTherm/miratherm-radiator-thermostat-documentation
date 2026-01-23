@@ -1,55 +1,58 @@
 # MiraTherm Radiator Thermostat Software Architecture
-This document describes the software architecture for the MiraTherm Radiator Thermostat. The software will be written in C and utilizes FreeRTOS for real-time task scheduling and resource management.
+This document describes the software architecture for the MiraTherm Radiator Thermostat. The software is written in C and utilizes FreeRTOS for real-time task scheduling and resource management.
 
 The architecture follows a modular design separating hardware abstraction, core control logic, and user interface (GUI) management. The structure aims to enable future integration of control algorithms and the Matter-over-Thread standard with minimal effort.
 
 ## Architecture Diagram
-![Architecture](./../diagrams/mt-rt-sw-architecture.png)
+![Architecture](./../diagrams/mt-rt-sw-architecture.svg)
 
 ## System Components
 
-### Application Layer (Tasks)
 The software is divided into specific FreeRTOS tasks, each responsible for distinct domain logic. These tasks are commonly started at system boot in the `main` function and then run indefinitely.
 
-**SystemTask**: Acts as the central coordinator. It manages the high-level state machine, coordinates transitions between operational modes, and assigns target temperatures. Therefore, it communicates with other tasks using events (e.g., `EVT_ADAPT_REQ`, `EVT_ADAPT_END`, `ENT_INST_REQ`), reads configurations from `ConfigMutex`, and writes current system state to `SystemStateMutex`.
-
-**InputTask**: Interprets hardware signals from the rotary encoder and push buttons, converting interrupts and GPIO states into logical input events (e.g., `EVT_MENU_BTN`, `EVT_CTRL_WHEEL_DELTA`) and sends them to the `ViewPresenterTask`.
-
-**ViewPresenterTask**: Manages the User Interface. It utilizes the LVGL library for rendering, handles routing of manual commands from the `InputTask`, and presents the system state to the user. Therefore, it writes to `ConfigMutex`, reads from `SystemStateMutex`, and sends command events to `SystemTask`.
-
-**SensorTask**: Periodically reads raw data from hardware sensors (e.g., temperature), converts them to internally used units (e.g., raw data to °C in float), and updates the shared `SystemStateMutex`.
-
-**ControlTask**: Executes the control loop and receives related values (e.g., current temperature and target temperature) from `SystemStateMutex`. The calculation of the temperature setpoint is currently mocked as a placeholder for future control algorithms integration.
-
-**MaintenanceTask**: Handles command events from `SystemTask` for non-standard operations such as valve adaptation (calibration) and descaling routines. Moreover, it sets fully opened (`EVT_OPEN_STATE` 100%) or fully closed (`EVT_CLOSED_STATE` 0%) positions. Therefore, it interacts with the `ControlTask` to stop the control loop and use `ValveFacade` to move the valve to specific positions as part of these procedures.
-
-**StorageTask**: Manages non-volatile memory interaction, ensuring configuration data is saved to the internal Flash via an EEPROM emulation layer. It loads configuration data at startup upon receiving `EVT_CFG_LOAD_REQ` and clears saved data upon receiving `EVT_CFG_RST_REQ` during factory reset routine.
-
 ### Synchronization & Data Structures
-Thread safety is maintained using Event Queues and Mutexes for shared data structures:
+Tasks communicate using event queues and mutex-protected structures to ensure thread safety. They are created and passed to tasks as parameters before the scheduler is started. This prevents deadlocks and priority inversion problems and enables flexible priority adjustments.
 
-**SystemStateMutex**: Holds volatile runtime data (Current Temperature, Target Temperature, Battery SoC, Current System Mode etc.).
+#### Event Queues
 
-**ConfigMutex**: Holds configuration settings.
+To ensure correct order of the program flow, tasks communicate using event queues for signaling and synchronizing state changes (e.g. using requests).
 
-**SleepLock**: A mechanism utilizing FreeRTOS pre-sleep processing to prevent the STM32WB55 from entering deep sleep while critical tasks (like motor movement or UI interaction) are active. It manages a variable containing bitflags `*_LOCK` that represent whether specific operations are ongoing, ensuring the system remains responsive during these periods.
+#### Access Structures
+
+Mutexes share data between tasks, and each mutex is wrapped in an `Access` structure together with the data it protects:
+
+**SensorValuesAccess**: Holds the latest sensor readings (Temperature, SoC, Motor Current).
+
+**ConfigAccess**: Holds configuration settings. It is automatically being saved to non-volatile memory by `StorageTask` on every update.
+
+**SystemStateAccess**: Holds volatile runtime data (System State, Current Operational Mode, Target Temperature, Current Time Slot etc.).
+
+### Application Layer (Tasks)
+
+**SystemTask**: Acts as the central coordinator. It manages the high-level state machine, coordinates transitions between operational modes and assigns target temperatures. Therefore, it communicates with other tasks using events (e.g., `EVT_SYS_INIT_END`, `EVT_ADAPT_REQ`, `EVT_ADAPT_END`), reads configurations from `ConfigAccess`, and manages `SystemStateAccess`.
+
+**InputTask**: Interprets hardware signals from `RotaryEncoder` and `Buttons`, converting interrupts and GPIO states into logical input events (e.g., `EVT_MENU_BTN`, `EVT_CTRL_WHEEL_DELTA`) and sends them to the `ViewPresenterTask`.
+
+**ViewPresenterTask**: Manages the User Interface. It uses a router to implement screen navigation between different views according to current system state. The views utilize the LVGL library for rendering and update display elements based on user inputs and system variables. `ViewPresenterTask` receives input events from `InputTask`, reads measurements from `SensorValuesAccess`, reads and writes `ConfigAccess` accordingly to user inputs. It has two ways to communicate with `SystemTask`:
+- using events (e.g., `EVT_COD_DT_END` to signalize the end of date/time setup on device startup).
+- reading and writing `SystemStateAccess` to display currently selected variables (e.g., Operational Mode) and perform user adjustments (e.g., Target Temperature).
+
+**SensorTask**: Periodically reads raw data from hardware sensors (e.g., temperature), converts them to internally used units (e.g., raw data to °C in float), and updates the shared `SensorValuesAccess`.
+
+**StorageTask**: Manages non-volatile memory interaction, ensuring configuration data is saved to the internal Flash via an EEPROM emulation layer. It communicates with `SystemTask` using events to ensure sequential program flow.
+
+**MaintenanceTask**: Handles command events from `SystemTask` for non-standard operations such as valve adaptation (calibration) and descaling routines. The task is currently mocked and implements only a mocked valve adaptation routine.
+
+**ControlTask**: Executes the control loop. The task is currently not implemented.
 
 ### Hardware Abstraction Layer (HAL)
-**Display**: Driver for SH1106 OLED display (128×64) via I²C.
+**LVGLDisplayPort**: Port of SH1106 based 128x64 display for LVGL library. It can be reimplemented in order to replace the display with another one.
 
-**MotorDriver**: Driver for a DRV8833 module. Handles states: Coast, Forward, Backward, Brake.
+**Motor**: Software abstraction for DRV8833 or similar motor drivers. Handles states: Coast, Forward, Backward, Brake
 
-#### Sensors
-**TemperatureSensor**: Abstraction for temperature sensor integrated into the STM32WB55 microcontroller.
-
-**SoCSensor**: ADC driver for measuring power supply voltage to calculate battery charge level.
-
-**MotorCurrentSensor**: Shunt resistor ADC driver for measuring motor current consumption during valve operation.
-
-#### Inputs
 **RotaryEncoder**: Quadrature decoder driver for control wheel input.
 
-**Buttons**: Interrupt-based driver for Mode, Centered, and Menu buttons.
+**Buttons**: Interrupt-based driver for Left, Middle and Right buttons.
 
-#### ValveFacade 
-**ValveFacade** is high-level abstraction layer sitting on top of the `MotorDriver` and `MotorCurrentSensor`, allowing tasks to set valve positions (0-100%) rather than managing raw motor inputs.
+### Sensors (ADC DMA)
+ADC and internal temperature sensor measurements have no own abstraction layers. Due to usage of DMA channels of a single ADC all measurements and calculations are executed in `SensorTask` for performance optimization and code clarity.
