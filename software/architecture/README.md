@@ -15,7 +15,7 @@ Tasks communicate using event queues and mutex-protected structures to ensure th
 
 #### Event Queues
 
-To ensure correct order of the program flow, tasks communicate using event queues for signaling and synchronizing state changes (e.g. using requests).
+To ensure correct order of the program flow, tasks communicate using event queues for signaling and synchronizing state changes (e.g., using requests). Each event quese is intended for one-directional communication between two tasks. For bidirectional communication, two event queues are used.
 
 #### Access Structures
 
