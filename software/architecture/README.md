@@ -57,15 +57,27 @@ Mutexes share data between tasks, and each mutex is wrapped in an `Access` struc
 ### Sensors (ADC DMA)
 ADC and internal temperature sensor measurements have no own abstraction layers. Due to usage of DMA channels of a single ADC all measurements and calculations are executed in `SensorTask` for performance optimization and code clarity.
 
-## Model View Presenter (MVP) Pattern
+## Model View Presenter ViewModel (MVPVM) Pattern
 
-As mentioned before, the User Interface implementation follows the Model View Presenter (MVP) design pattern to separate concerns and improve extendability and maintainability. 
+As mentioned before, the User Interface implementation follows the Model View Presenter ViewModel (MVPVM) design pattern to separate concerns and improve extendability and maintainability. 
 
-### MVP Components
+Be aware that this is not a "classical" MVPVM implementation, but rather a simplified and adapted version tailored for the constraints of an embedded system with limited resources.
+
+### MVPVM Components
 
 The whole UI logic is encapsulated within the `ViewPresenterTask`, which consists of the following components:
 - **Router**: Manages screen navigation and page transitions based on system state and return values of presenters. Each page is represented by one or multiple views and their corresponding presenters. The router initializes and deinitializes presenters due to currently active page and then forwards input events to the currently active presenter.
-- (**Models**): There are no dedicated models in this implementation. This abstraction is omitted for simplicity, and the presenters directly access the shared data structures (`SensorValuesAccess`, `ConfigAccess`, `SystemStateAccess`) or HAL functions (e.g., RTC) as needed.
+- (**Models**): There are no dedicated models in this implementation. This abstraction is omitted for simplicity and for memory efficiency, and the presenters directly access the shared data structures (`SensorValuesAccess`, `ConfigAccess`, `SystemStateAccess`) or HAL functions (e.g., RTC) as needed.
 - **Presenters**: Responsible for handling the presentation logic of individual views and user interactions. They receive input events from the router, update the models (shared data structures or HAL), and instruct the views to update their display elements accordingly.
 - **ViewModels**: Data structures that encapsulate the data needed by views for rendering. Presenters populate these view models based on the current state of the models.
 - **Views**: Responsible for updating/rendering the graphical elements on the display using the LVGL library.
+
+### Differences from "classical" MVPVM
+
+The "classical" definition of this hybrid pattern can be derived from an article by Bill Kratochvil publicated in MSDN Magazine to solve the limitations of using pure MVVM in complex navigation scenarios. ([Link to the article](https://learn.microsoft.com/en-us/archive/msdn-magazine/2011/december/mvpvm-design-pattern-the-model-view-presenter-viewmodel-design-pattern-for-wpf#the-mvpvm-pattern)).
+
+However, this implementation deviates from the classical MVPVM pattern in several ways to better suit the constraints and requirements of an embedded system with limited resources:
+
+1) **No dedicated Models**: In this implementation, the traditional model layer is omitted to avoid excessive memory allocation and simplify the design.
+2) **Router instead of direct navigation**: Instead of presenters directly managing navigation between views, a router component is introduced to centralize screen navigation logic. This enhances maintainability and scalability.
+3) **No observers/notifications**: In the classical MVPVM pattern, ViewModels notify Views about data changes using observer patterns or notifications. In this implementation, presenters directly instruct views to update whenever necessary, simplifying the communication flow.
