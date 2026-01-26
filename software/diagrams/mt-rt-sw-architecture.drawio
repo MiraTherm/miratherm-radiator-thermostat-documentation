@@ -1,6 +1,6 @@
 <mxfile host="65bd71144e">
     <diagram name="Seite-1" id="oSMfVe9FBlaE4qSntFBy">
-        <mxGraphModel dx="881" dy="899" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1654" pageHeight="1169" math="0" shadow="0">
+        <mxGraphModel dx="1268" dy="629" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1654" pageHeight="1169" math="0" shadow="0">
             <root>
                 <mxCell id="0"/>
                 <mxCell id="1" parent="0"/>
@@ -28,15 +28,15 @@
                         <mxPoint x="-27" y="7" as="offset"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="43" value="&lt;b&gt;ControlTask&lt;/b&gt;&lt;br&gt;task for temperature controller" style="html=1;dropTarget=0;whiteSpace=wrap;fontColor=default;dashed=1;" parent="1" vertex="1">
-                    <mxGeometry x="282" y="590" width="180" height="90" as="geometry"/>
+                <mxCell id="43" value="&lt;b&gt;ControlTask&lt;/b&gt;&lt;br&gt;task for temperature controller" style="html=1;dropTarget=0;whiteSpace=wrap;fontColor=default;" parent="1" vertex="1">
+                    <mxGeometry x="282" y="610" width="180" height="90" as="geometry"/>
                 </mxCell>
                 <mxCell id="44" value="" style="shape=module;jettyWidth=8;jettyHeight=4;fontColor=default;" parent="43" vertex="1">
                     <mxGeometry x="1" width="20" height="20" relative="1" as="geometry">
                         <mxPoint x="-27" y="7" as="offset"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="45" value="&lt;b&gt;MaintenanceTask&lt;/b&gt;&lt;br&gt;maintenance routines &lt;br&gt;execution" style="html=1;dropTarget=0;whiteSpace=wrap;fontColor=default;dashed=1;dashPattern=12 12;" parent="1" vertex="1">
+                <mxCell id="45" value="&lt;b&gt;MaintenanceTask&lt;/b&gt;&lt;br&gt;maintenance routines &lt;br&gt;execution" style="html=1;dropTarget=0;whiteSpace=wrap;" parent="1" vertex="1">
                     <mxGeometry x="282" y="490" width="180" height="90" as="geometry"/>
                 </mxCell>
                 <mxCell id="46" value="" style="shape=module;jettyWidth=8;jettyHeight=4;fontColor=default;" parent="45" vertex="1">
@@ -411,18 +411,6 @@
                         <mxPoint y="-8" as="offset"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="260" value="" style="rounded=0;whiteSpace=wrap;html=1;dashed=1;dashPattern=12 12;" parent="1" vertex="1">
-                    <mxGeometry x="260.5" y="705" width="43" height="20" as="geometry"/>
-                </mxCell>
-                <mxCell id="261" value="" style="rounded=0;whiteSpace=wrap;html=1;dashed=1;" parent="1" vertex="1">
-                    <mxGeometry x="260.5" y="735" width="43" height="20" as="geometry"/>
-                </mxCell>
-                <mxCell id="263" value="&amp;nbsp; - currently mocked" style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
-                    <mxGeometry x="303.5" y="700" width="110" height="30" as="geometry"/>
-                </mxCell>
-                <mxCell id="264" value="&amp;nbsp; - currently not implemented" style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
-                    <mxGeometry x="303.5" y="730" width="180" height="30" as="geometry"/>
-                </mxCell>
                 <mxCell id="278" value="" style="endArrow=open;html=1;rounded=0;endFill=0;exitX=0.75;exitY=1;exitDx=0;exitDy=0;edgeStyle=orthogonalEdgeStyle;fontColor=default;entryX=0.75;entryY=0;entryDx=0;entryDy=0;" parent="1" source="49" target="244" edge="1">
                     <mxGeometry width="50" height="50" relative="1" as="geometry">
                         <mxPoint x="417" y="260" as="sourcePoint"/>
@@ -494,7 +482,7 @@
                         <mxPoint x="4" y="165" as="offset"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="290" value="" style="endArrow=none;html=1;rounded=0;endFill=0;exitX=0.5;exitY=0;exitDx=0;exitDy=0;edgeStyle=orthogonalEdgeStyle;startArrow=open;startFill=0;fontColor=default;" edge="1" parent="1" source="121">
+                <mxCell id="290" value="" style="endArrow=none;html=1;rounded=0;endFill=0;exitX=0.5;exitY=0;exitDx=0;exitDy=0;edgeStyle=orthogonalEdgeStyle;startArrow=open;startFill=0;fontColor=default;" parent="1" source="121" edge="1">
                     <mxGeometry width="50" height="50" relative="1" as="geometry">
                         <mxPoint x="590" y="689.53" as="sourcePoint"/>
                         <mxPoint x="570" y="620" as="targetPoint"/>
@@ -503,10 +491,16 @@
                         </Array>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="291" value="&lt;b&gt;motor states&lt;br&gt;&lt;/b&gt;{coast, forward, backward, brake}" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontColor=default;" connectable="0" vertex="1" parent="290">
+                <mxCell id="291" value="&lt;b&gt;motor states&lt;br&gt;&lt;/b&gt;{coast, forward, backward, brake}" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontColor=default;" parent="290" connectable="0" vertex="1">
                     <mxGeometry x="-0.3006" relative="1" as="geometry">
                         <mxPoint x="2" y="-7" as="offset"/>
                     </mxGeometry>
+                </mxCell>
+                <mxCell id="293" value="Currently mocked" style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;darkOpacity=0.05;size=15;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
+                    <mxGeometry x="260" y="470" width="80" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="294" value="Currently not implemented" style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;darkOpacity=0.05;size=15;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
+                    <mxGeometry x="260" y="585" width="80" height="55" as="geometry"/>
                 </mxCell>
             </root>
         </mxGraphModel>
