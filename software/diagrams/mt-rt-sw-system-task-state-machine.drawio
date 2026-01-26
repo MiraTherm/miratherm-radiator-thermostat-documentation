@@ -1,6 +1,6 @@
 <mxfile host="65bd71144e">
     <diagram id="R7nA9iJf4RvnIifsXugM" name="Page-1">
-        <mxGraphModel dx="906" dy="449" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1654" pageHeight="1169" math="0" shadow="0">
+        <mxGraphModel dx="1492" dy="740" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1654" pageHeight="1169" math="0" shadow="0">
             <root>
                 <mxCell id="0"/>
                 <mxCell id="1" parent="0"/>
@@ -76,7 +76,7 @@
                 </mxCell>
                 <mxCell id="69" value="EVT_ADAPT_END &lt;br&gt;{result == OK}" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="68" vertex="1" connectable="0">
                     <mxGeometry x="0.0439" y="3" relative="1" as="geometry">
-                        <mxPoint x="293" y="-223" as="offset"/>
+                        <mxPoint x="367" y="-68" as="offset"/>
                     </mxGeometry>
                 </mxCell>
                 <mxCell id="70" value="STATE_FACTORY_RST" style="swimlane;fontStyle=4;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=20;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=0;marginBottom=0;html=1;rounded=1;absoluteArcSize=1;arcSize=18;whiteSpace=wrap;fillColor=#ffe6cc;strokeColor=#d79b00;" parent="1" vertex="1">
@@ -190,8 +190,8 @@
                 <mxCell id="107" value="Reset of the device" style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;darkOpacity=0.05;size=15;fillColor=#fff2cc;strokeColor=#d6b656;" parent="1" vertex="1">
                     <mxGeometry x="92" y="495" width="80" height="55" as="geometry"/>
                 </mxCell>
-                <mxCell id="114" value="CheckAndRun functions not implemented" style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;darkOpacity=0.05;size=15;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
-                    <mxGeometry x="700" y="480" width="80" height="70" as="geometry"/>
+                <mxCell id="114" value="CheckAndRun functions currently not implemented" style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;darkOpacity=0.05;size=15;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
+                    <mxGeometry x="700" y="460" width="80" height="90" as="geometry"/>
                 </mxCell>
             </root>
         </mxGraphModel>
