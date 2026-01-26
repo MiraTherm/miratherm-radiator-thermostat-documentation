@@ -4,7 +4,7 @@ This document describes the software architecture for the MiraTherm Radiator The
 The architecture follows a modular design separating hardware abstraction, core control logic, and user interface (GUI) management. The structure aims to enable future integration of control algorithms and the Matter-over-Thread standard with minimal effort.
 
 ## Architecture Diagram
-![Architecture](./../diagrams/mt-rt-sw-architecture.svg)
+![Architecture](./../diagrams/mt-rt-sw-architecture.png)
 
 ## Architecture Components
 
@@ -94,7 +94,7 @@ As described before, the `ViewPresenterTask` interacts with the `SystemTask` in 
 
 The interaction points with the `ViewPresenterTask` can be clearly identified in the diagram of the `SystemTask` state machine:
 
-![SystemTask State Machine](./../diagrams/mt-rt-sw-system-task-state-machine.svg)
+![SystemTask State Machine](./../diagrams/mt-rt-sw-system-task-state-machine.png)
 
 For example, during the `STATE_INIT`, the `ViewPresenterTask` waits for the `EVT_SYS_INIT_END` event from the `SystemTask` before rendering. After that, `SystemTask` waits for the end of the COD (configuration on device) signalized by `EVT_COD_END` from the `ViewPresenterTask`.
 
