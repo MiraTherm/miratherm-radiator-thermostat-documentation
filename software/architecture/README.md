@@ -56,3 +56,16 @@ Mutexes share data between tasks, and each mutex is wrapped in an `Access` struc
 
 ### Sensors (ADC DMA)
 ADC and internal temperature sensor measurements have no own abstraction layers. Due to usage of DMA channels of a single ADC all measurements and calculations are executed in `SensorTask` for performance optimization and code clarity.
+
+## Model View Presenter (MVP) Pattern
+
+As mentioned before, the User Interface implementation follows the Model View Presenter (MVP) design pattern to separate concerns and improve extendability and maintainability. 
+
+### MVP Components
+
+The whole UI logic is encapsulated within the `ViewPresenterTask`, which consists of the following components:
+- **Router**: Manages screen navigation and page transitions based on system state and return values of presenters. Each page is represented by one or multiple views and their corresponding presenters. The router initializes and deinitializes presenters due to currently active page and then forwards input events to the currently active presenter.
+- (**Models**): There are no dedicated models in this implementation. This abstraction is omitted for simplicity, and the presenters directly access the shared data structures (`SensorValuesAccess`, `ConfigAccess`, `SystemStateAccess`) or HAL functions (e.g., RTC) as needed.
+- **Presenters**: Responsible for handling the presentation logic of individual views and user interactions. They receive input events from the router, update the models (shared data structures or HAL), and instruct the views to update their display elements accordingly.
+- **ViewModels**: Data structures that encapsulate the data needed by views for rendering. Presenters populate these view models based on the current state of the models.
+- **Views**: Responsible for updating/rendering the graphical elements on the display using the LVGL library.
