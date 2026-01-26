@@ -34,8 +34,8 @@ Mutexes share data between tasks, and each mutex is wrapped in an `Access` struc
 **InputTask**: Interprets hardware signals from `RotaryEncoder` and `Buttons`, converting interrupts and GPIO states into logical input events (e.g., `EVT_MENU_BTN`, `EVT_CTRL_WHEEL_DELTA`) and sends them to the `ViewPresenterTask`.
 
 **ViewPresenterTask**: Manages the User Interface. It uses a router to implement screen navigation between different views according to current system state. The views utilize the LVGL library for rendering and update display elements based on user inputs and system variables. `ViewPresenterTask` receives input events from `InputTask`, reads measurements from `SensorValuesAccess`, reads and writes `ConfigAccess` accordingly to user inputs. It has two ways to communicate with `SystemTask`:
-- using events (e.g., `EVT_COD_DT_END` to signalize the end of date/time setup on device startup).
-- reading and writing `SystemStateAccess` to display currently selected variables (e.g., Operational Mode) and perform user adjustments (e.g., Target Temperature).
+- using events (e.g., `EVT_COD_DT_END` to signalize the end of date/time setup on device startup),
+- reading and writing `SystemStateAccess` for system state dependent routing and displaying (e.g., Operational Mode) or adjusting (e.g., Target Temperature) system variables.
 
 **SensorTask**: Periodically reads raw data from hardware sensors (e.g., temperature), converts them to internally used units (e.g., raw data to °C in float), and updates the shared `SensorValuesAccess`.
 
@@ -72,14 +72,30 @@ The whole UI logic is encapsulated within the `ViewPresenterTask`, which consist
 - **ViewModels**: Data structures that encapsulate the data needed by views for rendering. Presenters populate these view models based on the current state of the models.
 - **Views**: Responsible for updating/rendering the graphical elements on the display using the LVGL library.
 
+Using this pattern, a presenter can be reused with different views, or views can be reused with different presenters. Moreover, presenters or views can be nested, for example, to implement wizard workflows.
+
 ### Differences from "classical" MVPVM
 
-The "classical" definition of this hybrid pattern can be derived from an article by Bill Kratochvil publicated in MSDN Magazine to solve the limitations of using pure MVVM in complex navigation scenarios. ([Link to the article](https://learn.microsoft.com/en-us/archive/msdn-magazine/2011/december/mvpvm-design-pattern-the-model-view-presenter-viewmodel-design-pattern-for-wpf#the-mvpvm-pattern)).
+The "classical" definition of MVPVM can be derived from an article by Bill Kratochvil publicated in MSDN Magazine. ([Link to the article of Bill Kratochvil](https://learn.microsoft.com/en-us/archive/msdn-magazine/2011/december/mvpvm-design-pattern-the-model-view-presenter-viewmodel-design-pattern-for-wpf#the-mvpvm-pattern)).
 
-However, this implementation deviates from the classical MVPVM pattern in several ways to better suit the constraints and requirements of an embedded system with limited resources. Besides of the mentioned article of Bill Kratochvil, further inspiration was taken from an article by Mincheol Lee in Medium. ([Link to the article](https://medium.com/@mincheol.lee/model-view-presenter-pattern-in-streamlit-4cef7bb59028)).
+However, the implementation described above deviates from the MVPVM pattern presented by Bill Kratochvil in several ways. It is tailored to better suit the constraints and requirements of an embedded system with limited resources. Besides of the mentioned article of Bill Kratochvil, further inspiration was taken from an article by Mincheol Lee in Medium. ([Link to the article of Mincheol Lee](https://medium.com/@mincheol.lee/model-view-presenter-pattern-in-streamlit-4cef7bb59028)).
 
-The key differences to the "classical" MVPVM pattern are:
+The key differences of this implementation are:
 
 1) **No dedicated Models**: In this implementation, the traditional model layer is omitted to avoid excessive memory allocation and simplify the design.
 2) **Router instead of direct navigation**: Instead of presenters directly managing navigation between views, a router component is introduced to centralize screen navigation logic. This enhances maintainability and scalability.
 3) **No observers/notifications**: In the classical MVPVM pattern, ViewModels notify Views about data changes using observer patterns or notifications. In this implementation, presenters directly instruct views to update whenever necessary, simplifying the communication flow.
+
+### Interaction between MVPVM and `SystemTask`
+
+As described before, the `ViewPresenterTask` interacts with the `SystemTask` in two ways:
+- using events in cases where one of the tasks needs to notify the other about a specific occurrence,
+- reading and writing `SystemStateAccess` for system state dependent routing and displaying or adjusting system variables.
+
+The interaction points with the `ViewPresenterTask` can be clearly identified in the diagram of the `SystemTask` state machine:
+
+![SystemTask State Machine](./../diagrams/mt-rt-sw-system-task-state-machine.svg)
+
+For example, during the `STATE_INIT`, the `ViewPresenterTask` waits for the `EVT_SYS_INIT_END` event from the `SystemTask` before rendering. After that, `SystemTask` waits for the end of the COD (configuration on device) signalized by `EVT_COD_END` from the `ViewPresenterTask`.
+
+It is noticeable that the `ViewPresenterTask` do not receive any events besides `EVT_SYS_INIT_END`. That's because after initialization, the router of the `ViewPresenterTask` reads the system state from `SystemStateAccess` directly to determine corresponding pages to be rendered. (Assignment of multiple pages to multiple system states is also possible.)
