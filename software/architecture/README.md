@@ -6,7 +6,7 @@ The architecture follows a modular design separating hardware abstraction, core 
 ## Architecture Diagram
 ![Architecture](./../diagrams/mt-rt-sw-architecture.svg)
 
-## System Components
+## Architecture Components
 
 The software is divided into specific FreeRTOS tasks, each responsible for distinct domain logic. These tasks are commonly started at system boot in the `main` function and then run indefinitely.
 
@@ -76,7 +76,9 @@ The whole UI logic is encapsulated within the `ViewPresenterTask`, which consist
 
 The "classical" definition of this hybrid pattern can be derived from an article by Bill Kratochvil publicated in MSDN Magazine to solve the limitations of using pure MVVM in complex navigation scenarios. ([Link to the article](https://learn.microsoft.com/en-us/archive/msdn-magazine/2011/december/mvpvm-design-pattern-the-model-view-presenter-viewmodel-design-pattern-for-wpf#the-mvpvm-pattern)).
 
-However, this implementation deviates from the classical MVPVM pattern in several ways to better suit the constraints and requirements of an embedded system with limited resources:
+However, this implementation deviates from the classical MVPVM pattern in several ways to better suit the constraints and requirements of an embedded system with limited resources. Besides of the mentioned article of Bill Kratochvil, further inspiration was taken from an article by Mincheol Lee in Medium. ([Link to the article](https://medium.com/@mincheol.lee/model-view-presenter-pattern-in-streamlit-4cef7bb59028)).
+
+The key differences to the "classical" MVPVM pattern are:
 
 1) **No dedicated Models**: In this implementation, the traditional model layer is omitted to avoid excessive memory allocation and simplify the design.
 2) **Router instead of direct navigation**: Instead of presenters directly managing navigation between views, a router component is introduced to centralize screen navigation logic. This enhances maintainability and scalability.
