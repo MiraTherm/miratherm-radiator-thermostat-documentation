@@ -6,6 +6,6 @@
 
 ## Compiling
 
-- Use a LaTeX-IDE (e.g. MiKTeX + TeXstudio)
+- Use a LaTeX-IDE (e.g., included dev container or MiKTeX + TeXstudio)
 - Use XeLaTeX-Compiler
 - Use Biber
