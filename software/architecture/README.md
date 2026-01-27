@@ -78,7 +78,7 @@ Using this pattern, a presenter can be reused with different views, or views can
 
 The "classical" definition of MVPVM can be derived from an article by Bill Kratochvil publicated in MSDN Magazine. ([Link to the article of Bill Kratochvil](https://learn.microsoft.com/en-us/archive/msdn-magazine/2011/december/mvpvm-design-pattern-the-model-view-presenter-viewmodel-design-pattern-for-wpf#the-mvpvm-pattern)).
 
-However, the implementation described above deviates from the MVPVM pattern presented by Bill Kratochvil in several ways. It is tailored to better suit the constraints and requirements of an embedded system with limited resources. Besides of the mentioned article of Bill Kratochvil, further inspiration was taken from an article by Mincheol Lee in Medium. ([Link to the article of Mincheol Lee](https://medium.com/@mincheol.lee/model-view-presenter-pattern-in-streamlit-4cef7bb59028)).
+However, the implementation described above deviates from the MVPVM pattern presented by Bill Kratochvil in several ways. It is tailored to better suit the constraints and requirements of an embedded system with limited resources. Besides of the mentioned article of Bill Kratochvil, further inspiration was taken from an article by Mincheol Lee in Medium. ([Link to the article of Mincheol Lee](https://archive.is/MqP2O)).
 
 The key differences of this implementation are:
 
