@@ -61,9 +61,9 @@ ADC and internal temperature sensor measurements have no own abstraction layers.
 
 The User Interface implementation follows a customized version of the Model View Presenter ViewModel (MVPVM) design pattern to separate concerns and improve extendability and maintainability.
 
-Be aware that this is not a "classical" MVPVM implementation, but rather a simplified and adapted version tailored for the constraints of an embedded system with limited resources. Since a Router is introduced to manage screen navigation, we refer to this pattern as "Routed MVPVM" (RMVPVM) in this document.
+Be aware that this is not a "classical" MVPVM implementation, but rather a simplified and adapted version tailored for the constraints of an embedded system with limited resources. Since a Router is introduced to manage screen navigation, we refer to this pattern as "Routed MVPVM" (R-MVPVM) in this document.
 
-### RMVPVM Components
+### R-MVPVM Components
 
 The whole UI logic is encapsulated within the `ViewPresenterTask`, which consists of the following components:
 - **Router**: Manages screen navigation and page transitions based on system state and return values of presenters. Each page is represented by one or multiple presenters and their corresponding views. The router initializes and deinitializes presenters due to currently active page and then forwards input events to the currently active presenter.
@@ -88,9 +88,9 @@ The key differences of the used implementation are:
 2) **Hierarchical initialization**: Presenters are initialized and deinitialized by the router based on the currently active page. Nested presenters are initialized by their parent presenters. Views are initialized by their corresponding presenters.
 3) **No observers/notifications**: In the "classical" MVPVM pattern, view models notify views about data changes using observer patterns or notifications. In this implementation, presenters directly instruct views to update whenever necessary, simplifying the communication flow and reducing overhead.
 
-### Interaction between RMVPVM and `SystemTask`
+### Interaction between R-MVPVM and `SystemTask`
 
-As described before, the `ViewPresenterTask` implements the RMVPVM pattern and interacts with the `SystemTask` in two ways:
+As described before, the `ViewPresenterTask` implements the R-MVPVM pattern and interacts with the `SystemTask` in two ways:
 - using events in cases where one of the tasks needs to notify the other about a specific occurrence,
 - reading and writing `SystemContextAccess` for system state dependent routing and displaying or adjusting system variables.
 
