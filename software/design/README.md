@@ -1,14 +1,14 @@
-# MiraTherm Radiator Thermostat Software Architecture
-This document describes the software architecture for the MiraTherm Radiator Thermostat. The software is written in C and utilizes FreeRTOS for real-time task scheduling and resource management.
+# MiraTherm Radiator Thermostat Software Design
+This document describes the software design for the MiraTherm Radiator Thermostat. It includes the overall architecture, task structure, synchronization mechanisms, and description of used design patterns. The software is written in C and utilizes FreeRTOS for real-time task scheduling and resource management.
 
-The architecture follows a modular design separating hardware abstraction, core control logic, and user interface (GUI) management. The structure aims to enable future integration of control algorithms and the Matter-over-Thread standard with minimal effort.
+The architecture follows a modular design separating hardware abstraction, core control logic, and user interface (UI) management. The structure aims to enable future integration of control algorithms and the Matter-over-Thread standard with minimal effort.
 
 ## Architecture Diagram
 ![Architecture](./../diagrams/mt-rt-sw-architecture.svg)
 
 ## Architecture Components
 
-The software is divided into specific FreeRTOS tasks, each responsible for distinct domain logic. These tasks are commonly started at system boot in the `main` function and then run indefinitely.
+The software is divided into specific FreeRTOS tasks, each responsible for distinct domain logic. These tasks are commonly started at system boot in the `main` function and then run indefinitely. There is only one instance of each task that corresponds to a singleton design pattern.
 
 ### Synchronization & Data Structures
 Tasks communicate using event queues and mutex-protected structures to ensure thread safety. They are created and passed to tasks as parameters before the scheduler is started. This prevents deadlocks and priority inversion problems and enables flexible priority adjustments.
