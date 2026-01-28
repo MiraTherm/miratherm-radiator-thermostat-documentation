@@ -25,17 +25,17 @@ Mutexes share data between tasks, and each mutex is wrapped in an `Access` struc
 
 **ConfigAccess**: Holds configuration settings. It is automatically being saved to non-volatile memory by `StorageTask` on every update.
 
-**SystemStateAccess**: Holds volatile runtime data (System State, Current Operational Mode, Target Temperature, Current Time Slot etc.).
+**SystemContextAccess**: Holds volatile runtime data (System State, Current Operational Mode, Target Temperature, Current Time Slot etc.).
 
 ### Application Layer (Tasks)
 
-**SystemTask**: Acts as the central coordinator. It manages the high-level state machine, coordinates transitions between operational modes and assigns target temperatures. Therefore, it communicates with other tasks using events (e.g., `EVT_SYS_INIT_END`, `EVT_ADAPT_REQ`, `EVT_ADAPT_END`), reads configurations from `ConfigAccess`, and manages `SystemStateAccess`.
+**SystemTask**: Acts as the central coordinator. It manages the high-level state machine, coordinates transitions between operational modes and assigns target temperatures. Therefore, it communicates with other tasks using events (e.g., `EVT_SYS_INIT_END`, `EVT_ADAPT_REQ`, `EVT_ADAPT_END`), reads configurations from `ConfigAccess`, and manages `SystemContextAccess`.
 
 **InputTask**: Interprets hardware signals from `RotaryEncoder` and `Buttons`, converting interrupts and GPIO states into logical input events (e.g., `EVT_MENU_BTN`, `EVT_CTRL_WHEEL_DELTA`) and sends them to the `ViewPresenterTask`.
 
-**ViewPresenterTask**: Manages the User Interface. It uses a router to implement screen navigation between different views according to current system state. The views utilize the LVGL library for rendering and update display elements based on user inputs and system variables. `ViewPresenterTask` receives input events from `InputTask`, reads measurements from `SensorValuesAccess`, reads and writes `ConfigAccess` accordingly to user inputs. It has two ways to communicate with `SystemTask`:
+**ViewPresenterTask**: Manages the User Interface. It uses a router to implement screen navigation between different pages according to current system state. The UI utilizes the LVGL library for rendering and update display elements based on user inputs and system variables. `ViewPresenterTask` receives input events from `InputTask`, reads measurements from `SensorValuesAccess`, reads and writes `ConfigAccess` accordingly to user inputs. It has two ways to communicate with `SystemTask`:
 - using events (e.g., `EVT_COD_DT_END` to signalize the end of date/time setup on device startup),
-- reading and writing `SystemStateAccess` for system state dependent routing and displaying (e.g., Operational Mode) or adjusting (e.g., Target Temperature) system variables.
+- reading and writing `SystemContextAccess` for system state dependent routing and displaying (e.g., Operational Mode) or adjusting (e.g., Target Temperature) system variables.
 
 **SensorTask**: Periodically reads raw data from hardware sensors (e.g., temperature), converts them to internally used units (e.g., raw data to °C in float), and updates the shared `SensorValuesAccess`.
 
@@ -57,40 +57,42 @@ Mutexes share data between tasks, and each mutex is wrapped in an `Access` struc
 ### Sensors (ADC DMA)
 ADC and internal temperature sensor measurements have no own abstraction layers. Due to usage of DMA channels of a single ADC all measurements and calculations are executed in `SensorTask` for performance optimization and code clarity.
 
-## Model View Presenter ViewModel (MVPVM) Pattern
+## Routed Model View Presenter ViewModel Pattern
 
-As mentioned before, the User Interface implementation follows the Model View Presenter ViewModel (MVPVM) design pattern to separate concerns and improve extendability and maintainability. 
+The User Interface implementation follows a customized version of the Model View Presenter ViewModel (MVPVM) design pattern to separate concerns and improve extendability and maintainability.
 
-Be aware that this is not a "classical" MVPVM implementation, but rather a simplified and adapted version tailored for the constraints of an embedded system with limited resources.
+Be aware that this is not a "classical" MVPVM implementation, but rather a simplified and adapted version tailored for the constraints of an embedded system with limited resources. Since a Router is introduced to manage screen navigation, we refer to this pattern as "Routed MVPVM" (RMVPVM) in this document.
 
-### MVPVM Components
+### RMVPVM Components
 
 The whole UI logic is encapsulated within the `ViewPresenterTask`, which consists of the following components:
-- **Router**: Manages screen navigation and page transitions based on system state and return values of presenters. Each page is represented by one or multiple views and their corresponding presenters. The router initializes and deinitializes presenters due to currently active page and then forwards input events to the currently active presenter.
+- **Router**: Manages screen navigation and page transitions based on system state and return values of presenters. Each page is represented by one or multiple presenters and their corresponding views. The router initializes and deinitializes presenters due to currently active page and then forwards input events to the currently active presenter.
 - (**Models**): There are no dedicated models in this implementation. This abstraction is omitted for simplicity and for memory efficiency, and the presenters directly access the shared data structures (`SensorValuesAccess`, `ConfigAccess`, `SystemStateAccess`) or HAL functions (e.g., RTC) as needed.
-- **Presenters**: Responsible for handling the presentation logic of individual views and user interactions. They receive input events from the router, update the models (shared data structures or HAL), and instruct the views to update their display elements accordingly.
+- **Presenters**: Responsible for handling the presentation logic of individual views and user interactions. They initialize views or nested presenters, receive input events from the router, update the models (shared data structures or HAL), and instruct the views to update their display elements accordingly.
 - **ViewModels**: Data structures that encapsulate the data needed by views for rendering. Presenters populate these view models based on the current state of the models.
 - **Views**: Responsible for updating/rendering the graphical elements on the display using the LVGL library.
 
-Using this pattern, a presenter can be reused with different views, or views can be reused with different presenters. Moreover, presenters or views can be nested, for example, to implement wizard workflows.
+Using this pattern, a presenter can be reused with different views, or views can be reused with different presenters, assumed that their view model structures are compatible. Moreover, presenters or views can be nested, for example, to implement wizard workflows.
 
 ### Differences from "classical" MVPVM
 
 The "classical" definition of MVPVM can be derived from an article by Bill Kratochvil publicated in MSDN Magazine. ([Link to the article of Bill Kratochvil](https://learn.microsoft.com/en-us/archive/msdn-magazine/2011/december/mvpvm-design-pattern-the-model-view-presenter-viewmodel-design-pattern-for-wpf#the-mvpvm-pattern)).
 
-However, the implementation described above deviates from the MVPVM pattern presented by Bill Kratochvil in several ways. It is tailored to better suit the constraints and requirements of an embedded system with limited resources. Besides of the mentioned article of Bill Kratochvil, further inspiration was taken from an article by Mincheol Lee in Medium. ([Link to the article of Mincheol Lee](https://archive.is/MqP2O)).
+However, the implementation described above deviates from the MVPVM pattern presented by Bill Kratochvil in several ways. It is tailored to better suit the constraints and requirements of an embedded system with limited resources. 
 
-The key differences of this implementation are:
+Besides of the mentioned article of Bill Kratochvil, further inspiration was taken from an article by Mincheol Lee in Medium to implement sequential MVPVM execution. ([Link to the article of Mincheol Lee](https://archive.is/MqP2O))
 
-1) **No dedicated Models**: In this implementation, the traditional model layer is omitted to avoid excessive memory allocation and simplify the design.
-2) **Router instead of direct navigation**: Instead of presenters directly managing navigation between views, a router component is introduced to centralize screen navigation logic. This enhances maintainability and scalability.
-3) **No observers/notifications**: In the classical MVPVM pattern, ViewModels notify Views about data changes using observer patterns or notifications. In this implementation, presenters directly instruct views to update whenever necessary, simplifying the communication flow.
+The key differences of the used implementation are:
 
-### Interaction between MVPVM and `SystemTask`
+1) **Router instead of direct navigation**: Instead of presenters directly managing navigation between views, a router component is introduced to centralize page navigation logic and input events forwarding. Since input events are received from a separate task (`InputTask`) and not from views directly, this approach simplifies the overall architecture.
+2) **Hierarchical initialization**: Presenters are initialized and deinitialized by the router based on the currently active page. Nested presenters are initialized by their parent presenters. Views are initialized by their corresponding presenters.
+3) **No observers/notifications**: In the "classical" MVPVM pattern, view models notify views about data changes using observer patterns or notifications. In this implementation, presenters directly instruct views to update whenever necessary, simplifying the communication flow and reducing overhead.
 
-As described before, the `ViewPresenterTask` interacts with the `SystemTask` in two ways:
+### Interaction between RMVPVM and `SystemTask`
+
+As described before, the `ViewPresenterTask` implements the RMVPVM pattern and interacts with the `SystemTask` in two ways:
 - using events in cases where one of the tasks needs to notify the other about a specific occurrence,
-- reading and writing `SystemStateAccess` for system state dependent routing and displaying or adjusting system variables.
+- reading and writing `SystemContextAccess` for system state dependent routing and displaying or adjusting system variables.
 
 The interaction points with the `ViewPresenterTask` can be clearly identified in the diagram of the `SystemTask` state machine:
 
@@ -98,4 +100,4 @@ The interaction points with the `ViewPresenterTask` can be clearly identified in
 
 For example, during the `STATE_INIT`, the `ViewPresenterTask` waits for the `EVT_SYS_INIT_END` event from the `SystemTask` before rendering. After that, `SystemTask` waits for the end of the COD (configuration on device) signalized by `EVT_COD_END` from the `ViewPresenterTask`.
 
-It is noticeable that the `ViewPresenterTask` do not receive any events besides `EVT_SYS_INIT_END`. That's because after initialization, the router of the `ViewPresenterTask` reads the system state from `SystemStateAccess` directly to determine corresponding pages to be rendered. (Assignment of multiple pages to multiple system states is also possible.)
+It is noticeable that the `ViewPresenterTask` do not receive any events besides `EVT_SYS_INIT_END`. That's because after initialization, the router of the `ViewPresenterTask` reads the system state from `SystemContextAccess` directly to determine corresponding pages to be rendered. (Assignment of multiple pages to multiple system states is also possible.)
