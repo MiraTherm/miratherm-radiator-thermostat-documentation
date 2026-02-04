@@ -65,7 +65,11 @@ keyword1, keyword2, keyword3, keyword4, keyword5
 %
 
 \section{Introduction}
-Test citation: \cite{IEEEwebsite}.
+Heating private living spaces is one of the most significant sources of $CO_2$ emissions. In Germany, a substantial portion of annual greenhouse gas emissions originates from this sector \cite{StatistischesBundesamt.16.07.2025} \cite{Umweltbundesamt.15.03.2022}. While intelligent heating control and smart home systems offer an average energy saving potential of between 8 and 19\% \cite{Kersken.2018}, the market is currently dominated by proprietary solutions. Consequently, there is a lack of open-domain projects that can serve as a foundation for research and development of smart heating controllers.
+
+This paper presents the software development for a radiator thermostat prototype, realized as part of the interdisciplinary ``MiraTherm Radiator Thermostat'' project at Fulda University of Applied Sciences. The overarching project aims to create a complete device, encompassing mechanics, electronics, and control algorithms.
+
+The primary objective of this work is to establish a solid software foundation for the thermostat's microcontroller-based hardware. While the long-term vision includes control algorithms and wireless connectivity (e.g., Matter-over-Thread), the central contribution of this paper lies in the architectural design of the application and its User Interface (UI). Specifically, we propose the application of the Routed-Model-View-Presenter-ViewModel (R-MVPVM) design pattern in order to decouple UI logic from hardware drivers and core system logic. This approach is used to implement basic consumer functions considering constraints of an embedded system and of the C programming language.
 
 \section{Background} % and Related Work
 Text\dots
