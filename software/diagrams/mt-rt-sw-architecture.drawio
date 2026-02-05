@@ -1,6 +1,6 @@
 <mxfile host="65bd71144e">
     <diagram name="Seite-1" id="oSMfVe9FBlaE4qSntFBy">
-        <mxGraphModel dx="1268" dy="629" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1654" pageHeight="1169" math="0" shadow="0">
+        <mxGraphModel dx="1375" dy="689" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1654" pageHeight="1169" math="0" shadow="0">
             <root>
                 <mxCell id="0"/>
                 <mxCell id="1" parent="0"/>
@@ -105,7 +105,7 @@
                         <mxPoint x="1" y="-8" as="offset"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="74" value="&lt;b style=&quot;scrollbar-color: rgb(226, 226, 226) rgb(251, 251, 251);&quot;&gt;Buttons&lt;/b&gt;&lt;br style=&quot;scrollbar-color: rgb(226, 226, 226) rgb(251, 251, 251);&quot;&gt;&lt;div style=&quot;scrollbar-color: rgb(226, 226, 226) rgb(251, 251, 251);&quot;&gt;buttons abstraction and driver&lt;/div&gt;" style="html=1;dropTarget=0;whiteSpace=wrap;fontColor=default;" parent="1" vertex="1">
+                <mxCell id="74" value="&lt;font&gt;&lt;b style=&quot;scrollbar-color: rgb(226, 226, 226) rgb(251, 251, 251);&quot;&gt;Buttons&lt;/b&gt;&lt;br style=&quot;scrollbar-color: rgb(226, 226, 226) rgb(251, 251, 251);&quot;&gt;&lt;/font&gt;&lt;div style=&quot;scrollbar-color: rgb(226, 226, 226) rgb(251, 251, 251);&quot;&gt;&lt;font&gt;buttons abstraction and driver&lt;/font&gt;&lt;/div&gt;" style="html=1;dropTarget=0;whiteSpace=wrap;fontColor=default;" parent="1" vertex="1">
                     <mxGeometry x="823" y="152" width="160" height="90" as="geometry"/>
                 </mxCell>
                 <mxCell id="75" value="" style="shape=module;jettyWidth=8;jettyHeight=4;fontColor=default;" parent="74" vertex="1">
@@ -295,7 +295,7 @@
                         <mxPoint x="-20" y="-2" as="offset"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="197" value="&lt;b&gt;ConfigAccess&lt;br&gt;&lt;/b&gt;thread safe configuration structure" style="html=1;dropTarget=0;whiteSpace=wrap;fontColor=default;" parent="1" vertex="1">
+                <mxCell id="197" value="&lt;b&gt;ConfigModel&lt;br&gt;&lt;/b&gt;thread safe configuration data structure" style="html=1;dropTarget=0;whiteSpace=wrap;fontColor=default;" parent="1" vertex="1">
                     <mxGeometry x="530" y="310" width="180" height="90" as="geometry"/>
                 </mxCell>
                 <mxCell id="201" value="" style="endArrow=open;html=1;rounded=0;endFill=0;edgeStyle=orthogonalEdgeStyle;exitX=0.5;exitY=1;exitDx=0;exitDy=0;startArrow=none;startFill=0;entryX=0.25;entryY=0;entryDx=0;entryDy=0;fontColor=default;" parent="1" source="197" target="39" edge="1">
@@ -308,7 +308,7 @@
                         </Array>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="202" value="&lt;b&gt;config&lt;/b&gt;&lt;br&gt;&lt;div&gt;struct&lt;/div&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontColor=default;" parent="201" vertex="1" connectable="0">
+                <mxCell id="202" value="&lt;b&gt;config data&lt;/b&gt;&lt;br&gt;&lt;div&gt;struct&lt;/div&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontColor=default;" parent="201" vertex="1" connectable="0">
                     <mxGeometry x="-0.7214" y="-1" relative="1" as="geometry">
                         <mxPoint x="1" y="-6" as="offset"/>
                     </mxGeometry>
@@ -319,12 +319,12 @@
                         <mxPoint x="920" y="760" as="targetPoint"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="206" value="&lt;b&gt;config&lt;/b&gt;&lt;br&gt;&lt;div&gt;struct&lt;/div&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontColor=default;" parent="205" vertex="1" connectable="0">
+                <mxCell id="206" value="&lt;b&gt;config data&lt;/b&gt;&lt;br&gt;&lt;div&gt;struct&lt;/div&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontColor=default;" parent="205" vertex="1" connectable="0">
                     <mxGeometry x="-0.7214" y="-1" relative="1" as="geometry">
                         <mxPoint x="-11" y="-13" as="offset"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="207" value="&lt;b&gt;SystemContextAccess&lt;br&gt;&lt;/b&gt;thread safe system state structure" style="html=1;dropTarget=0;whiteSpace=wrap;fontColor=default;" parent="1" vertex="1">
+                <mxCell id="207" value="&lt;b&gt;SystemModel&lt;br&gt;&lt;/b&gt;thread safe system data structure" style="html=1;dropTarget=0;whiteSpace=wrap;fontColor=default;" parent="1" vertex="1">
                     <mxGeometry x="983" y="570" width="180" height="90" as="geometry"/>
                 </mxCell>
                 <mxCell id="210" value="" style="endArrow=open;html=1;rounded=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;endFill=0;exitX=0.25;exitY=1;exitDx=0;exitDy=0;edgeStyle=orthogonalEdgeStyle;startArrow=open;startFill=0;fontColor=default;" parent="1" source="41" target="207" edge="1">
@@ -333,7 +333,7 @@
                         <mxPoint x="1080" y="685" as="targetPoint"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="211" value="&lt;b&gt;system context&lt;/b&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontColor=default;" parent="210" vertex="1" connectable="0">
+                <mxCell id="211" value="&lt;b&gt;system data&lt;/b&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontColor=default;" parent="210" vertex="1" connectable="0">
                     <mxGeometry x="-0.7214" y="-1" relative="1" as="geometry">
                         <mxPoint x="-16" y="15" as="offset"/>
                     </mxGeometry>
@@ -344,7 +344,7 @@
                         <mxPoint x="1080" y="685" as="targetPoint"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="213" value="&lt;b&gt;system&amp;nbsp;&lt;/b&gt;&lt;b style=&quot;color: rgb(63, 63, 63); scrollbar-color: rgb(226, 226, 226) rgb(251, 251, 251);&quot;&gt;context&lt;/b&gt;&lt;br&gt;&lt;div&gt;(system state&lt;span style=&quot;color: rgb(63, 63, 63);&quot;&gt;, current time slot,&lt;br&gt;&lt;/span&gt;&amp;nbsp;ambient/target temperature,&lt;br&gt;mode etc.)&lt;/div&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontColor=default;" parent="212" vertex="1" connectable="0">
+                <mxCell id="213" value="&lt;b&gt;system&amp;nbsp;&lt;/b&gt;&lt;b style=&quot;color: rgb(63, 63, 63); scrollbar-color: rgb(226, 226, 226) rgb(251, 251, 251);&quot;&gt;data&lt;/b&gt;&lt;br&gt;&lt;div&gt;(system state&lt;span style=&quot;color: rgb(63, 63, 63);&quot;&gt;, current time slot,&lt;br&gt;&lt;/span&gt;&amp;nbsp;ambient/target temperature,&lt;br&gt;mode etc.)&lt;/div&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontColor=default;" parent="212" vertex="1" connectable="0">
                     <mxGeometry x="-0.7214" y="-1" relative="1" as="geometry">
                         <mxPoint x="86" y="19" as="offset"/>
                     </mxGeometry>
@@ -379,7 +379,7 @@
                         <mxPoint x="136" y="168" as="offset"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="244" value="&lt;b&gt;SensorValuesAccess&lt;br&gt;&lt;/b&gt;thread safe system state structure" style="html=1;dropTarget=0;whiteSpace=wrap;" parent="1" vertex="1">
+                <mxCell id="244" value="&lt;b&gt;Sensor&lt;/b&gt;&lt;b style=&quot;color: rgb(63, 63, 63); scrollbar-color: rgb(226, 226, 226) rgb(251, 251, 251);&quot;&gt;Model&lt;/b&gt;&lt;b&gt;&lt;br&gt;&lt;/b&gt;thread safe sensor data structure" style="html=1;dropTarget=0;whiteSpace=wrap;" parent="1" vertex="1">
                     <mxGeometry x="282" y="370" width="180" height="90" as="geometry"/>
                 </mxCell>
                 <mxCell id="248" value="" style="endArrow=open;html=1;rounded=0;entryX=0.25;entryY=0;entryDx=0;entryDy=0;endFill=0;exitX=0.25;exitY=1;exitDx=0;exitDy=0;edgeStyle=orthogonalEdgeStyle;fontColor=default;" parent="1" source="49" target="244" edge="1">
@@ -423,10 +423,10 @@
                         <mxPoint y="46" as="offset"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="280" value="&lt;b&gt;SensorValuesAccess*&lt;/b&gt;" style="html=1;dropTarget=0;whiteSpace=wrap;" parent="1" vertex="1">
+                <mxCell id="280" value="&lt;b&gt;SensorModel*&lt;/b&gt;" style="html=1;dropTarget=0;whiteSpace=wrap;" parent="1" vertex="1">
                     <mxGeometry x="1070" y="680" width="180" height="30" as="geometry"/>
                 </mxCell>
-                <mxCell id="283" value="&lt;b&gt;ConfigAccess*&lt;/b&gt;" style="html=1;dropTarget=0;whiteSpace=wrap;fontColor=default;" parent="1" vertex="1">
+                <mxCell id="283" value="&lt;b&gt;ConfigModel*&lt;/b&gt;" style="html=1;dropTarget=0;whiteSpace=wrap;fontColor=default;" parent="1" vertex="1">
                     <mxGeometry x="1150" y="730" width="179" height="30" as="geometry"/>
                 </mxCell>
                 <mxCell id="284" value="" style="endArrow=open;html=1;rounded=0;endFill=0;edgeStyle=orthogonalEdgeStyle;exitX=0;exitY=0.75;exitDx=0;exitDy=0;entryX=1;entryY=0.75;entryDx=0;entryDy=0;startArrow=none;startFill=0;fontColor=default;" parent="1" source="41" target="39" edge="1">
@@ -466,7 +466,7 @@
                         <mxPoint x="1288" y="700" as="targetPoint"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="287" value="&lt;b&gt;sensor values&lt;/b&gt;&lt;br&gt;&lt;div&gt;struct&lt;/div&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontColor=default;" parent="286" vertex="1" connectable="0">
+                <mxCell id="287" value="&lt;b&gt;sensor data&lt;/b&gt;&lt;br&gt;&lt;div&gt;struct&lt;/div&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontColor=default;" parent="286" vertex="1" connectable="0">
                     <mxGeometry x="-0.7214" y="-1" relative="1" as="geometry">
                         <mxPoint x="-11" y="106" as="offset"/>
                     </mxGeometry>
@@ -477,9 +477,9 @@
                         <mxPoint x="1392" y="710" as="targetPoint"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="289" value="&lt;b&gt;config&lt;/b&gt;&lt;br&gt;&lt;div&gt;struct&lt;/div&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontColor=default;" parent="288" vertex="1" connectable="0">
+                <mxCell id="289" value="&lt;b&gt;config data&lt;/b&gt;&lt;br&gt;&lt;div&gt;struct&lt;/div&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontColor=default;" parent="288" vertex="1" connectable="0">
                     <mxGeometry x="-0.7214" y="-1" relative="1" as="geometry">
-                        <mxPoint x="4" y="165" as="offset"/>
+                        <mxPoint x="4" y="148" as="offset"/>
                     </mxGeometry>
                 </mxCell>
                 <mxCell id="290" value="" style="endArrow=none;html=1;rounded=0;endFill=0;exitX=0.5;exitY=0;exitDx=0;exitDy=0;edgeStyle=orthogonalEdgeStyle;startArrow=open;startFill=0;fontColor=default;" parent="1" source="121" edge="1">
