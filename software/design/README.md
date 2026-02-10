@@ -21,36 +21,37 @@ To ensure the correct order of program flow, tasks communicate using event queue
 
 Mutexes protect shared data between tasks, and each mutex is wrapped in a `Model` structure together with the data it protects:
 
-**SensorModel**: Holds the latest sensor readings (temperature, SoC, motor current).
+- **SensorModel**: Holds the latest sensor readings (temperature, SoC, motor current).
 
-**ConfigModel**: Holds configuration settings. It is automatically saved to non-volatile memory by `StorageTask` on every update.
+- **ConfigModel**: Holds configuration settings. It is automatically saved to non-volatile memory by `StorageTask` on every update.
 
-**SystemModel**: Holds volatile runtime data (system state, current operational mode, target temperature, current time slot, etc.).
+- **SystemModel**: Holds volatile runtime data (system state, current operational mode, target temperature, current time slot, etc.).
 
 ### Application Layer (Tasks)
 
-**SystemTask**: Acts as the central coordinator. It manages the high-level state machine, coordinates transitions between operational modes, and assigns the target temperature. It communicates with other tasks using events (e.g., `EVT_SYS_INIT_END`, `EVT_ADAPT_REQ`, `EVT_ADAPT_END`), reads configuration from `ConfigModel`, and manages `SystemModel`.
-**InputTask**: Interprets hardware signals from `RotaryEncoder` and `Buttons`, converting interrupts and GPIO states into logical input events (e.g., `EVT_MENU_BTN`, `EVT_CTRL_WHEEL_DELTA`) and sends them to the `ViewPresenterTask`.
+- **SystemTask**: Acts as the central coordinator. It manages the high-level state machine, coordinates transitions between operational modes, and assigns the target temperature. It communicates with other tasks using events (e.g., `EVT_SYS_INIT_END`, `EVT_ADAPT_REQ`, `EVT_ADAPT_END`), reads configuration from `ConfigModel`, and manages `SystemModel`.
 
-**ViewPresenterTask**: Manages the User Interface using the Routed MVP pattern (detailed below). Receives input events from `InputTask`, accesses shared Models (`SensorModel`, `ConfigModel`, `SystemModel`), and renders UI using LVGL. Communicates with `SystemTask` via events and direct state reading.
+- **InputTask**: Interprets hardware signals from `RotaryEncoder` and `Buttons`, converting interrupts and GPIO states into logical input events (e.g., `EVT_MENU_BTN`, `EVT_CTRL_WHEEL_DELTA`) and sends them to the `ViewPresenterTask`.
 
-**SensorTask**: Periodically reads raw data from hardware sensors (e.g., temperature), converts it to internal units (e.g., raw data to °C as float), and updates the shared `SensorModel`.
+- **ViewPresenterTask**: Manages the User Interface using the Routed MVP pattern (detailed below). Receives input events from `InputTask`, accesses shared Models (`SensorModel`, `ConfigModel`, `SystemModel`), and renders UI using LVGL. Communicates with `SystemTask` primariy through direct readings/writings of `SystemModel`.
 
-**StorageTask**: Manages non-volatile memory interaction, ensuring configuration data is saved to the internal Flash via an EEPROM emulation layer. It communicates with `SystemTask` using events to ensure sequential program flow.
+- **SensorTask**: Periodically reads raw data from hardware sensors (e.g., temperature), converts it to internal units (e.g., raw data to °C as float), and updates the shared `SensorModel`.
 
-**MaintenanceTask**: Handles command events from `SystemTask` for non-standard operations such as valve adaptation (calibration) and descaling routines. The task is currently mocked and implements only a mocked valve adaptation routine.
+- **StorageTask**: Manages non-volatile memory interaction, ensuring configuration data is saved to the internal Flash via an EEPROM emulation layer. It communicates with `SystemTask` using events to ensure sequential program flow.
 
-**ControlTask**: Executes the control loop. The task is currently not implemented.
+- **MaintenanceTask**: Handles command events from `SystemTask` for non-standard operations such as valve adaptation (calibration) and descaling routines. The task is currently mocked and implements only a mocked valve adaptation routine.
+
+- **ControlTask**: Executes the control loop. The task is currently not implemented.
 
 ### Hardware Abstraction Layer (HAL)
 
-**LVGLDisplayPort**: Port of SH1106-based 128x64 display for LVGL library. It can be reimplemented in order to replace the display with another one.
+- **LVGLDisplayPort**: Port of SH1106-based 128x64 display for LVGL library. It can be reimplemented in order to replace the display with another one.
 
-**Motor**: Software abstraction for DRV8833 or similar motor drivers. Handles states: Coast, Forward, Backward, Brake
+- **Motor**: Software abstraction for DRV8833 or similar motor drivers. Handles states: Coast, Forward, Backward, Brake.
 
-**RotaryEncoder**: Quadrature decoder driver for control wheel input.
+- **RotaryEncoder**: Quadrature decoder driver for control wheel input.
 
-**Buttons**: Interrupt-based driver for Left, Middle and Right buttons.
+- **Buttons**: Interrupt-based driver for Left, Middle and Right buttons.
 
 ### Sensors (ADC DMA)
 ADC and internal temperature sensor measurements have no own abstraction layers. Due to usage of DMA channels of a single ADC all measurements and calculations are executed in `SensorTask` for performance optimization and code clarity.
@@ -59,13 +60,17 @@ ADC and internal temperature sensor measurements have no own abstraction layers.
 
 The User Interface implementation follows a customized version of the Model View Presenter (MVP) design pattern to separate concerns and improve extensibility and maintainability.
 
-This implementation introduces a Router component for centralized navigation and input event forwarding, which is why we refer to it as "Routed MVP" (R-MVP). The key adaptations from classical MVP are state-driven navigation (instead of user-driven) and hierarchical event delegation through the router.
+This implementation introduces a Router component for centralized navigation and input event forwarding, which is why we refer to it as "Routed MVP" (R-MVP). The key adaptations from classical MVP are partial state-driven navigation (instead of user-driven) and hierarchical event delegation through the router.
 
 ### R-MVP Components
 
 The whole UI logic is encapsulated within the `ViewPresenterTask`, which consists of the following components:
 
-- **Router**: Manages screen navigation and page transitions based on system state. Each page is represented by one or more presenters and their corresponding views. The router initializes/deinitializes presenters, forwards input events from `InputTask` to the active presenter, and makes routing decisions by reading `SystemModel`.
+- **Router**: Manages screen navigation and page transitions based on system state. Each page is represented by one or more presenters and their corresponding views. The router:
+    - reads `SystemModel` to fetch `SystemState_t`
+    - initializes/deinitializes presenters
+    - forwards input events from `InputTask` to the active presenter
+    - sends events via `vp2system_event_queue` to initiate state transitions if needed.
 
 - **Presenters**: Handle presentation logic and user interactions. They initialize views or nested presenters, receive input events from the router, read/write Models, and instruct views to update display elements.
 
@@ -86,21 +91,13 @@ The data flow within the R-MVP pattern is as follows:
 3. **Presenter Logic**: The active presenter processes the input event and reads/writes the shared `Models` (with mutex protection).
 4. **View Update**: The presenter instructs the corresponding `View` to render the updated data.
 
-### Thread Safety in R-MVP
-
-Thread safety is an important aspect of the R-MVP implementation:
-
-- **Presenter Responsibility**: Presenters are responsible for acquiring mutexes before accessing shared `Models` (SensorModel, ConfigModel, SystemModel).
-- **View Isolation**: Views never directly access `Models`, eliminating the need for thread-safety logic in view code. This keeps views simple and focused on rendering only.
-- **Event-Driven Communication**: Communication between tasks uses thread-safe event queues to avoid race conditions.
-
 ### Differences from Classical MVP
 
 Reference: [Mike Potel's MVP paper](https://bit.ly/dF4gNn).
 
 Key deviations from classical MVP:
 
-1. **Centralized Router**: Instead of presenters directly managing navigation between views, a router component is introduced to centralize page navigation logic and input event forwarding. The router makes routing decisions based on the current system state (read from `SystemModel`), enabling state-driven navigation rather than user-driven navigation (as in classical MVP).
+1. **Centralized Router**: Instead of presenters directly managing navigation between views, a router component is introduced to centralize page navigation logic and input event forwarding. The router makes routing decisions based on current `SystemState_t` (read from `SystemModel`), enabling partial state-driven navigation rather than user-driven navigation (as in classical MVP).
 2. **Hierarchical Structure**: Since input events do not come from views, presenters are considered to be on a higher hierarchy level than views. Presenters are initialized and deinitialized by the router based on the currently active page. Nested presenters are initialized by their parent presenters. Finally, views are initialized by their corresponding presenters.
 3. **Separated Input Handling**: Input events flow through the router to the active presenter, rather than being handled by views directly (as in classical MVP). This enables more flexible input handling independent of UI framework callbacks.
 
@@ -114,6 +111,6 @@ The interaction points with the `ViewPresenterTask` can be clearly identified in
 
 ![SystemTask State Machine](./../diagrams/mt-rt-sw-system-task-state-machine.svg)
 
-For example, during the `STATE_INIT` state, the `ViewPresenterTask` waits for the `EVT_SYS_INIT_END` event from the `SystemTask` before rendering. After that, `SystemTask` waits for the end of the COD (configuration on device) signaled by `EVT_COD_END` from the `ViewPresenterTask`.
+For example, during `STATE_INIT`, `ViewPresenterTask` waits for `EVT_SYS_INIT_END` event from `SystemTask` before rendering. After that, `SystemTask` waits for the end of the COD (configuration on device) signaled by `EVT_COD_END` from `ViewPresenterTask`.
 
-It is noticeable that the `ViewPresenterTask` does not receive any events besides `EVT_SYS_INIT_END`. This is because after initialization, the router of the `ViewPresenterTask` reads the system state from `SystemModel` directly to determine corresponding pages to be rendered. (Assignment of multiple pages to multiple system states is also possible.)
+It is noticeable that `ViewPresenterTask` does not receive any events besides `EVT_SYS_INIT_END`. This is because after initialization, the router of `ViewPresenterTask` reads `SystemState_t` from `SystemModel` directly to determine corresponding pages to be rendered. (Assignment of multiple pages to multiple system states is also possible.)
