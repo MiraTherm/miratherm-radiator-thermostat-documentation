@@ -79,37 +79,37 @@ A radiator thermostat is a device mounted on a heating radiator valve to control
 
 Smart radiator thermostats extend the digital concept with wireless connectivity, such as Wi-Fi, Bluetooth Low Energy (BLE), or emerging standards like Matter-over-Thread, enabling integration into smart home ecosystems and remote control via mobile applications. Common consumer functions of such devices include manual temperature adjustment, mode selection (e.g., auto, manual, boost, vacation), weekly schedule programming, an open-window detection function, and a periodic valve decalcification program \cite{eQ3AG.05.2018}. They are most commonly battery-powered and are expected to operate for extended periods, typically around two years on two AA batteries \cite{ELVjournal.2012}.
 
-The software presented in this paper uses the eQ-3 eqiva Bluetooth Smart Radiator Thermostat (CC-RT-M-BLE-EQ) \cite{eQ3AG.05.2018} as a functional reference for defining its scope.
+The software presented in this paper uses the eQ-3 eqiva Bluetooth Smart Radiator Thermostat \cite{eQ3AG.05.2018} as a functional reference for defining its scope.
 
 \subsection{MVP Pattern}
-The Model-View-Presenter (MVP) pattern is a derivative of the classic Model-View-Controller (MVC) pattern originating from Smalltalk-80 \cite{Burbeck.1992}. MVP was formalized by Potel at Taligent, Inc. as a generalization of MVC that decomposes an application's design into two fundamental domains: \textit{Data Management} and \textit{User Interface} \cite{Potel.1996}.
+The Model-View-Presenter (MVP) pattern is a derivative of the classic Model-View-Controller (MVC) pattern developed in the late 1970's. MVP is described in \cite{Potel.1996} a generalization of MVC that decomposes an application's design into two fundamental domains: \textit{Data Management} and \textit{User Interface}.
 
 In the Data Management domain, Potel identifies three sub-questions that a developer must address:
 \begin{enumerate}
-    \item \textit{What is my data?} --- answered by the \textbf{Model}, which encapsulates the application's data and its access methods.
-    \item \textit{How do I specify my data?} --- answered by \textbf{Selections}, which represent abstractions for identifying subsets of the model's data.
-    \item \textit{How do I change my data?} --- answered by \textbf{Commands}, which represent operations that can be performed on selections.
+    \item \textit{What is my data?} --- answered by the \textbf{Model}, which encapsulates the application's data and its access methods;
+    \item \textit{How do I specify my data?} --- answered by \textbf{Selections}, which represent abstractions for identifying subsets of the model's data;
+    \item \textit{How do I change my data?} --- answered by \textbf{Commands}, which represent operations that can be performed on selections \cite{Potel.1996}.
 \end{enumerate}
 
 In the User Interface domain, three further questions are posed:
 \begin{enumerate}
     \setcounter{enumi}{3}
-    \item \textit{How do I display my data?} --- answered by the \textbf{View}, which renders a representation of the model's data. Views need not be graphical.
-    \item \textit{How do events map into changes in my data?} --- answered by \textbf{Interactors}, which handle user-initiated actions such as mouse clicks, keystrokes, or physical input like turning a dial.
-    \item \textit{How do I put it all together?} --- answered by the \textbf{Presenter}, which coordinates all other elements by providing the business logic that maps user gestures onto the appropriate commands for manipulating the model.
+    \item \textit{How do I display my data?} --- answered by the \textbf{View}, which renders a representation of the model's data (Views need not be graphical.);
+    \item \textit{How do events map into changes in my data?} --- answered by \textbf{Interactors}, which handle user-initiated actions such as mouse clicks, keystrokes, or physical input like turning a dial;
+    \item \textit{How do I put it all together?} --- answered by the \textbf{Presenter}, which coordinates all other elements by providing the business logic that maps user gestures onto the appropriate commands for manipulating the model \cite{Potel.1996}.
 \end{enumerate}
 
-% TODO: Insert figure with the 6 data management questions and MVP structure
-% visualization from Potel's paper here.
 \begin{figure}[htbp]
     \centerline{\includegraphics[width=\columnwidth]{figures/mvp-six-questions.png}}
-    \caption{The six design questions of the MVP programming model and their corresponding abstractions, after Potel \cite{Potel.1996}.}
+    \caption{The six design questions of the MVP programming model and their corresponding abstractions \cite{Potel.1996}}
     \label{fig:mvp-six-questions}
 \end{figure}
 
-A key insight from Potel's work is that these abstractions need not all be employed at once. In the ``Building an Application'' section of \cite{Potel.1996}, Potel demonstrates using a calculator example that a developer can start with only a subset of the MVP elements---such as the Model, View, and Presenter---and incrementally introduce Selections, Commands, and Interactors as the application evolves and requires their respective benefits, such as undo/redo capability, scriptability, or advanced input handling. This incremental adoption is particularly relevant for the embedded context of this work, where the constrained environment and the C programming language favor a minimal yet well-structured architecture. Accordingly, the design presented in this paper deliberately omits the Command, Selection, and Interactor abstractions, retaining only the core Model, View, and Presenter triad as the foundation of its UI architecture.
+A key insight from \cite{Potel.1996} is that these abstractions need not all be employed at once. A developer can start with only a subset of the MVP elements---such as the Model, View, and Presenter---and incrementally introduce Selections, Commands, and Interactors as the application evolves and requires their respective benefits, such as undo/redo capability, scriptability, or advanced input handling. 
 
-The primary benefit of the MVP pattern that motivates its use in this project is the clean separation between the Model and the View-Presenter (Presentation). This separation enables independent development and testing of UI logic and data management, facilitates reuse of models with different presentations, and allows the underlying data structures to be modified without affecting the presentation code \cite{Potel.1996}.
+This incremental adoption is particularly relevant for the embedded context of this work, where the constrained environment and the C programming language favor a minimal yet well-structured architecture. Accordingly, the design presented in this paper deliberately omits the Command, Selection, and Interactor abstractions, retaining only the core Model, View, and Presenter triad as the foundation of its UI architecture.
+
+% The primary benefit of the MVP pattern that motivates its use in this project is the clean separation between the Model and the View-Presenter (Presentation). This separation enables independent development and testing of UI logic and data management, facilitates reuse of models with different presentations, and allows the underlying data structures to be modified without affecting the presentation code \cite{Potel.1996}.
 
 \section{Requirements}
 Text\dots
