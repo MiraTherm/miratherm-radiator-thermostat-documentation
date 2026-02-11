@@ -114,7 +114,23 @@ A key insight from \cite{Potel.1996} is that these abstractions need not all be 
 This incremental adoption is particularly relevant for the embedded context of this work, where the constrained environment and the C programming language favor a minimal yet well-structured architecture. Accordingly, the design presented in this paper deliberately omits the Command, Selection, and Interactor abstractions, retaining only the core Model, View, and Presenter triad as the foundation of its UI architecture.
 
 \section{Requirements}
-Text\dots
+\label{sec:Requirements}
+The software requirements for the thermostat prototype are defined in a separate specification document \cite{Menzel.2026.Spec}. This section provides a condensed overview of the key functional and non-functional requirements that drive the technical design.
+
+The functional requirements specify the integration of hardware peripherals shown in \autoref{fig:mt-rt-sw-dev-hw-block-diagram}. A display, a rotary encoder, three buttons and a motor driver must be connected to the STM32WB55 MCU on its development board. Measurement of temperature, motor current and supply voltage (\texttt{V\_BAT}) must be performed. \cite{Menzel.2026.Spec}
+\begin{figure}[htbp]
+    \centerline{\includegraphics[width=\columnwidth]{../../electronics/diagrams/mt-rt-sw-dev-hw-block-diagram.png}}
+    \caption{Block diagram of the thermostat's prototype hardware for software development and testing \cite{Menzel.2026.Spec}.}
+    \label{fig:mt-rt-sw-dev-hw-block-diagram}
+\end{figure}
+
+The thermostat must support three operational modes: \textit{Auto}, \textit{Manual}, and \textit{Boost}. In Auto mode, the target temperature follows a user-configured daily schedule; in Manual mode, the user sets it directly; and Boost mode provides a temporary override with a countdown display. \cite{Menzel.2026.Spec}
+
+A Configuration on Device (COD) routine is required at startup, guiding the user through date/time setup, daily schedule programming, and a valve adaptation procedure. \cite{Menzel.2026.Spec}
+
+The home display page must directly reflect the current thermostat state (e.g, current time, battery level, target temperature etc.). A menu provides access to schedule changes, temperature offset configuration, and factory reset. All user settings must persist in non-volatile memory across power cycles. \cite{Menzel.2026.Spec}
+
+The non-functional requirements mandate a modular architecture with hardware abstraction layers to allow easy replacement of individual hardware components (e.g., display, motor driver, temperature sensor) with minimal code changes. The UI must provide contextual button hints on every page, indicating the function assigned to each physical button. \cite{Menzel.2026.Spec}
 
 \section{Technical Design}
 Text\dots
