@@ -133,9 +133,48 @@ The home display page must directly reflect the current thermostat state (e.g, c
 The non-functional requirements mandate a modular architecture with hardware abstraction layers to allow easy replacement of individual hardware components (e.g., display, motor driver, temperature sensor) with minimal code changes. The UI must provide contextual button hints on every page, indicating the function assigned to each physical button. \cite{Menzel.2026.Spec}
 
 \section{Technical Design}
-Text\dots
+\label{sec:Technical Design}
+This section presents the software architecture and the adapted design pattern used for the UI implementation. The design addresses the requirements from \autoref{sec:Requirements} by establishing a modular, task-based structure that separates hardware interaction, control logic, and user interface concerns.
+
 \subsection{Overall Architecture}
-Text\dots
+\label{subsec:Overall Architecture}
+The software is written in C and uses FreeRTOS for real-time task scheduling and resource management. The architecture follows a modular design that separates hardware abstraction, core control logic, and UI management into distinct FreeRTOS tasks. Each task runs as a singleton and is started at system boot. The architecture is designed to enable future integration of control algorithms and the Matter-over-Thread standard with minimal effort. \autoref{fig:mt-rt-sw-architecture} shows the overall architecture.
+
+\begin{figure*}[htbp]
+    \includegraphics[width=\textwidth]{../diagrams/mt-rt-sw-architecture.png}
+    \caption{Architecture of the radiator thermostat software.}
+    \label{fig:mt-rt-sw-architecture}
+\end{figure*}
+
+\subsubsection{Synchronization and Data Structures}
+\label{subsubsec:Synchronization and Data Structures}
+Tasks communicate using FreeRTOS event queues and mutex-protected data structures. All synchronization primitives are created and passed to tasks as parameters before the scheduler is started, preventing deadlocks and priority inversion.
+
+Event queues provide one-way communication between task pairs for signaling and synchronizing state changes (e.g., initialization completion, adaptation requests). Bidirectional communication between two tasks uses two dedicated queues.
+
+Shared data is organized into mutex-protected \textit{Model} structures, each encapsulating a mutex together with the data it protects:
+\begin{itemize}
+    \item \textbf{SensorModel}: Latest sensor readings (temperature, battery state of charge, motor current).
+    \item \textbf{ConfigModel}: User-configurable settings, automatically persisted to non-volatile memory on every update.
+    \item \textbf{SystemModel}: Volatile runtime data (system state, current operational mode, target temperature, active time slot, etc.).
+\end{itemize}
+
+\subsubsection{Application Layer}
+\label{subsubsec:Application Layer}
+The application layer consists of the following tasks:
+\begin{itemize}
+    \item \textbf{SystemTask}: Central coordinator managing the high-level state machine. It orchestrates transitions between operational modes, assigns the target temperature, and communicates with other tasks via events (e.g., \texttt{EVT\_SYS\_INIT\_END}, \texttt{EVT\_ADAPT\_REQ}).
+    \item \textbf{InputTask}: Converts hardware signals from the rotary encoder and buttons into logical input events (e.g., \texttt{EVT\_MENU\_BTN}, \texttt{EVT\_CTRL\_WHEEL\_DELTA}) forwarded to the ViewPresenterTask.
+    \item \textbf{ViewPresenterTask}: Manages the UI using the R-MVP pattern (see \autoref{subsec:R-MVP Pattern}). It receives input events, accesses shared models, and renders UI elements via the LVGL graphics library.
+    \item \textbf{SensorTask}: Periodically reads raw sensor data (via ADC/DMA), converts it to internal units, and updates the SensorModel.
+    \item \textbf{StorageTask}: Manages non-volatile memory through an EEPROM emulation layer, ensuring configuration persistence.
+    \item \textbf{MaintenanceTask}: Handles non-standard operations such as valve adaptation and descaling, triggered by commands from the SystemTask.
+\end{itemize}
+
+\subsubsection{Hardware Abstraction Layer}
+\label{subsubsec:Hardware Abstraction Layer}
+A Hardware Abstraction Layer (HAL) provides interfaces for the display (LVGL display port for SH1106), the motor driver (IN1/IN2 interface for DRV8833), the rotary encoder (quadrature decoder), and the push buttons (interrupt-driven). This layer satisfies the replaceability requirement by isolating hardware-specific code from application logic.
+
 \subsection{R-MVP Pattern}
 Text\dots
 
