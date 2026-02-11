@@ -111,7 +111,13 @@ In the User Interface domain, three further questions are posed:
 
 A key insight from \cite{Potel.1996} is that these abstractions need not all be employed at once. A developer can start with only a subset of the MVP elements---such as the Model, View, and Presenter---and incrementally introduce Selections, Commands, and Interactors as the application evolves and requires their respective benefits, such as undo/redo capability, scriptability, or advanced input handling. 
 
-This incremental adoption is particularly relevant for the embedded context of this work, where the constrained environment and the C programming language favor a minimal yet well-structured architecture. Accordingly, the design presented in this paper deliberately omits the Command, Selection, and Interactor abstractions, retaining only the core Model, View, and Presenter triad as the foundation of its UI architecture.
+This incremental adoption is particularly relevant for the embedded context of this work, where the constrained environment and usage of a verbose programming language favor a minimal yet well-structured architecture. Accordingly, the design of an application can deliberately omit the Command, Selection, and Interactor abstractions, retaining only the core Model, View, and Presenter triad as the foundation of its UI architecture. \autoref{fig:mvp} illustrates the data flow in this simplified programming model.
+
+\begin{figure}[htbp]
+    \centerline{\includegraphics[height=0.25\textheight]{../diagrams/mvp.png}}
+    \caption{Data flow in the MVP programming model (mod. from \cite{Perrouin.2017, MVP.Wikipedia.2024})}
+    \label{fig:mvp}
+\end{figure}
 
 \section{Requirements}
 \label{sec:Requirements}
