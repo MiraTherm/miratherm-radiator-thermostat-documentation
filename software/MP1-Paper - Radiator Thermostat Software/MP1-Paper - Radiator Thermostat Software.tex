@@ -65,6 +65,7 @@ keyword1, keyword2, keyword3, keyword4, keyword5
 %
 
 \section{Introduction}
+\label{sec:Introduction}
 Heating private living spaces is one of the most significant sources of $CO_2$ emissions. In Germany, a substantial portion of annual greenhouse gas emissions originates from this sector \cite{StatistischesBundesamt.16.07.2025} \cite{Umweltbundesamt.15.03.2022}. While intelligent heating control and smart home systems offer an average energy saving potential of between 8 and 19\% \cite{Kersken.2018}, the market is currently dominated by proprietary solutions. Consequently, there is a lack of open-domain projects that can serve as a foundation for research and development of smart heating controllers.
 
 This paper presents the software development for a radiator thermostat prototype, realized as part of the interdisciplinary ``MiraTherm Radiator Thermostat'' project at Fulda University of Applied Sciences. The overarching project aims to create a complete device, encompassing mechanics, electronics, and control algorithms.
@@ -72,17 +73,20 @@ This paper presents the software development for a radiator thermostat prototype
 The primary objective of this work is to establish a solid software foundation for the thermostat's microcontroller-based hardware. While the long-term vision includes control algorithms and wireless connectivity (e.g., Matter-over-Thread), the central contribution of this paper lies in the architectural design of the application and its User Interface (UI). Specifically, we propose the application of the Routed-Model-View-Presenter (R-MVP) design pattern in order to decouple UI logic from hardware drivers and core system logic. This approach is used to implement basic consumer functions considering constraints of an embedded system and of the C programming language.
 
 \section{Background} % and Related Work
+\label{sec:Background}
 This section provides the necessary context for this work. First, the domain of smart radiator thermostats is introduced. Then, the Model-View-Presenter (MVP) design pattern, which forms the architectural basis for the software, is described.
 
 \subsection{Smart Radiator Thermostats}
-A radiator thermostat is a device mounted on a heating radiator valve to control the flow of hot water, thereby regulating the room temperature. Traditional thermostatic radiator valves (TRVs) use a wax or liquid-filled capsule that expands and contracts with temperature changes, mechanically adjusting valve position. Digital radiator thermostats replace this mechanism with an electronically controlled system, typically consisting of a microcontroller unit (MCU), a DC motor with a gearbox for valve actuation, a user interface (buttons or rotary encoder, display), and a motor driver circuit.
+\label{subsec:Smart Radiator Thermostats}
+A radiator thermostat is a device mounted on a heating radiator valve to control the flow of hot water, thereby regulating the room temperature. Traditional thermostatic radiator valves (TRVs) use a wax or liquid-filled capsule that expands and contracts with temperature changes, mechanically adjusting valve position. Digital radiator thermostats replace this mechanism with an electronically controlled system, typically consisting of a microcontroller unit (MCU), a DC motor with a gearbox for valve actuation, a user interface (buttons, rotary encoder, display), and a motor driver circuit.
 
-Smart radiator thermostats extend the digital concept with wireless connectivity, such as Wi-Fi, Bluetooth Low Energy (BLE), or emerging standards like Matter-over-Thread, enabling integration into smart home ecosystems and remote control via mobile applications. Common consumer functions of such devices include manual temperature adjustment, mode selection (e.g., auto, manual, boost, vacation), weekly schedule programming, an open-window detection function, and a periodic valve decalcification program \cite{eQ3AG.05.2018}. They are most commonly battery-powered and are expected to operate for extended periods, typically around two years on two AA batteries \cite{ELVjournal.2012}.
+Smart radiator thermostats extend the digital concept with wireless connectivity, such as Wi-Fi, Bluetooth Low Energy (BLE), or emerging standards like Matter-over-Thread, enabling integration into smart home ecosystems and remote control via mobile applications. Common consumer functions of such devices include manual temperature adjustment, mode selection (e.g., auto, manual, boost, vacation), weekly schedule programming, an open-window detection function, and a periodic valve decalcification program \cite{eQ3AG.05.2018, ELVjournal.2012}. They are most commonly battery-powered and are expected to operate for extended periods, typically around two years on two AA batteries \cite{eQ3AG.05.2018, ELVjournal.2012}.
 
 The software presented in this paper uses the eQ-3 eqiva Bluetooth Smart Radiator Thermostat \cite{eQ3AG.05.2018} as a functional reference for defining its scope.
 
 \subsection{MVP Pattern}
-The Model-View-Presenter (MVP) pattern is a derivative of the classic Model-View-Controller (MVC) pattern developed in the late 1970's. MVP is described in \cite{Potel.1996} a generalization of MVC that decomposes an application's design into two fundamental domains: \textit{Data Management} and \textit{User Interface}.
+\label{sec:MVP}
+The Model-View-Presenter (MVP) pattern is a derivative of the classic Model-View-Controller (MVC) pattern developed in the late 1970's. MVP is described in \cite{Potel.1996} as a generalization of MVC that decomposes an application's design into two fundamental domains: \textit{Data Management} and \textit{User Interface}.
 
 In the Data Management domain, a developer must address three sub-questions:
 \begin{enumerate}
@@ -108,8 +112,6 @@ In the User Interface domain, three further questions are posed:
 A key insight from \cite{Potel.1996} is that these abstractions need not all be employed at once. A developer can start with only a subset of the MVP elements---such as the Model, View, and Presenter---and incrementally introduce Selections, Commands, and Interactors as the application evolves and requires their respective benefits, such as undo/redo capability, scriptability, or advanced input handling. 
 
 This incremental adoption is particularly relevant for the embedded context of this work, where the constrained environment and the C programming language favor a minimal yet well-structured architecture. Accordingly, the design presented in this paper deliberately omits the Command, Selection, and Interactor abstractions, retaining only the core Model, View, and Presenter triad as the foundation of its UI architecture.
-
-% The primary benefit of the MVP pattern that motivates its use in this project is the clean separation between the Model and the View-Presenter (Presentation). This separation enables independent development and testing of UI logic and data management, facilitates reuse of models with different presentations, and allows the underlying data structures to be modified without affecting the presentation code \cite{Potel.1996}.
 
 \section{Requirements}
 Text\dots
