@@ -209,7 +209,7 @@ For simplicity and to reduce abstraction overhead in the embedded C environment,
 
 \subsubsection{R-MVP Data Flow}
 \label{subsubsec:R-MVP Data Flow}
-The data flow follows a unidirectional path through four stages:
+The data flow follows a path through four stages:
 \begin{enumerate}
     \item The InputTask generates input events and sends them to the Router via an event queue.
     \item The Router receives input events and forwards them to the currently active Presenter.
@@ -235,10 +235,13 @@ Three key deviations distinguish R-MVP from the classical pattern:
 \end{itemize}
 
 \section{Implementation}
-Text\dots
+In this section, main challenges encountered during implementation are discussed, along with the solutions adopted to address them. 
 
-\subsubsection{Interaction of ViewPresenterTask with SystemTask}
-\label{subsubsec:Interaction with SystemTask}
+\subsection{Interaction of ViewPresenterTask with SystemTask}
+\label{subsec:Interaction with SystemTask}
+
+Implementation of a paritally state-driven UI requires tight synchronization between the ViewPresenterTask and the SystemTask in certain phases. Their interaction points can be clearly identified in the diagram of the `SystemTask` state machine, shown in \autoref{fig:mt-rt-sw-system-task-state-machine}.
+
 The ViewPresenterTask interacts with the SystemTask through two mechanisms: event queues for discrete notifications (e.g., \texttt{EVT\_SYS\_INIT\_END}, \texttt{EVT\_COD\_END}) and direct reading/writing of the SystemModel for state-dependent routing and display updates.
 
 \begin{figure*}[htbp]
@@ -248,6 +251,11 @@ The ViewPresenterTask interacts with the SystemTask through two mechanisms: even
 \end{figure*}
 
 During initialization, the ViewPresenterTask waits for \texttt{EVT\_SYS\_INIT\_END} from the SystemTask before rendering. After that, the SystemTask waits for \texttt{EVT\_COD\_END} to signal the completion of Configuration on Device. Beyond initialization, the router reads the system state directly from the SystemModel to determine which pages to render, without requiring further events from the SystemTask.
+
+\subsection{Boilerplate Code in Router}
+\label{subsec:Boilerplate Code in Router}
+
+Since a verbose programming language (C) is used, the Router contains a significant amount of boilerplate code for initializing and deinitializing presenters and views, as well as for forwarding input events. A big amount of this code could be reduced by using a language with advanced abstraction features, such as Rust, which is well-suited for embedded systems and offers ``zero cost'' abstractions (e.g., traits, generics, and pattern matching). However, the decision to use C was made based on the target hardware's ecosystem and the desire for maximum compatibility with existing embedded development tools and libraries.
 
 \section{Verification and Results}
 Text\dots
