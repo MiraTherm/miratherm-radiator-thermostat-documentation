@@ -185,13 +185,22 @@ A self implemented Hardware Abstraction Layer (HAL) provides interfaces for the 
 
 \subsection{R-MVP Pattern}
 \label{subsec:R-MVP Pattern}
+
+\subsubsection{Motivation for MVP over MVC}
+\label{subsubsec:Motivation for MVP over MVC}
 The classical MVC pattern does not enforce a strict decoupling between Model and View---the View can directly observe and access the Model, which makes it difficult to develop these components independently. MVP addresses this by introducing the Presenter as an intermediary: the View only communicates with the Presenter, and the Presenter mediates all access to the Model \cite{Ramsdale.2010}. This separation is the primary reason for choosing MVP over MVC as the basis for the thermostat's UI architecture.
 
-However, classical MVP relies on rich, automated UI widgets (Interactors) that generate high-level semantic events---an assumption rooted in desktop frameworks such as those in Windows or Taligent's CommonPoint \cite{Kratochvil.2011}. In the embedded context of this work, no such widget infrastructure is available. User input must therefore be handled manually, closer to the approach taken in MVC.
+\subsubsection{Challenges in Embedded Context}
+\label{subsubsec:Challenges in Embedded Context}
+Classical MVP relies on rich, automated UI widgets (Interactors) that generate high-level semantic events---an assumption common to modern application frameworks, including desktop environments (Windows, Taligent's CommonPoint \cite{Kratochvil.2011}), mobile platforms (Android, iOS), and web frameworks. In the bare-metal embedded context of this work, no such widget infrastructure is available. User input must therefore be handled manually, closer to the approach taken in MVC.
 
-While the LVGL graphics library does offer an encoder input device abstraction \cite{LVGL.Encoder.2025}, interaction model of this library is primarily designed for touchscreen or mouse/keyboard interfaces. Integration of an encoder in LVGL---based on widget focus groups, edit modes, and long-press transitions---proves too complicated for quick configuration routines of a simple thermostat. The predefined gesture semantics do not match the custom navigation behavior required by the application (e.g., context-dependent button actions, quick wizard-style page flows). For this reason, native LVGL input callbacks are not used. Instead, a dedicated \textit{Router} component is introduced to receive input events from the InputTask and forward them to the active presenter, enabling full control over gesture interpretation.
+While the LVGL graphics library does offer an encoder input device abstraction \cite{LVGL.Encoder.2025}, the interaction model of this library is primarily designed for touchscreen or mouse/keyboard interfaces. Integration of an encoder in LVGL---based on widget focus groups, edit modes, and long-press transitions---proves too complicated for quick configuration routines of a simple thermostat. The predefined gesture semantics do not match the custom navigation behavior required by the application (e.g., context-dependent button actions, quick wizard-style page flows).
 
-Furthermore, certain system state changes must provoke specific page transitions or restrict user interactions---for instance, during an ongoing adaptation procedure or while the SystemTask awaits completion of the Configuration on Device (COD). This requires navigation to be partially state-driven rather than purely user-driven as in classical MVC or MVP. The Router addresses this by reading the current system state from the SystemModel to determine which page to display.
+Furthermore, certain system state changes must provoke specific page transitions or restrict user interactions---for instance, during an ongoing adaptation procedure or while the SystemTask awaits completion of the Configuration on Device (COD). This requires navigation to be partially state-driven rather than purely user-driven as in classical MVC or MVP.
+
+\subsubsection{The R-MVP Solution}
+\label{subsubsec:The R-MVP Solution}
+To address these challenges, the presented architecture introduces a dedicated \textit{Router} component that receives input events from the InputTask and forwards them to the active presenter, enabling full control over gesture interpretation without relying on LVGL's native input callbacks. The Router also reads the current system state from the SystemModel to determine which page to display, supporting state-driven navigation alongside user-driven interactions.
 
 The resulting pattern is referred to as Routed MVP (R-MVP). In the presented architecture, its entire logic is encapsulated within the ViewPresenterTask.
 
@@ -225,8 +234,8 @@ This can be illustrated in \autoref{fig:r-mvp}, which shows the data and control
     \label{fig:r-mvp}
 \end{figure}
 
-\subsubsection{Differences from Classical MVP}
-\label{subsubsec:Differences from Classical MVP}
+\subsubsection{Key Differences from Classical MVP}
+\label{subsubsec:Key Differences from Classical MVP}
 Three key deviations distinguish R-MVP from the classical pattern:
 \begin{itemize}
     \item \textbf{Centralized Router}: Instead of presenters managing navigation between views, a dedicated Router component centralizes page navigation logic and input event forwarding. Routing decisions are partially state-driven, based on the current system state read from the SystemModel, rather than being purely user-driven as in classical MVP.
