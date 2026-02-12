@@ -255,7 +255,7 @@ During initialization, the ViewPresenterTask waits for \texttt{EVT\_SYS\_INIT\_E
 \subsection{Boilerplate Code in Router}
 \label{subsec:Boilerplate Code in Router}
 
-Since a verbose programming language (C) is used, the Router contains a significant amount of boilerplate code for initializing and deinitializing presenters and views, as well as for forwarding input events. A big amount of this code could be reduced by using a language with advanced abstraction features, such as Rust, which is well-suited for embedded systems and offers ``zero cost'' abstractions (e.g., traits, generics, and pattern matching). However, the decision to use C was made based on the target hardware's ecosystem and the desire for maximum compatibility with existing embedded development tools and libraries.
+Since a verbose programming language (C) is used, the Router contains a significant amount of boilerplate code for initializing and deinitializing presenters and views, as well as for forwarding input events. This could be substantially reduced by using a language with advanced abstraction features, such as Rust, which is well-suited for embedded systems and typically provides compile-time abstractions with minimal or no runtime overhead (e.g., generics, pattern matching, and zero-copy trait implementations). However, the decision to use C was made based on the target hardware's ecosystem and the desire for maximum compatibility with existing embedded development tools and libraries.
 
 \section{Verification and Results}
 Text\dots
