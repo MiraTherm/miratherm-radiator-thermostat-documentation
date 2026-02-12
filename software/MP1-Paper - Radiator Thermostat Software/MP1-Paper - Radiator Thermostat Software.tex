@@ -125,31 +125,30 @@ This partial adoption is particularly relevant for the embedded context of this 
 \label{sec:Requirements}
 The software requirements for the thermostat prototype are defined in \cite{Menzel.2026.Spec} as a separate specification document. This section provides a condensed overview of the key functional and non-functional requirements that drive the technical design.
 
-The functional requirements specify the integration of hardware peripherals shown in \autoref{fig:mt-rt-sw-dev-hw-block-diagram}. A display, a rotary encoder, three buttons, and a motor driver must be connected to the STM32WB55 MCU on its development board. Measurement of temperature, motor current, and supply voltage (\texttt{V\_BAT}) must be performed. \cite{Menzel.2026.Spec}
+The functional requirements specify the integration of hardware peripherals shown in \autoref{fig:mt-rt-sw-dev-hw-block-diagram}. A display, a rotary encoder, three buttons, and a motor driver must be connected to the STM32WB55 MCU on its development board. Measurement of temperature, motor current, and supply voltage (\texttt{V\_BAT}) must be performed.
 \begin{figure}[htbp]
     \centerline{\includegraphics[width=\columnwidth]{../../electronics/diagrams/mt-rt-sw-dev-hw-block-diagram.png}}
-    \caption{Block diagram of the thermostat's prototype hardware for software development and testing \cite{Menzel.2026.Spec}.}
+    \caption{Block diagram of the thermostat's prototype hardware for software development and testing.}
     \label{fig:mt-rt-sw-dev-hw-block-diagram}
 \end{figure}
 
-The thermostat must support three operational modes: \textit{Auto}, \textit{Manual}, and \textit{Boost}. In Auto mode, the target temperature follows a configured daily schedule; in Manual mode, the user sets it directly; and Boost mode provides a temporary override with a countdown display. \cite{Menzel.2026.Spec}
+The thermostat must support three operational modes: \textit{Auto}, \textit{Manual}, and \textit{Boost}. In Auto mode, the target temperature follows a configured daily schedule; in Manual mode, the user sets it directly; and Boost mode provides a temporary override with a countdown display.
 
-A Configuration on Device (COD) routine is required at startup, guiding the user through date/time setup, daily schedule programming, and a valve adaptation procedure. \cite{Menzel.2026.Spec}
+A Configuration on Device (COD) routine is required at startup, guiding the user through date/time setup, daily schedule programming, and a valve adaptation procedure.
 
-The home display page must directly reflect the current thermostat state (e.g., current time, battery level, target temperature). A menu provides access to schedule changes, temperature offset configuration, and factory reset. All user settings must persist in non-volatile memory across power cycles. \cite{Menzel.2026.Spec}
+The home display page must directly reflect the current thermostat state (e.g., current time, battery level, target temperature). A menu provides access to schedule changes, temperature offset configuration, and factory reset. All user settings must persist in non-volatile memory across power cycles.
 
-The non-functional requirements mandate a modular architecture with hardware abstraction layers to allow easy replacement of individual hardware components (e.g., display, motor driver, temperature sensor) with minimal code changes. The UI must provide contextual button hints on every page, indicating the function assigned to each physical button. \cite{Menzel.2026.Spec}
+The non-functional requirements mandate a modular architecture with hardware abstraction layers to allow easy replacement of individual hardware components (e.g., display, motor driver, temperature sensor) with minimal code changes. The UI must provide contextual button hints on every page, indicating the function assigned to each physical button.
 
 \section{Technical Design}
 \label{sec:Technical Design}
-This section presents the software architecture and the adapted design pattern used for the UI implementation. The design addresses the requirements from \autoref{sec:Requirements} by establishing a modular, task-based structure that separates hardware interaction, control logic, and user interface concerns.
+This section presents the software architecture and the adapted design pattern used for the UI implementation. Both were also described during the development process in \cite{Menzel.2026.Design}. The design addresses the requirements from \autoref{sec:Requirements} by establishing a modular, task-based structure that separates hardware interaction, control logic, and user interface concerns.
 
 \subsection{Overall Architecture}
 \label{subsec:Overall Architecture}
 The software is written in C and uses FreeRTOS for real-time task scheduling and resource management. The architecture follows a modular design that separates hardware abstraction, core control logic, and UI management into distinct FreeRTOS tasks. Each task runs as a singleton and is started at system boot. The architecture is designed to enable future integration of control algorithms and the Matter-over-Thread standard with minimal effort. \autoref{fig:mt-rt-sw-architecture} shows the overall architecture.
-
 \begin{figure*}[htbp]
-    \includegraphics[width=\textwidth]{../diagrams/mt-rt-sw-architecture.png}
+    \includegraphics[width=\textwidth]{../diagrams/mt-rt-sw-architecture.pdf}
     \caption{Architecture of the radiator thermostat software.}
     \label{fig:mt-rt-sw-architecture}
 \end{figure*}
@@ -254,7 +253,7 @@ Implementation of a paritally state-driven UI requires tight synchronization bet
 The ViewPresenterTask interacts with the SystemTask through two mechanisms: event queues for discrete notifications (e.g., \texttt{EVT\_SYS\_INIT\_END}, \texttt{EVT\_COD\_END}) and direct reading/writing of the SystemModel for state-dependent routing and display updates.
 
 \begin{figure*}[htbp]
-    \includegraphics[width=\textwidth]{../diagrams/mt-rt-sw-system-task-state-machine.png}
+    \includegraphics[width=\textwidth]{../diagrams/mt-rt-sw-system-task-state-machine.pdf}
     \caption{State machine of the SystemTask}
     \label{fig:mt-rt-sw-system-task-state-machine}
 \end{figure*}
