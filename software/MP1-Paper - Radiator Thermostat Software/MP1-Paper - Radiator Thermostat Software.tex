@@ -189,7 +189,7 @@ The classical MVC pattern does not enforce a strict decoupling between Model and
 
 However, classical MVP relies on rich, automated UI widgets (Interactors) that generate high-level semantic events---an assumption rooted in desktop frameworks such as those in Windows or Taligent's CommonPoint \cite{Kratochvil.2011}. In the embedded context of this work, no such widget infrastructure is available. User input must therefore be handled manually, closer to the approach taken in MVC.
 
-While the LVGL graphics library does offer an encoder input device abstraction \cite{LVGL.Encoder.2025}, its interaction model is primarily designed for touchscreen or mouse/keyboard interfaces. Integration of an encoder in LVGL---based on widget focus groups, edit modes, and long-press transitions---proves too complicated for quick configuration routines of a simple thermostat. The predefined gesture semantics do not match the custom navigation behavior required by the application (e.g., context-dependent button actions, quick wizard-style page flows). For this reason, native LVGL input callbacks are not used. Instead, a dedicated \textit{Router} component is introduced to receive input events from the InputTask and forward them to the active presenter, enabling full control over gesture interpretation.
+While the LVGL graphics library does offer an encoder input device abstraction \cite{LVGL.Encoder.2025}, interaction model of this library is primarily designed for touchscreen or mouse/keyboard interfaces. Integration of an encoder in LVGL---based on widget focus groups, edit modes, and long-press transitions---proves too complicated for quick configuration routines of a simple thermostat. The predefined gesture semantics do not match the custom navigation behavior required by the application (e.g., context-dependent button actions, quick wizard-style page flows). For this reason, native LVGL input callbacks are not used. Instead, a dedicated \textit{Router} component is introduced to receive input events from the InputTask and forward them to the active presenter, enabling full control over gesture interpretation.
 
 Furthermore, certain system state changes must provoke specific page transitions or restrict user interactions---for instance, during an ongoing adaptation procedure or while the SystemTask awaits completion of the Configuration on Device (COD). This requires navigation to be partially state-driven rather than purely user-driven as in classical MVC or MVP. The Router addresses this by reading the current system state from the SystemModel to determine which page to display.
 
@@ -228,11 +228,11 @@ This can be illustrated in \autoref{fig:r-mvp}, which shows the data and control
 \subsubsection{Differences from Classical MVP}
 \label{subsubsec:Differences from Classical MVP}
 Three key deviations distinguish R-MVP from the classical pattern:
-\begin{enumerate}
-    \item \textit{Centralized Router}: Instead of presenters managing navigation between views, a dedicated Router component centralizes page navigation logic and input event forwarding. Routing decisions are partially state-driven, based on the current system state read from the SystemModel, rather than being purely user-driven as in classical MVP.
-    \item \textit{Separated Input Handling}: Input events do not originate from the views (as they would via LVGL callbacks in a classical approach) but are received by the Router from the InputTask and forwarded to the active presenter. This bypasses LVGL's built-in input device model and enables custom gesture interpretation tailored to the rotary encoder and button hardware.
-    \item \textit{Hierarchical Structure}: Presenters are initialized and deinitialized by the Router based on the active page; nested presenters are initialized by their parent presenters; views are initialized by their corresponding presenters.
-\end{enumerate}
+\begin{itemize}
+    \item \textbf{Centralized Router}: Instead of presenters managing navigation between views, a dedicated Router component centralizes page navigation logic and input event forwarding. Routing decisions are partially state-driven, based on the current system state read from the SystemModel, rather than being purely user-driven as in classical MVP.
+    \item \textbf{Separated Input Handling}: Input events do not originate from the views (as they would via LVGL callbacks in a classical approach) but are received by the Router from the InputTask and forwarded to the active presenter. This bypasses LVGL's built-in input device model and enables custom gesture interpretation tailored to the rotary encoder and button hardware.
+    \item \textbf{Hierarchical Structure}: Presenters are initialized and deinitialized by the Router based on the active page; nested presenters are initialized by their parent presenters; views are initialized by their corresponding presenters.
+\end{itemize}
 
 \section{Implementation}
 Text\dots
