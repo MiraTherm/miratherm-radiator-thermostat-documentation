@@ -265,13 +265,65 @@ During initialization, the ViewPresenterTask waits for \texttt{EVT\_SYS\_INIT\_E
 
 Since a verbose programming language (C) is used, the Router contains a significant amount of boilerplate code for initializing and deinitializing presenters, as well as for forwarding input events. This could be substantially reduced by using a language with advanced abstraction features, such as Rust, which is well-suited for embedded systems and typically provides compile-time abstractions with minimal or no runtime overhead (e.g., generics, pattern matching, and zero-copy trait implementations). However, the decision to use C was made based on the target hardware's ecosystem and the desire for maximum compatibility with existing embedded development tools and libraries.
 
-\section{Verification and Results}
-Text\dots
-\subsection{Test Environment}
-Text\dots
-\subsection{Results}
-Text\dots
+\section{Evaluation}
+\label{sec:Evaluation}
+The implemented software was verified against the requirements defined in \cite{Menzel.2026.Spec} using two complementary methods: integration testing on the target hardware and source code inspection. The complete test scenarios, inspection criteria, and detailed results are documented in \cite{Menzel.2026.Verif}.
 
+Integration testing was performed on the prototype hardware shown in \autoref{fig:mt-rt-sw-dev-hw-block-diagram}. The tests were divided into two groups: \textit{driver tests}, which verify the correct operation of individual Hardware Abstraction Layer components (see ``Hardware Abstraction Layer'' in \autoref{subsec:Overall Architecture}), and \textit{integration tests}, which validate the application-level functionality including the R-MVP-based UI (\autoref{subsec:R-MVP Pattern}), the SystemTask state machine with its ViewPresenterTask synchronization (\autoref{subsec:Interaction with SystemTask}), and non-volatile storage. For requirements not practically verifiable through functional testing, source code inspection was performed.
+
+\subsection{Results}
+\label{subsec:Results}
+
+All four driver tests and all eight integration tests passed successfully. \autoref{tab:test-results} summarizes the results with their requirement coverage.
+
+\begin{table}[htbp]
+\caption{Summary of Driver and Integration Test Results}
+\begin{center}
+\begin{tabular}{|c|l|l|c|}
+\hline
+\textbf{ID} & \textbf{Name} & \textbf{REQ} & \textbf{Status} \\
+\hline
+\multicolumn{4}{|l|}{\textit{Driver Tests}} \\
+\hline
+1 & Display \& Measurements & 1.x, 5.x, 6.x, 8.x & Passed \\
+2 & Rotary Encoder & 2.x & Passed \\
+3 & Buttons & 3.x & Passed \\
+4 & Motor Driver & 4.x, 5.x & Passed \\
+\hline
+\multicolumn{4}{|l|}{\textit{Integration Tests}} \\
+\hline
+5 & Home Display Page & 14, 31 & Passed \\
+6 & Temp.\ Range \& Valve States & 20 & Passed \\
+7 & Mode Switch & 14, 17, 18, 31 & Passed \\
+8 & COD: Date \& Time & 9, 10, 31 & Passed \\
+9 & COD: Daily Schedule & 9--13, 20 & Passed \\
+10 & Boost Mode & 17, 19.x, 31 & Passed \\
+11 & Temperature Offset & 15, 21, 23, 31 & Passed \\
+12 & Factory Reset & 15, 23, 24, 31 & Passed \\
+\hline
+\end{tabular}
+\label{tab:test-results}
+\end{center}
+\end{table}
+
+The inspection results are summarized in \autoref{tab:inspection-results}. The automatic summer/winter time switching was fully verified, as the implementation correctly delegates to native STM32 HAL RTC functions. Hardware component replaceability was partially satisfied: dedicated abstraction layers exist for the buttons, rotary encoder, motor driver, and display, but ADC-based measurements and the internal temperature sensor lack own abstraction layers due to their coupling to a single DMA-driven ADC peripheral in the SensorTask.
+
+\begin{table}[htbp]
+\caption{Summary of Inspection Results}
+\begin{center}
+\begin{tabular}{|c|l|c|}
+\hline
+\textbf{REQ} & \textbf{Name} & \textbf{Status} \\
+\hline
+22 & Summer/Winter Time Switching & Fully passed \\
+30 & Hardware Replaceability & Partially passed \\
+\hline
+\end{tabular}
+\label{tab:inspection-results}
+\end{center}
+\end{table}
+
+In summary, all requirements were fully verified through testing or inspection, with the exception of hardware replaceability, which was partially met due to the aforementioned measurement code coupling. No functional defects were observed.
 
 \section{Conclusion}
 Text\dots
