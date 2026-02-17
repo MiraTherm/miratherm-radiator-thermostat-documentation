@@ -66,11 +66,11 @@ embedded software architecture, Model-View-Presenter, design pattern, radiator t
 
 \section{Introduction}
 \label{sec:Introduction}
-Heating private living spaces is one of the most significant sources of $CO_2$ emissions. In Germany, a substantial portion of annual greenhouse gas emissions originates from this sector \cite{StatistischesBundesamt.16.07.2025} \cite{Umweltbundesamt.15.03.2022}. While intelligent heating control and smart home systems offer an average energy saving potential of between 8 and 19\% \cite{Kersken.2018}, the market is currently dominated by proprietary solutions. Consequently, there is a lack of open-domain projects that can serve as a foundation for research and development of smart heating controllers.
+Heating private living spaces is one of the most significant sources of $CO_2$ emissions. In Germany, a substantial portion of annual greenhouse gas emissions originates from this sector \cite{StatistischesBundesamt.16.07.2025} \cite{Umweltbundesamt.15.03.2022}. While intelligent heating control and smart home systems offer an average energy saving potential of between 8 and 19\% \cite{Kersken.2018}, the market is currently dominated by proprietary solutions. Consequently, there is a lack of open-source projects that can serve as a foundation for research and development of smart heating controllers.
 
 This paper presents the software development for a radiator thermostat prototype, realized as part of the interdisciplinary ``MiraTherm Radiator Thermostat'' project at Fulda University of Applied Sciences. The overarching project aims to create a complete device, encompassing mechanics, electronics, and control algorithms.
 
-The primary objective of this work is to establish a solid software foundation for the thermostat's microcontroller-based hardware. While the long-term vision includes control algorithms and wireless connectivity (e.g., Matter-over-Thread), the central contribution of this paper lies in the architectural design of the application and its User Interface (UI). Specifically, we propose the application of the Routed-Model-View-Presenter (R-MVP) design pattern in order to decouple UI logic from hardware drivers and core system logic. This approach is used to implement basic consumer functions considering constraints of an embedded system and of a verbose programming language.
+The primary objective of this work is to establish a solid software foundation for the thermostat's microcontroller-based hardware. While the long-term vision includes control algorithms and wireless connectivity (e.g., Matter-over-Thread), the central contribution of this paper lies in the architectural design of the application and its User Interface (UI). Specifically, we propose the application of the Routed-Model-View-Presenter (R-MVP) design pattern to decouple UI logic from hardware drivers and core system logic. This approach is used to implement basic consumer functions considering constraints of an embedded system and of a verbose programming language.
 
 \section{Background} % and Related Work
 \label{sec:Background}
@@ -80,7 +80,7 @@ This section provides the necessary context for this work. First, the domain of 
 \label{subsec:Smart Radiator Thermostats}
 A radiator thermostat is a device mounted on a heating radiator valve to control the flow of hot water, thereby regulating the room temperature. Traditional thermostatic radiator valves (TRVs) use a wax or liquid-filled capsule that expands and contracts with temperature changes, mechanically adjusting valve position. Digital radiator thermostats replace this mechanism with an electronically controlled system, typically consisting of a microcontroller unit (MCU), a DC motor with a gearbox for valve actuation, a user interface (buttons, rotary encoder, display), and a motor driver circuit.
 
-Smart radiator thermostats extend the digital concept with wireless connectivity, such as Wi-Fi, Bluetooth Low Energy (BLE), or emerging standards like Matter-over-Thread, enabling integration into smart home ecosystems and remote control via mobile applications. Common consumer functions of such devices include manual temperature adjustment, mode selection (e.g., auto, manual, boost, vacation), weekly schedule programming, an open-window detection function, a periodic valve decalcification program and others \cite{eQ3AG.05.2018, ELVjournal.2012}. They are most commonly battery-powered and are expected to operate for extended periods, typically around two years on two AA batteries \cite{eQ3AG.05.2018, ELVjournal.2012}.
+Smart radiator thermostats extend the digital concept with wireless connectivity, such as Wi-Fi, Bluetooth Low Energy (BLE), or emerging standards like Matter-over-Thread, enabling integration into smart home ecosystems and remote control via mobile applications. Common consumer functions of such devices include manual temperature adjustment, mode selection (e.g., auto, manual, boost, vacation), weekly schedule programming, an open-window detection function, a periodic valve decalcification program, and others \cite{eQ3AG.05.2018, ELVjournal.2012}. They are most commonly battery-powered and are expected to operate for extended periods, typically around two years on two AA batteries \cite{eQ3AG.05.2018, ELVjournal.2012}.
 
 The software presented in this paper uses the eQ-3 eqiva Bluetooth Smart Radiator Thermostat \cite{eQ3AG.05.2018} as a functional reference for defining its scope.
 
@@ -109,7 +109,7 @@ In the User Interface domain, three further questions are posed:
     \label{fig:mvp-six-questions}
 \end{figure}
 
-A key insight from \cite{Potel.1996} is that these abstractions need not all be employed at once. A developer can start with only a subset of the MVP elements---such as the Model, View, and Presenter---and introduce other if the application requires their respective benefits, such as undo/redo capability, scriptability, or advanced input handling. 
+A key insight from \cite{Potel.1996} is that these abstractions need not all be employed at once. A developer can start with only a subset of the MVP elements---such as the Model, View, and Presenter---and introduce others if the application requires their respective benefits, such as undo/redo capability, scriptability, or advanced input handling. 
 
 This partial adoption is particularly relevant for the embedded context of this work, where the constrained environment and the use of a verbose programming language favor a minimal yet well-structured architecture. Accordingly, the design of an application can deliberately omit the Command, Selection, and Interactor abstractions, retaining only the core Model, View, and Presenter triad as the foundation of its UI architecture. 
 
@@ -243,12 +243,12 @@ Three key deviations distinguish R-MVP from the classical pattern:
 \end{itemize}
 
 \section{Implementation}
-In this section, main challenges encountered during implementation are discussed, along with the solutions adopted to address them. 
+In this section, the main challenges encountered during implementation are discussed, along with the solutions adopted to address them. 
 
 \subsection{Interaction of ViewPresenterTask with SystemTask}
 \label{subsec:Interaction with SystemTask}
 
-Implementation of a paritally state-driven UI requires tight synchronization between the ViewPresenterTask and the SystemTask in certain phases. Their interaction points can be clearly identified in the diagram of the `SystemTask` state machine, shown in \autoref{fig:mt-rt-sw-system-task-state-machine}.
+Implementation of a partially state-driven UI requires tight synchronization between the ViewPresenterTask and the SystemTask in certain phases. Their interaction points can be clearly identified in the diagram of the SystemTask state machine, shown in \autoref{fig:mt-rt-sw-system-task-state-machine}.
 
 The ViewPresenterTask interacts with the SystemTask through two mechanisms: event queues for discrete notifications (e.g., \texttt{EVT\_SYS\_INIT\_END}, \texttt{EVT\_COD\_END}) and direct reading/writing of the SystemModel for state-dependent routing and display updates.
 
@@ -332,7 +332,7 @@ The modular, task-based architecture built around FreeRTOS enables clear separat
 
 The boilerplate overhead observed in the Router implementation highlights a trade-off inherent to applying structured design patterns in C. A migration to a language with stronger compile-time abstractions, such as Rust, could address this limitation while preserving or improving runtime efficiency.
 
-Future work will extend the software with valve maintenance, temperature control algorithms and integration of the Matter-over-Thread communication standard for smart home interoperability.
+Future work will extend the software with valve maintenance, temperature control algorithms, and integration of the Matter-over-Thread communication standard for smart home interoperability.
 
 %
 %--Example Content-------------------------------------------------------------%
