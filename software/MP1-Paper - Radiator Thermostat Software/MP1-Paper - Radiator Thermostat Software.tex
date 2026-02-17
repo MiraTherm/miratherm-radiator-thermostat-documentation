@@ -54,11 +54,11 @@ alexander.menzel@et.hs-fulda.de
 %--Abstract and Keywords--------------------------------------------------------%
 %
 \begin{abstract}
-Text\dots
+Intelligent heating control can significantly reduce residential energy consumption, yet the market is dominated by proprietary solutions with limited transparency for research and development. This paper presents the software architecture for a radiator thermostat prototype, developed as part of the interdisciplinary MiraTherm project at Fulda University of Applied Sciences. The central contribution is the Routed-Model-View-Presenter (R-MVP) design pattern, an adaptation of the classical MVP pattern for resource-constrained embedded systems. R-MVP introduces a dedicated Router component that centralizes page navigation and input event forwarding, enabling state-driven UI transitions without relying on the widget-level input abstractions assumed by classical MVP. The software is implemented in C using FreeRTOS on an STM32WB55 microcontroller and employs the LVGL graphics library for display rendering. A modular, task-based architecture separates hardware abstraction, control logic, and user interface concerns into distinct FreeRTOS tasks communicating via event queues and mutex-protected shared data models. Verification through integration testing and source code inspection confirms that all functional requirements are met and the architecture successfully decouples UI logic from hardware drivers and core system logic.
 \end{abstract}
 %
 \begin{IEEEkeywords}
-keyword1, keyword2, keyword3, keyword4, keyword5
+embedded software architecture, Model-View-Presenter, design pattern, radiator thermostat, smart home, FreeRTOS
 \end{IEEEkeywords}
 %
 %--Sections--------------------------------------------------------------------%
@@ -326,7 +326,13 @@ The inspection results are summarized in \autoref{tab:inspection-results}. The a
 In summary, all requirements were fully verified through testing or inspection, with the exception of hardware replaceability, which was partially met due to the aforementioned measurement code coupling. No functional defects were observed.
 
 \section{Conclusion}
-Text\dots
+This paper presented the software design and implementation for a radiator thermostat prototype, with a focus on the Routed-Model-View-Presenter (R-MVP) pattern as an architectural approach for decoupling UI logic in embedded systems. The R-MVP pattern addresses specific challenges that arise when applying classical MVP in a bare-metal embedded context: the absence of rich widget infrastructures for input handling and the need for partially state-driven page navigation. By introducing a centralized Router component, the pattern achieves a clean separation between input processing, presentation logic, and rendering, while remaining practical within the constraints of a verbose programming language and limited hardware resources.
+
+The modular, task-based architecture built around FreeRTOS enables clear separation of concerns across hardware abstraction, control logic, sensor management, and user interface. Verification through integration testing and source code inspection confirmed that all functional requirements were met, with the sole partial limitation being the hardware replaceability of ADC-based measurement code due to its coupling to a single DMA-driven peripheral.
+
+The boilerplate overhead observed in the Router implementation highlights a trade-off inherent to applying structured design patterns in C. A migration to a language with stronger compile-time abstractions, such as Rust, could address this limitation while preserving or improving runtime efficiency.
+
+Future work will extend the software with valve maintenance, temperature control algorithms and integration of the Matter-over-Thread communication standard for smart home interoperability.
 
 %
 %--Example Content-------------------------------------------------------------%
