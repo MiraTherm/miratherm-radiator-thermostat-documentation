@@ -70,7 +70,7 @@ Heating private living spaces is one of the most significant sources of $CO_2$ e
 
 This paper presents the software development for a radiator thermostat prototype, realized as part of the interdisciplinary ``MiraTherm Radiator Thermostat'' project at Fulda University of Applied Sciences. The overarching project aims to create a complete device, encompassing mechanics, electronics, and control algorithms.
 
-The primary objective of this work is to establish a solid software foundation for the thermostat's microcontroller-based hardware. While the long-term vision includes control algorithms and wireless connectivity (e.g., Matter-over-Thread), the central contribution of this paper lies in the architectural design of the application and its User Interface (UI). Specifically, we propose the application of the Routed-Model-View-Presenter (R-MVP) design pattern to decouple UI logic from hardware drivers and core system logic. This approach is used to implement basic consumer functions considering constraints of an embedded system and of a verbose programming language.
+The primary objective of this work is to establish a solid software foundation for the thermostat's microcontroller-based hardware. While the long-term vision includes control algorithms, wireless connectivity (e.g., Matter-over-Thread), and energy saving, the central contribution of this paper lies in the architectural design of the application and its User Interface (UI). Specifically, we propose the application of the Routed-Model-View-Presenter (R-MVP) design pattern to decouple UI logic from hardware drivers and core system logic. This approach is used to implement basic consumer functions considering constraints of an embedded system and of a verbose programming language.
 
 \section{Background} % and Related Work
 \label{sec:Background}
@@ -332,7 +332,7 @@ The modular, task-based architecture built around FreeRTOS enables clear separat
 
 The boilerplate overhead observed in the Router implementation highlights a trade-off inherent to applying structured design patterns in C. A migration to a language with stronger compile-time abstractions, such as Rust, could address this limitation while preserving or improving runtime efficiency.
 
-Future work will extend the software with valve maintenance, temperature control algorithms, and integration of the Matter communication standard for smart home interoperability.
+Future work will extend the software with control algorithms, energy saving, and integration of the Matter communication standard for smart home interoperability.
 
 %
 %--Example Content-------------------------------------------------------------%
