@@ -225,7 +225,7 @@ The data flow follows a path through four stages:
     \item The Presenter instructs the corresponding View to render the updated data on the display.
 \end{enumerate}
 
-This can be illustrated in \autoref{fig:r-mvp}, which shows the data and control flow between the components of the R-MVP pattern. Comparing this flow with the classic MVP flow in \autoref{fig:mvp}, it can be seen that only the path of user input has changed, which now leads from the Router to the Presenter instead of from the View.
+This can be illustrated in \autoref{fig:r-mvp}, which shows the data and control flow between the components of the R-MVP pattern (initialization and deinitialization are omitted for clarity). Comparing this flow with the classic MVP flow in \autoref{fig:mvp}, it can be seen that only the path of user input has changed, which now leads from the Router to the Presenter instead of from the View.
 
 \begin{figure}[htbp]
     \centerline{\includegraphics[height=0.25\textheight]{../diagrams/r-mvp.png}}
