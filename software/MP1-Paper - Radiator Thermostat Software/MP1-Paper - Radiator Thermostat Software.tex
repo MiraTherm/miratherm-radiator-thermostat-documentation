@@ -207,10 +207,10 @@ The resulting pattern is referred to as Routed MVP (R-MVP). In the presented arc
 \label{subsubsec:R-MVP Components}
 The pattern comprises four component types:
 \begin{itemize}
+    \item \textbf{Models}: The shared, thread-safe data structures (SensorModel, ConfigModel, SystemModel) described in \autoref{subsec:Overall Architecture}, passed to the ViewPresenterTask as parameters.
     \item \textbf{Router}: Manages screen navigation and page transitions based on the system state read from the SystemModel. It initializes and deinitializes presenters for each page, forwards input events from the InputTask to the currently active presenter, and can send events to the SystemTask to initiate state transitions.
     \item \textbf{Presenters}: Handle presentation logic and user interactions. They receive input events from the router, read and write shared models, and instruct views to update display elements. Presenters can be nested to implement multi-step wizard workflows.
     \item \textbf{Views}: Pure rendering components using LVGL, responsible solely for updating graphical elements on the display using data provided by the Presenters.
-    \item \textbf{Models}: The shared, thread-safe data structures (SensorModel, ConfigModel, SystemModel) described in \autoref{subsec:Overall Architecture}, passed to the ViewPresenterTask as parameters.
 \end{itemize}
 
 For simplicity and to reduce abstraction overhead in the embedded C environment, no explicit interfaces are used; presenters call views directly. Since page content differs significantly across screens, this does not introduce code duplication.
