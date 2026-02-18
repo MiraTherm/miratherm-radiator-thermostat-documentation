@@ -80,7 +80,7 @@ This section provides the necessary context for this work. First, the domain of 
 \label{subsec:Smart Radiator Thermostats}
 A radiator thermostat is a device mounted on a heating radiator valve to control the flow of hot water, thereby regulating the room temperature. Traditional thermostatic radiator valves (TRVs) use a wax or liquid-filled capsule that expands and contracts with temperature changes, mechanically adjusting valve position. Digital radiator thermostats replace this mechanism with an electronically controlled system, typically consisting of a microcontroller unit (MCU), a DC motor with a gearbox for valve actuation, a user interface (buttons, rotary encoder, display), and a motor driver circuit.
 
-Smart radiator thermostats extend the digital concept with wireless connectivity, such as Wi-Fi, Bluetooth Low Energy (BLE), or emerging standards like Matter-over-Thread, enabling integration into smart home ecosystems and remote control via mobile applications. Common consumer functions of such devices include manual temperature adjustment, mode selection (e.g., auto, manual, boost, vacation), weekly schedule programming, an open-window detection function, a periodic valve decalcification program, and others \cite{eQ3AG.05.2018, ELVjournal.2012}. They are most commonly battery-powered and are expected to operate for extended periods, typically around two years on two AA batteries \cite{eQ3AG.05.2018, ELVjournal.2012}.
+Smart radiator thermostats extend the digital concept with wireless connectivity, such as Wi-Fi, Bluetooth Low Energy (BLE), or emerging standards like Matter, enabling integration into smart home ecosystems and remote control via mobile applications. Common consumer functions of such devices include manual temperature adjustment, mode selection (e.g., auto, manual, boost, vacation), weekly schedule programming, an open-window detection function, a periodic valve decalcification program, and others \cite{eQ3AG.05.2018, ELVjournal.2012}. They are most commonly battery-powered and are expected to operate for extended periods, typically around two years on two AA batteries \cite{eQ3AG.05.2018, ELVjournal.2012}.
 
 The software presented in this paper uses the eQ-3 eqiva Bluetooth Smart Radiator Thermostat \cite{eQ3AG.05.2018} as a functional reference for defining its scope.
 
@@ -146,7 +146,7 @@ This section presents the software architecture and the adapted design pattern u
 
 \subsection{Overall Architecture}
 \label{subsec:Overall Architecture}
-The software is written in C and uses FreeRTOS for real-time task scheduling and resource management. The architecture follows a modular design that separates hardware abstraction, core control logic, and UI management into distinct FreeRTOS tasks. Each task runs as a singleton and is started at system boot. The architecture is designed to enable future integration of control algorithms and the Matter-over-Thread standard with minimal effort. \autoref{fig:mt-rt-sw-architecture} shows the overall architecture.
+The software is written in C and uses FreeRTOS for real-time task scheduling and resource management. The architecture follows a modular design that separates hardware abstraction, core control logic, and UI management into distinct FreeRTOS tasks. Each task runs as a singleton and is started at system boot. The architecture is designed to enable future integration of control algorithms and the Matter standard with minimal effort. \autoref{fig:mt-rt-sw-architecture} shows the overall architecture.
 \begin{figure*}[htbp]
     \includegraphics[width=\textwidth]{../diagrams/mt-rt-sw-architecture.pdf}
     \caption{Architecture of the radiator thermostat software.}
@@ -332,7 +332,7 @@ The modular, task-based architecture built around FreeRTOS enables clear separat
 
 The boilerplate overhead observed in the Router implementation highlights a trade-off inherent to applying structured design patterns in C. A migration to a language with stronger compile-time abstractions, such as Rust, could address this limitation while preserving or improving runtime efficiency.
 
-Future work will extend the software with valve maintenance, temperature control algorithms, and integration of the Matter-over-Thread communication standard for smart home interoperability.
+Future work will extend the software with valve maintenance, temperature control algorithms, and integration of the Matter communication standard for smart home interoperability.
 
 %
 %--Example Content-------------------------------------------------------------%
