@@ -269,7 +269,7 @@ Since a verbose programming language (C) is used, the Router contains a signific
 \label{sec:Evaluation}
 The implemented software was verified against the requirements defined in \cite{Menzel.2026.Spec} using two complementary methods: integration testing on the target hardware and source code inspection. The complete test scenarios, inspection criteria, and detailed results are documented in \cite{Menzel.2026.Verif}.
 
-Integration testing was performed on the prototype hardware shown in \autoref{fig:mt-rt-sw-dev-hw-block-diagram}. The tests were divided into two groups: \textit{driver tests}, which verify the correct operation of individual HAL components (see ``Hardware Abstraction Layer'' in \autoref{subsec:Overall Architecture}), and \textit{integration tests}, which validate the application-level functionality including the R-MVP-based UI (\autoref{subsec:R-MVP Pattern}), the SystemTask state machine with its ViewPresenterTask synchronization (\autoref{subsec:Interaction with SystemTask}), and non-volatile storage. For requirements not practically verifiable through functional testing, source code inspection was performed.
+Integration testing was performed on the prototype hardware shown in \autoref{fig:mt-rt-sw-dev-hw-block-diagram}. The tests were divided into two groups: \textit{driver tests}, verifying the correct operation of individual HAL components, and \textit{integration tests}, verifying the application-level functionality including the R-MVP-based UI, the SystemTask state machine, and non-volatile storage. For requirements not practically verifiable through functional testing, source code inspection was performed.
 
 \subsection{Results}
 \label{subsec:Results}
