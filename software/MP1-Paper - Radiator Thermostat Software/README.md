@@ -1,6 +1,6 @@
 # Radiator Thermostat Software Specification
 
-**Title**: Radiator Thermostat Software Specification
+**Title**: Radiator Thermostat Software Specification 
 
 **Type of work**: Requirement Specification for a Master Project
 
